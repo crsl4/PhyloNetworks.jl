@@ -1,0 +1,151 @@
+```{julia; eval=true; echo=false}
+using PhyloNetworks
+raxmltrees = joinpath(Pkg.dir("PhyloNetworks"),"examples","raxmltrees.tre")
+raxmlCF = readTrees2CF(raxmltrees, writeTab=false, writeSummary=false)
+astralfile = joinpath(Pkg.dir("PhyloNetworks"),"examples","astral.tre")
+astraltree = readMultiTopology(astralfile)[102] # 102th tree = last tree here
+net0 = readTopology(joinpath(Pkg.dir("PhyloNetworks"),"examples","net0.out"))
+net1 = readTopology(joinpath(Pkg.dir("PhyloNetworks"),"examples","net1.out"))
+net0.loglik = 53.53150526187732
+net1.loglik = 28.31506721890958
+```
+# Comparing and manipulating networks
+
+Examples below follow those in [Getting a Network](@ref).
+
+## Comparing networks / trees
+
+Is the SNaQ tree (network with h=0) the same as the ASTRAL tree?
+We can calculate their Robinson-Foulds distance:
+
+```{julia; eval=true; results="markup"; term=true}
+hardwiredClusterDistance(astraltree, net0, false)
+```
+The last option `false` is to consider topologies as unrooted.
+The RF distance is 0, so the two unrooted topologies are the same.
+If we had considered them as rooted, with whatever root they
+currently have in their internal representation,
+we would find a difference:
+```{julia; eval=true; results="markup"; term=true}
+hardwiredClusterDistance(astraltree, net0, true)
+```
+
+## Re-rooting trees and networks
+
+We can re-root our networks with the outgroup, O,
+and then re-compare the ASTRAL tree and the SNaQ tree
+as rooted topologies (and find no difference):
+```{julia; eval=true; results="markup"; term=true; label="net0_O"; fig_width=4; fig_height=4}
+rootatnode!(astraltree, "O")
+rootatnode!(net0, "O")
+hardwiredClusterDistance(astraltree, net0, true)
+plot(net0)
+```
+After trees/networks are rooted with a correct outgroup,
+their visualization is more meaningful.
+
+With 1 or more hybridization, the direction of hybrid edges
+constrain the position of the root, which cannot be downstream of hybrid edges.
+An attempt to re-root the network at a position incompatible with hybrid edges
+will fail.
+
+Networks can be re-rooted at a given node or along a given edge.
+Get help (type `?`) on the functions `rootatnode!` and `rootonedge!`
+for more info. There are examples in the [Bootstrap](@ref) section.
+
+If the network is plotted with crossing edges, you may identify
+ways to rotate the children edges at some nodes to untangle some crossing edges.
+This can be done using the function `rotate!`.
+See an example in the [Bootstrap](@ref) section, or type `?` then `rotate!`.
+
+## Extracting the major tree
+
+We can also compare the networks estimated with h=0 (net0) and h=1 (net1):
+```{julia; eval=true; results="markup"; term=true; label="net1_O"; fig_width=4; fig_height=4}
+rootatnode!(net1, "O"); # the ; suppresses screen output
+hardwiredClusterDistance(net0, net1, true)
+plot(net1, showGamma=true)
+```
+They differ by 2 clusters: that's because A is of hybrid descent
+in net1, not in net0.
+
+To beyond this hybrid difference,
+we can extract the major tree from the network with 1 hybridization,
+that is, delete the hybrid edge supported by less than 50% of genes.
+Then we can compare this tree with the ASTRAL/SNaQ tree net0.
+```{julia; eval=true; results="markup"; term=true}
+tree1 = majorTree(net1); # major tree from net1
+hardwiredClusterDistance(net0, tree1, true)
+```
+They are identical (at distance 0), so here the species network
+with 1 hybrid node is a refinement of the estimated species tree
+(this needs not be the case always).
+
+Is the SNaQ network with 1 hybrid node the same as the true network,
+the one that was initially used to simulate the data?
+
+(digression on the data: gene trees were simulated under the coalescent
+along some "true" network, then 500 base-pair alignments were simulated
+along each gene tree with the HKY model,
+gene trees were estimated from each alignment with RAxML, and
+these estimated gene trees served as input to both ASTRAL and SNaQ.)
+
+The true network is shown below, correctly rooted at the outgroup O,
+and plotted with branch lengths proportional to their
+values in coalescence units:
+```{julia; eval=true; label="truenet"; fig_width=4; fig_height=4}
+truenet = readTopology("((((D:0.4,C:0.4):4.8,((A:0.8,B:0.8):2.2)#H1:2.2::0.7):4.0,(#H1:0::0.3,E:3.0):6.2):2.0,O:11.2);");
+plot(truenet, useEdgeLength=true, showGamma=true)
+```
+```{julia; eval=true; results="markup"; term=true}
+hardwiredClusterDistance(net1, truenet, true)
+```
+
+Our estimated network is not the same as the true network:
+- the underlying tree is correctly estimated
+- the origin of gene flow is correctly estimated: E
+- the target of gene flow is *not* correctly estimated: it was
+  the lineage ancestral to (A,B), but it is estimated to be A only.
+
+For networks, the distance here is the hardwired cluster distance:
+the number of hardwired clusters found in one network and not
+in the other. The **hardwired cluster** associated with an edge is the
+set of *all* tips descendant from that edge, i.e. all tips that
+inherited at least *some* genetic material from that edge.
+
+## Displayed trees and subnetworks
+
+We can extract all trees displayed in a network.
+These trees are obtained by picking one parent hybrid edge
+at each hybrid node, and dropping the other parent hybrid edge.
+We can choose to pick the "important" hybrid edges only,
+with heritability γ at or above a threshold.
+Below we use a γ threshold of 0, so we get all displayed trees:
+```{julia; eval=true; results="markup"; term=true}
+t = displayedTrees(net1, 0.0) # list of trees displayed in network
+writeTopology(t[1], round=true)
+writeTopology(t[2], round=true)
+```
+If we decide to keep edges with γ>0.2 only, then we are
+left with a single tree in the list (the major tree).
+This is because our example has 1 hybrid node with minor γ=0.196.
+```{julia; eval=true; results="markup"; term=true}
+t = displayedTrees(net1, 0.2)
+```
+
+We can also delete all "non-important" reticulations,
+those with a minor heritability γ below some threshold.
+The function below changes our network `net1`,
+as indicated by its name ending with a `!`.
+
+```{julia; eval=true; results="markup"; term=true}
+deleteHybridThreshold!(net1, 0.1)
+```
+Nothing happened to our network: because its γ is above 0.1.
+But if we set the threshold to 0.3, then our reticulation disappears:
+```{julia; eval=true; results="markup"; term=true}
+deleteHybridThreshold!(net1, 0.3)
+```
+See also function `displayedNetworkAt!` to get the network with
+a single reticulation of interest, and eliminate all other
+reticulations.

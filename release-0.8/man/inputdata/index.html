@@ -1,0 +1,852 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PhyloNetworks is a Julia package for the manipulation, visualization and inference of phylogenetic networks.">
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.5, mkdocs-material-2.9.4">
+    
+    
+      
+        <title>Input Data for SNaQ - PhyloNetworks.jl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.451f80e5.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#input-for-snaq" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="PhyloNetworks.jl" class="md-header-nav__button md-logo">
+          
+            <img src="../../snaq_small.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                PhyloNetworks.jl
+              </span>
+              <span class="md-header-nav__topic">
+                Input Data for SNaQ
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="PhyloNetworks.jl" class="md-nav__button md-logo">
+      
+        <img src="../../snaq_small.png" width="48" height="48">
+      
+    </a>
+    PhyloNetworks.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Manual
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Manual
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Input Data for SNaQ
+      </label>
+    
+    <a href="./" title="Input Data for SNaQ" class="md-nav__link md-nav__link--active">
+      Input Data for SNaQ
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-data-gene-trees" title="Tutorial data: gene trees" class="md-nav__link">
+    Tutorial data: gene trees
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-data-quartet-cfs" title="Tutorial data: quartet CFs" class="md-nav__link">
+    Tutorial data: quartet CFs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-data-starting-tree" title="Tutorial data: starting tree" class="md-nav__link">
+    Tutorial data: starting tree
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-nav__link">
+      TICR pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../snaq_plot/" title="Network estimation and display" class="md-nav__link">
+      Network estimation and display
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dist_reroot/" title="Network comparison and manipulation" class="md-nav__link">
+      Network comparison and manipulation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fixednetworkoptim/" title="Candidate Networks" class="md-nav__link">
+      Candidate Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../expectedCFs/" title="Extract Expected CFs" class="md-nav__link">
+      Extract Expected CFs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../multiplealleles/" title="Multiple Alleles" class="md-nav__link">
+      Multiple Alleles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../trait_tree/" title="Continuous Trait Evolution" class="md-nav__link">
+      Continuous Trait Evolution
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../parsimony/" title="Parsimony on networks" class="md-nav__link">
+      Parsimony on networks
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Library
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Library
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/public/" title="Public" class="md-nav__link">
+      Public
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/internals/" title="Internals" class="md-nav__link">
+      Internals
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-data-gene-trees" title="Tutorial data: gene trees" class="md-nav__link">
+    Tutorial data: gene trees
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-data-quartet-cfs" title="Tutorial data: quartet CFs" class="md-nav__link">
+    Tutorial data: quartet CFs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-data-starting-tree" title="Tutorial data: starting tree" class="md-nav__link">
+    Tutorial data: starting tree
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/crsl4/PhyloNetworks.jl/edit/master/docs/man/inputdata.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><a id='Input-for-SNaQ-1'></a></p>
+<h1 id="input-for-snaq">Input for SNaQ</h1>
+<p>SNaQ is a method implemented in the package to estimate a phylogenetic network from multiple molecular sequence alignments. There are two alternatives for the input data:</p>
+<ol>
+<li>A list of estimated gene trees for each locus, which can be obtained using <a href="http://mrbayes.sourceforge.net">MrBayes</a> or <a href="http://sco.h-its.org/exelixis/software.html">RAxML</a>. Or:</li>
+<li>A table of concordance factors (CF), i.e. gene tree frequencies, for each 4-taxon subset. This table can be obtained from <a href="http://www.stat.wisc.edu/~ane/bucky/">BUCKy</a>, to account for gene tree uncertainty</li>
+</ol>
+<p>This <a href="https://github.com/nstenz/TICR">pipeline</a> can be used to obtain the table of quartet CF needed as input for SNaQ (see also the <a href="https://github.com/crsl4/PhyloNetworks.jl/wiki/TICR:-from-alignments-to-quartet-concordance-factors">wiki</a>.) It starts from the sequence alignments, runs MrBayes and then BUCKy (both parallelized), producing the table of estimated CFs and their credibility intervals. Additional details on this <a href="../ticr_howtogetQuartetCFs/#TICR-pipeline-1">TICR pipeline</a> describe how to insert data at various stages (e.g. after running MrBayes on each locus).</p>
+<p><a id='Tutorial-data:-gene-trees-1'></a></p>
+<h2 id="tutorial-data-gene-trees">Tutorial data: gene trees</h2>
+<p>We suggest that you create a special directory for running these examples, where input files can be downloaded and where output files will be created (with estimated networks for instance). Enter this directory and run Julia from there.</p>
+<p>Suppose you have a file with a list of gene trees in parenthetical format called <code>raxmltrees.tre</code>. You can access the example file of input trees <a href="https://github.com/crsl4/PhyloNetworks/blob/master/examples/raxmltrees.tre">here</a> or <a href="https://raw.githubusercontent.com/crsl4/PhyloNetworks/master/examples/raxmltrees.tre">here</a> for easier download.</p>
+<p>Do not copy-paste into a "smart" text-editor. Instead, save the file directly into your working directory using "save link as" or "download linked file as". This file contains 30 gene trees, each in parenthetical format on 6 taxa like this (with rounded branch lengths):</p>
+<p><code>(E:0.038,((A:0.014,B:0.010):0.010,(C:0.008,D:0.002):0.010):0.025,O:0.078);</code></p>
+<p>If <code>raxmltrees.tre</code> is in your working directory, you can view its content within Julia:</p>
+<div class="codehilite"><pre><span></span><span class="n">less</span><span class="p">(</span><span class="s">&quot;raxmltrees.tre&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>or like this, to view the version downloaded with the package:</p>
+<div class="codehilite"><pre><span></span><span class="n">raxmltrees</span> <span class="o">=</span> <span class="n">joinpath</span><span class="p">(</span><span class="n">Pkg</span><span class="o">.</span><span class="n">dir</span><span class="p">(</span><span class="s">&quot;PhyloNetworks&quot;</span><span class="p">),</span><span class="s">&quot;examples&quot;</span><span class="p">,</span><span class="s">&quot;raxmltrees.tre&quot;</span><span class="p">)</span>
+<span class="n">less</span><span class="p">(</span><span class="n">raxmltrees</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Just type <code>q</code> to quit viewing this file. You could read in these 30 trees and visualize the third one (say) like this:</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">PhyloNetworks</span>
+<span class="n">raxmltrees</span> <span class="o">=</span> <span class="n">joinpath</span><span class="p">(</span><span class="n">Pkg</span><span class="o">.</span><span class="n">dir</span><span class="p">(</span><span class="s">&quot;PhyloNetworks&quot;</span><span class="p">),</span><span class="s">&quot;examples&quot;</span><span class="p">,</span><span class="s">&quot;raxmltrees.tre&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">genetrees</span> <span class="o">=</span> <span class="nt">readMultiTopology</span><span class="o">(</span><span class="nt">raxmltrees</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">genetrees</span><span class="cp">[</span><span class="mi">3</span><span class="cp">]</span>
+<span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">HybridNetwork</span><span class="o">,</span> <span class="nt">Rooted</span> <span class="nt">Network</span>
+<span class="nt">9</span> <span class="nt">edges</span>
+<span class="nt">10</span> <span class="nt">nodes</span><span class="o">:</span> <span class="nt">6</span> <span class="nt">tips</span><span class="o">,</span> <span class="nt">0</span> <span class="nt">hybrid</span> <span class="nt">nodes</span><span class="o">,</span> <span class="nt">4</span> <span class="nt">internal</span> <span class="nt">tree</span> <span class="nt">nodes</span><span class="o">.</span>
+<span class="nt">tip</span> <span class="nt">labels</span><span class="o">:</span> <span class="nt">E</span><span class="o">,</span> <span class="nt">A</span><span class="o">,</span> <span class="nt">B</span><span class="o">,</span> <span class="nt">C</span><span class="o">,</span> <span class="o">...</span>
+<span class="o">((</span><span class="nt">E</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">015</span><span class="o">,(</span><span class="nt">A</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">006</span><span class="o">,</span><span class="nt">B</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">006</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">003</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">041</span><span class="o">,(</span><span class="nt">C</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">006</span><span class="o">,</span><span class="nt">D</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">0</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">041</span><span class="o">,</span><span class="nt">O</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">052</span><span class="o">);</span>
+</pre></div>
+
+
+<p>To visualize any of these input trees, use the <a href="https://github.com/cecileane/PhyloPlots.jl">PhyloPlots</a> package:</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">PhyloPlots</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">genetrees</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="o">:</span><span class="n">R</span><span class="p">);</span> <span class="c"># tree for 3rd gene</span>
+</pre></div>
+
+
+<p><img alt="gene3" src="../../assets/figures/inputdata_gene3.svg" /></p>
+<p>To read in all gene trees and directly summarize them by a list of quartet CFs (proportion of input trees with a given quartet):</p>
+<div class="codehilite"><pre><span></span>julia&gt; raxmlCF = readTrees2CF(raxmltrees, CFfile=&quot;tableCF.txt&quot;);
+will use all quartets on 6 taxa
+calculating obsCF from 30 gene trees and for 15 quartets
+Reading in quartets...
+0+---------------+100%  
+  ***************  
+table of obsCF printed to file tableCF.txt
+descriptive stat of input data printed to file summaryTreesQuartets.txt
+
+julia&gt; PhyloNetworks.writeObsCF(raxmlCF) # observed CFs: gene frequencies
+15×8 DataFrames.DataFrame
+│ Row │ t1 │ t2 │ t3 │ t4 │ CF12_34  │ CF13_24   │ CF14_23   │ ngenes │
+├─────┼────┼────┼────┼────┼──────────┼───────────┼───────────┼────────┤
+│ 1   │ A  │ B  │ C  │ D  │ 1.0      │ 0.0       │ 0.0       │ 30     │
+│ 2   │ A  │ B  │ C  │ E  │ 0.833333 │ 0.0333333 │ 0.133333  │ 30     │
+│ 3   │ A  │ B  │ C  │ O  │ 0.866667 │ 0.0       │ 0.133333  │ 30     │
+│ 4   │ A  │ B  │ D  │ E  │ 0.833333 │ 0.0333333 │ 0.133333  │ 30     │
+│ 5   │ A  │ B  │ D  │ O  │ 0.866667 │ 0.0       │ 0.133333  │ 30     │
+│ 6   │ A  │ B  │ E  │ O  │ 0.833333 │ 0.0666667 │ 0.1       │ 30     │
+│ 7   │ A  │ C  │ D  │ E  │ 0.0      │ 0.0       │ 1.0       │ 30     │
+│ 8   │ A  │ C  │ D  │ O  │ 0.0      │ 0.0       │ 1.0       │ 30     │
+│ 9   │ A  │ C  │ E  │ O  │ 0.533333 │ 0.333333  │ 0.133333  │ 30     │
+│ 10  │ A  │ D  │ E  │ O  │ 0.533333 │ 0.333333  │ 0.133333  │ 30     │
+│ 11  │ B  │ C  │ D  │ E  │ 0.0      │ 0.0       │ 1.0       │ 30     │
+│ 12  │ B  │ C  │ D  │ O  │ 0.0      │ 0.0       │ 1.0       │ 30     │
+│ 13  │ B  │ C  │ E  │ O  │ 0.666667 │ 0.266667  │ 0.0666667 │ 30     │
+│ 14  │ B  │ D  │ E  │ O  │ 0.666667 │ 0.266667  │ 0.0666667 │ 30     │
+│ 15  │ C  │ D  │ E  │ O  │ 1.0      │ 0.0       │ 0.0       │ 30     │
+</pre></div>
+
+
+<p><code>less("tableCF.txt")</code> lets you see the content of the newly created file "tableCF.txt", within Julia. Again, type <code>q</code> to quit viewing this file.</p>
+<p>In this table, each 4-taxon set is listed in one row. The 3 "CF" columns gives the proportion of genes that has each of the 3 possible trees on these 4 taxa.</p>
+<p>For more help on any function, type <code>?</code> to enter the help mode, then type the name of the function. For example: type <code>?</code> then <code>readTrees2CF</code> for information on the various options of that function.</p>
+<p>When there are many more taxa, the number of quartets might be very large and we might want to use a subset to speed things up. Here, if we wanted to use a random sample of 10 quartets instead of all quartets, we could do:</p>
+<p><code>readTrees2CF(raxmltrees, whichQ="rand", numQ=10, CFfile="tableCF10.txt")</code></p>
+<p>Be careful to use a numQ value smaller than the total number of possible 4-taxon subsets, which is <em>n choose 4</em> on <em>n</em> taxa (e.g. 15 on 6 taxa). To get a predictable random sample, you may set the seed with <code>srand(12321)</code> (for instance) prior to sampling the quartets as above.</p>
+<p><a id='Tutorial-data:-quartet-CFs-1'></a></p>
+<h2 id="tutorial-data-quartet-cfs">Tutorial data: quartet CFs</h2>
+<p>If we already have a table of quartet concordance factor (CF) values in a file <code>buckyCF.csv</code> in this format</p>
+<table>
+<thead>
+<tr>
+<th align="left">Taxon1</th>
+<th align="left">Taxon2</th>
+<th align="left">Taxon3</th>
+<th align="left">Taxon4</th>
+<th align="left">CF12_34</th>
+<th align="left">CF13_24</th>
+<th align="left">CF14_23</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">D</td>
+<td align="left">A</td>
+<td align="left">E</td>
+<td align="left">O</td>
+<td align="left">0.565</td>
+<td align="left">0.0903</td>
+<td align="left">0.3447</td>
+</tr>
+<tr>
+<td align="left">...</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">...</td>
+</tr>
+</tbody>
+</table>
+<p>we would read it in one step like this: <code>readTableCF("buckyCF.csv")</code>. An example file comes with the package, available <a href="https://github.com/crsl4/PhyloNetworks/blob/master/examples/buckyCF.csv">here</a> or <a href="https://raw.githubusercontent.com/crsl4/PhyloNetworks/master/examples/buckyCF.csv">here</a>.</p>
+<div class="codehilite"><pre><span></span>julia&gt; buckyCFfile = joinpath(Pkg.dir(&quot;PhyloNetworks&quot;),&quot;examples&quot;,&quot;buckyCF.csv&quot;);
+
+julia&gt; buckyCF = readTableCF(buckyCFfile)
+30 gene trees per 4-taxon set
+Object DataCF
+number of quartets: 15
+</pre></div>
+
+
+<p>The same thing could be done in 2 steps: first to read the file and convert it to a 'DataFrame' object, and then to convert this DataFrame into a DataCF object.</p>
+<div class="codehilite"><pre><span></span>julia&gt; using CSV, DataFrames
+
+julia&gt; dat = CSV.read(buckyCFfile);
+
+julia&gt; head(dat) # head shows the first 6 rows only
+6×14 DataFrames.DataFrame. Omitted printing of 8 columns
+│ Row │ taxon1 │ taxon2 │ taxon3 │ taxon4 │ CF12.34    │ CF12.34_lo │
+├─────┼────────┼────────┼────────┼────────┼────────────┼────────────┤
+│ 1   │ D      │ A      │ E      │ O      │ 0.565033   │ 0.5        │
+│ 2   │ D      │ A      │ E      │ B      │ 0.0005     │ 0.0        │
+│ 3   │ C      │ A      │ E      │ B      │ 0.0005     │ 0.0        │
+│ 4   │ C      │ A      │ E      │ O      │ 0.565033   │ 0.5        │
+│ 5   │ D      │ A      │ O      │ B      │ 3.33333e-5 │ 0.0        │
+│ 6   │ C      │ D      │ E      │ O      │ 0.999867   │ 1.0        │
+
+julia&gt; buckyCF = readTableCF(dat)
+30 gene trees per 4-taxon set
+Object DataCF
+number of quartets: 15
+
+julia&gt; PhyloNetworks.writeObsCF(buckyCF)
+15×8 DataFrames.DataFrame
+│ Row │ t1 │ t2 │ t3 │ t4 │ CF12_34    │ CF13_24    │ CF14_23    │ ngenes │
+├─────┼────┼────┼────┼────┼────────────┼────────────┼────────────┼────────┤
+│ 1   │ D  │ A  │ E  │ O  │ 0.565033   │ 0.0903     │ 0.344667   │ 30     │
+│ 2   │ D  │ A  │ E  │ B  │ 0.0005     │ 0.8599     │ 0.139567   │ 30     │
+│ 3   │ C  │ A  │ E  │ B  │ 0.0005     │ 0.8599     │ 0.139567   │ 30     │
+│ 4   │ C  │ A  │ E  │ O  │ 0.565033   │ 0.0903     │ 0.344667   │ 30     │
+│ 5   │ D  │ A  │ O  │ B  │ 3.33333e-5 │ 0.8885     │ 0.111467   │ 30     │
+│ 6   │ C  │ D  │ E  │ O  │ 0.999867   │ 6.66667e-5 │ 6.66667e-5 │ 30     │
+│ 7   │ C  │ E  │ O  │ B  │ 0.0401667  │ 0.263067   │ 0.696767   │ 30     │
+│ 8   │ C  │ D  │ A  │ E  │ 1.0        │ 0.0        │ 0.0        │ 30     │
+│ 9   │ C  │ D  │ O  │ B  │ 0.999867   │ 6.66667e-5 │ 6.66667e-5 │ 30     │
+│ 10  │ C  │ D  │ E  │ B  │ 1.0        │ 0.0        │ 0.0        │ 30     │
+│ 11  │ D  │ E  │ O  │ B  │ 0.0401667  │ 0.263067   │ 0.696767   │ 30     │
+│ 12  │ C  │ D  │ A  │ O  │ 0.999867   │ 6.66667e-5 │ 6.66667e-5 │ 30     │
+│ 13  │ C  │ D  │ A  │ B  │ 1.0        │ 0.0        │ 0.0        │ 30     │
+│ 14  │ A  │ E  │ O  │ B  │ 0.0731667  │ 0.0424667  │ 0.884367   │ 30     │
+│ 15  │ C  │ A  │ O  │ B  │ 3.33333e-5 │ 0.8885     │ 0.111467   │ 30     │
+</pre></div>
+
+
+<p>In the input file, columns need to be in the right order: with the first 4 columns giving the names of the taxa in each 4-taxon set. The CF values are assumed to be in columns named "CF12_34", etc., or else in columns 5,6,7. If available, a column named "ngenes" will be taken to have the the number of genes for each 4-taxon subset.</p>
+<p><a id='Tutorial-data:-starting-tree-1'></a></p>
+<h2 id="tutorial-data-starting-tree">Tutorial data: starting tree</h2>
+<p>If we have a tree for the data set at hand, it can be used as a starting point for the optimization. From our gene trees, we estimated a species tree with <a href="https://github.com/smirarab/ASTRAL/blob/master/astral-tutorial.md">ASTRAL</a>. This tree comes with the package in file <code>astral.tre</code> <a href="https://github.com/crsl4/PhyloNetworks/blob/master/examples/astral.tre">here</a>. This file has 102 trees: 100 bootstrap species trees, followed by their greedy consensus, followed by the best tree on the original data. It's this last tree that we are most interested in. We can read it with</p>
+<div class="codehilite"><pre><span></span><span class="n">astralfile</span> <span class="o">=</span> <span class="n">joinpath</span><span class="p">(</span><span class="n">Pkg</span><span class="o">.</span><span class="n">dir</span><span class="p">(</span><span class="s">&quot;PhyloNetworks&quot;</span><span class="p">),</span><span class="s">&quot;examples&quot;</span><span class="p">,</span><span class="s">&quot;astral.tre&quot;</span><span class="p">);</span>
+<span class="n">astraltree</span> <span class="o">=</span> <span class="n">readMultiTopology</span><span class="p">(</span><span class="n">astralfile</span><span class="p">)[</span><span class="mi">102</span><span class="p">]</span> <span class="c"># 102th tree: last tree here</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">astraltree</span><span class="p">,</span> <span class="o">:</span><span class="n">R</span><span class="p">,</span> <span class="n">showEdgeLength</span><span class="o">=</span><span class="kc">true</span><span class="p">);</span>
+</pre></div>
+
+
+<p><img alt="astraltree" src="../../assets/figures/inputdata_astraltree.svg" /></p>
+<p>To start its search, SNaQ will need a network of "level 1". All trees and all networks with 1 hybridization are of level 1. To make sure that a network with 2 or more hybridizations is of level 1, we can read it in with <code>readTopologyLevel1</code> (which also unroots the tree, resolves polytomies, replaces missing branch lengths by 1 for starting values etc.):</p>
+<div class="codehilite"><pre><span></span><span class="n">T</span><span class="o">=</span><span class="n">readTopologyLevel1</span><span class="p">(</span><span class="s">&quot;startNetwork.txt&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>(here <code>startNetwork.txt</code> is a hypothetical file: replace this by the name of a file that contains your network of interest.)</p>
+<p>Next: <a href="../snaq_plot/#Getting-a-Network-1">Getting a Network</a></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../installation/" title="Installation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Installation
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                TICR pipeline
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.30f6b8b1.js"></script>
+      
+      <script>app.initialize({version:"0.17.5",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="../../assets/mathjaxhelper.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

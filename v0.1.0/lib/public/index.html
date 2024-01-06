@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    
+      
+        <title>Public - PhyloNetworks.jl</title>
+      
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+    
+    <meta property="og:url" content="None">
+    <meta property="og:title" content="PhyloNetworks.jl">
+    <meta property="og:image" content="None/../../snaq_small.png">
+    <meta name="apple-mobile-web-app-title" content="PhyloNetworks.jl">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="../../snaq_small.png">
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../None">
+    <link rel="icon" type="image/x-icon" href="../../None">
+    <style>
+      @font-face {
+      	font-family: 'Icon';
+      	src: url('../../assets/fonts/icon.eot?52m981');
+      	src: url('../../assets/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+      		   url('../../assets/fonts/icon.woff?52m981')
+               format('woff'),
+      		   url('../../assets/fonts/icon.ttf?52m981')
+               format('truetype'),
+      		   url('../../assets/fonts/icon.svg?52m981#icon')
+               format('svg');
+      	font-weight: normal;
+      	font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="../../assets/stylesheets/application-0dac3e5884.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/palettes-05ab2406df.css">
+    
+    
+      
+      
+      
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <style>
+        body, input {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+        }
+        pre, code {
+          font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+        }
+      </style>
+    
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    <script src="../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    
+  </head>
+  
+  
+  
+  <body class="palette-primary-teal palette-accent-teal">
+    
+      
+      
+    
+    <div class="backdrop">
+      <div class="backdrop-paper"></div>
+    </div>
+    <input class="toggle" type="checkbox" id="toggle-drawer">
+    <input class="toggle" type="checkbox" id="toggle-search">
+    <label class="toggle-button overlay" for="toggle-drawer"></label>
+    <header class="header">
+      <nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        
+          <span class="path">
+            
+              
+                Library <i class="icon icon-link"></i>
+              
+            
+          </span>
+        
+        Public
+      </div>
+    </div>
+    
+    
+    <div class="button button-search" role="button" aria-label="Search">
+      <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
+    </div>
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+    </header>
+    <main class="main">
+      
+      <div class="drawer">
+        <nav aria-label="Navigation">
+  
+  <a href="https://github.com/crsl4/PhyloNetworks.jl" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="../../snaq_small.png">
+        </div>
+      
+      <div class="name">
+        <strong>
+          PhyloNetworks.jl
+          <span class="version">
+            
+          </span>
+        </strong>
+        
+          <br>
+          crsl4/PhyloNetworks.jl
+        
+      </div>
+    </div>
+  </a>
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            
+            <a href="https://github.com/crsl4/PhyloNetworks.jl/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/crsl4/PhyloNetworks.jl/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+      <div class="toc">
+        <ul>
+          
+            
+  <li>
+    <a class="" title="Home" href="../..">
+      Home
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <span class="section">Manual</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Installation" href="../../man/installation/">
+      Installation
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Input Data for SNaQ" href="../../man/inputdata/">
+      Input Data for SNaQ
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="TICR pipeline" href="../../man/ticr_howtogetQuartetCFs/">
+      TICR pipeline
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Network estimation and display" href="../../man/snaq_plot/">
+      Network estimation and display
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Fixed Network" href="../../man/fixednetworkoptim/">
+      Fixed Network
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Extract Expected CFs" href="../../man/expectedCFs/">
+      Extract Expected CFs
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Bootstrap" href="../../man/bootstrap/">
+      Bootstrap
+    </a>
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
+            
+  <li>
+    <span class="section">Library</span>
+    <ul>
+      
+        
+  <li>
+    <a class="current" title="Public" href="./">
+      Public
+    </a>
+    
+      
+        
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Contents" href="#contents">
+                Contents
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Index" href="#index">
+                Index
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Types" href="#types">
+                Types
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Utilities" href="#utilities">
+                Utilities
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Data and Topology read/write" href="#data-and-topology-readwrite">
+                Data and Topology read/write
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Network inference" href="#network-inference">
+                Network inference
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Network Comparisons" href="#network-comparisons">
+                Network Comparisons
+              </a>
+            </li>
+          
+        </ul>
+      
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Internals" href="../internals/">
+      Internals
+    </a>
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+      <article class="article">
+        <div class="wrapper">
+          
+          <p><a id='Public-Documentation-1'></a></p>
+<h1 id="public-documentation">Public Documentation</h1>
+<p>Documentation for <code>PhyloNetworks</code>'s public (exported) interface.</p>
+<p>See <a href="../internals/#Internal-Documentation-1">Internal Documentation</a> for documentation on internal functions.</p>
+<p><a id='Contents-1'></a></p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="./#Public-Documentation-1">Public Documentation</a><ul>
+<li><a href="./#Contents-1">Contents</a></li>
+<li><a href="./#Index-1">Index</a></li>
+<li><a href="./#Types-1">Types</a></li>
+<li><a href="./#Utilities-1">Utilities</a></li>
+<li><a href="./#Data-and-Topology-read/write-1">Data and Topology read/write</a></li>
+<li><a href="./#Network-inference-1">Network inference</a></li>
+<li><a href="./#Network-Comparisons-1">Network Comparisons</a></li>
+</ul>
+</li>
+</ul>
+<p><a id='Index-1'></a></p>
+<h2 id="index">Index</h2>
+<ul>
+<li><a href="./#PhyloNetworks.DataCF"><code>PhyloNetworks.DataCF</code></a></li>
+<li><a href="./#PhyloNetworks.HybridNetwork"><code>PhyloNetworks.HybridNetwork</code></a></li>
+<li><a href="./#PhyloNetworks.Quartet"><code>PhyloNetworks.Quartet</code></a></li>
+<li><a href="./#Gadfly.plot"><code>Gadfly.plot</code></a></li>
+<li><a href="./#PhyloNetworks.bootsnaq"><code>PhyloNetworks.bootsnaq</code></a></li>
+<li><a href="./#PhyloNetworks.cladewiseorder!"><code>PhyloNetworks.cladewiseorder!</code></a></li>
+<li><a href="./#PhyloNetworks.deleteHybridThreshold!"><code>PhyloNetworks.deleteHybridThreshold!</code></a></li>
+<li><a href="./#PhyloNetworks.deleteleaf!"><code>PhyloNetworks.deleteleaf!</code></a></li>
+<li><a href="./#PhyloNetworks.directEdges!"><code>PhyloNetworks.directEdges!</code></a></li>
+<li><a href="./#PhyloNetworks.displayedNetworkAt!"><code>PhyloNetworks.displayedNetworkAt!</code></a></li>
+<li><a href="./#PhyloNetworks.displayedTrees"><code>PhyloNetworks.displayedTrees</code></a></li>
+<li><a href="./#PhyloNetworks.fittedQuartetCF"><code>PhyloNetworks.fittedQuartetCF</code></a></li>
+<li><a href="./#PhyloNetworks.hardwiredCluster"><code>PhyloNetworks.hardwiredCluster</code></a></li>
+<li><a href="./#PhyloNetworks.hardwiredClusterDistance"><code>PhyloNetworks.hardwiredClusterDistance</code></a></li>
+<li><a href="./#PhyloNetworks.hardwiredClusters"><code>PhyloNetworks.hardwiredClusters</code></a></li>
+<li><a href="./#PhyloNetworks.hybridBootstrapSupport"><code>PhyloNetworks.hybridBootstrapSupport</code></a></li>
+<li><a href="./#PhyloNetworks.hybridatnode!"><code>PhyloNetworks.hybridatnode!</code></a></li>
+<li><a href="./#PhyloNetworks.majorTree"><code>PhyloNetworks.majorTree</code></a></li>
+<li><a href="./#PhyloNetworks.mapAllelesCFtable"><code>PhyloNetworks.mapAllelesCFtable</code></a></li>
+<li><a href="./#PhyloNetworks.minorTreeAt"><code>PhyloNetworks.minorTreeAt</code></a></li>
+<li><a href="./#PhyloNetworks.preorder!"><code>PhyloNetworks.preorder!</code></a></li>
+<li><a href="./#PhyloNetworks.printEdges"><code>PhyloNetworks.printEdges</code></a></li>
+<li><a href="./#PhyloNetworks.printNodes"><code>PhyloNetworks.printNodes</code></a></li>
+<li><a href="./#PhyloNetworks.readBootstrapTrees"><code>PhyloNetworks.readBootstrapTrees</code></a></li>
+<li><a href="./#PhyloNetworks.readInputTrees"><code>PhyloNetworks.readInputTrees</code></a></li>
+<li><a href="./#PhyloNetworks.readMultiTopology"><code>PhyloNetworks.readMultiTopology</code></a></li>
+<li><a href="./#PhyloNetworks.readSnaqNetwork"><code>PhyloNetworks.readSnaqNetwork</code></a></li>
+<li><a href="./#PhyloNetworks.readTableCF"><code>PhyloNetworks.readTableCF</code></a></li>
+<li><a href="./#PhyloNetworks.readTopology"><code>PhyloNetworks.readTopology</code></a></li>
+<li><a href="./#PhyloNetworks.readTopologyLevel1"><code>PhyloNetworks.readTopologyLevel1</code></a></li>
+<li><a href="./#PhyloNetworks.readTrees2CF"><code>PhyloNetworks.readTrees2CF</code></a></li>
+<li><a href="./#PhyloNetworks.rootatnode!"><code>PhyloNetworks.rootatnode!</code></a></li>
+<li><a href="./#PhyloNetworks.rootonedge!"><code>PhyloNetworks.rootonedge!</code></a></li>
+<li><a href="./#PhyloNetworks.rotate!"><code>PhyloNetworks.rotate!</code></a></li>
+<li><a href="./#PhyloNetworks.setGamma!"><code>PhyloNetworks.setGamma!</code></a></li>
+<li><a href="./#PhyloNetworks.setLength!"><code>PhyloNetworks.setLength!</code></a></li>
+<li><a href="./#PhyloNetworks.snaq!"><code>PhyloNetworks.snaq!</code></a></li>
+<li><a href="./#PhyloNetworks.snaqDebug"><code>PhyloNetworks.snaqDebug</code></a></li>
+<li><a href="./#PhyloNetworks.summarizeDataCF"><code>PhyloNetworks.summarizeDataCF</code></a></li>
+<li><a href="./#PhyloNetworks.tipLabels"><code>PhyloNetworks.tipLabels</code></a></li>
+<li><a href="./#PhyloNetworks.topologyMaxQPseudolik!"><code>PhyloNetworks.topologyMaxQPseudolik!</code></a></li>
+<li><a href="./#PhyloNetworks.topologyQPseudolik!"><code>PhyloNetworks.topologyQPseudolik!</code></a></li>
+<li><a href="./#PhyloNetworks.treeEdgesBootstrap"><code>PhyloNetworks.treeEdgesBootstrap</code></a></li>
+<li><a href="./#PhyloNetworks.writeMultiTopology"><code>PhyloNetworks.writeMultiTopology</code></a></li>
+<li><a href="./#PhyloNetworks.writeTopology"><code>PhyloNetworks.writeTopology</code></a></li>
+</ul>
+<p><a id='Types-1'></a></p>
+<h2 id="types">Types</h2>
+<p><a id='PhyloNetworks.HybridNetwork' href='#PhyloNetworks.HybridNetwork'>#</a>
+<strong><code>PhyloNetworks.HybridNetwork</code></strong> &mdash; <em>Type</em>.</p>
+<p><code>HybridNetwork type</code> Explicit network or tree with the following attributes:</p>
+<ul>
+<li>numTaxa</li>
+<li>numNodes (total number of nodes)</li>
+<li>numEdges</li>
+<li>numHybrids (number of hybrid nodes)</li>
+<li>edge (array of Edges)</li>
+<li>node (array of Nodes)</li>
+<li>root (index of root in vector 'node'. May be artificial, for printing and traversal purposes only.)</li>
+<li>hybrid (array of Nodes: those are are hybrid nodes)</li>
+<li>leaf (array of Nodes: those that are leaves)</li>
+<li>loglik (negative log pseudolik after estimation)</li>
+<li>isRooted (true or false)</li>
+</ul>
+<p><a id='PhyloNetworks.DataCF' href='#PhyloNetworks.DataCF'>#</a>
+<strong><code>PhyloNetworks.DataCF</code></strong> &mdash; <em>Type</em>.</p>
+<p><code>DataCF type</code></p>
+<p>type that contains the following attributes:</p>
+<ul>
+<li>quartet (vector of Quartets)</li>
+<li>numQuartets</li>
+<li>tree (vector of trees: empty if a table of CF was input instead of list of trees)</li>
+<li>numTrees (-1 if a table CF was input instead of list of trees)</li>
+<li>repSpecies (taxon names that were repeated in table of CF or input gene trees: used inside snaq for multiple alleles case)</li>
+</ul>
+<p>The list of Quartet may be accessed with the attribute .quartet. If the input was a list of trees, the HybridNetwork's can be accessed with the attribute .tree. For example, if the DataCF object is named d, d.quartet[1] will show the first quartet and d.tree[1] will print the first input tree.</p>
+<p><a id='PhyloNetworks.Quartet' href='#PhyloNetworks.Quartet'>#</a>
+<strong><code>PhyloNetworks.Quartet</code></strong> &mdash; <em>Type</em>.</p>
+<p><code>Quartet type</code></p>
+<p>type that saves the information on a given 4-taxon subset. It contains the following attributes:</p>
+<ul>
+<li>number</li>
+<li>taxon (vector of taxon names)</li>
+<li>obsCF (vector of observed CF)</li>
+<li>logPseudoLik</li>
+<li>ngenes (number of gene trees used to compute the observed CF: -1 if unknown)</li>
+<li>qnet (internal topological structure that saves the expCF after snaq estimation to emphasize that the expCF depend on a specific network, not the data)</li>
+</ul>
+<p><a id='Utilities-1'></a></p>
+<h2 id="utilities">Utilities</h2>
+<p><a id='PhyloNetworks.tipLabels' href='#PhyloNetworks.tipLabels'>#</a>
+<strong><code>PhyloNetworks.tipLabels</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>tipLabels(net::HybridNetwork)</code></p>
+<p>returns a vector of taxon names (at the leaves) from a HybridNetwork object</p>
+<p><a id='PhyloNetworks.printEdges' href='#PhyloNetworks.printEdges'>#</a>
+<strong><code>PhyloNetworks.printEdges</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>printEdges(net::HybridNetwork)</code></p>
+<p>prints the information on the edges of net: edge number, node numbers of nodes attached to it, in which cycle it is contained (-1 if no cycle), can it contain root, is it an identifiable edge, length, is it hybrid, gamma value</p>
+<p><a id='PhyloNetworks.printNodes' href='#PhyloNetworks.printNodes'>#</a>
+<strong><code>PhyloNetworks.printNodes</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>printNodes(net::HybridNetwork)</code></p>
+<p>prints information on the nodes of net: node number, in which cycle it is contained (-1 if no cycle), is it hybrid, does it has hybrid edges, edges number attached to it</p>
+<p><a id='PhyloNetworks.summarizeDataCF' href='#PhyloNetworks.summarizeDataCF'>#</a>
+<strong><code>PhyloNetworks.summarizeDataCF</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>summarizeDataCF(d::DataCF)</code></p>
+<p>function to summarize the information contained in a DataCF object. It has the following optional arguments: - filename: if provided, the summary will be saved in the filename, not to screen - pc (number between (0,1)): threshold of percentage of missing genes to identify 4-taxon subsets with fewer genes than the threshold</p>
+<p><a id='PhyloNetworks.directEdges!' href='#PhyloNetworks.directEdges!'>#</a>
+<strong><code>PhyloNetworks.directEdges!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>directEdges!(net::HybridNetwork; checkMajor=true::Bool)</code></p>
+<p>Updates the edges' attribute <code>isChild1</code>, according to the root placement. Also updates edges' attribute <code>containRoot</code>, for other possible root placements compatible with the direction of existing hybrid edges. Relies on hybrid nodes having exactly 1 major hybrid parent edge, but checks for that if checkMajor=true.</p>
+<p>Warning: Assumes that isChild1 is correct on hybrid edges (to avoid changing the identity of which nodes are hybrids and which are not).</p>
+<p>Returns the network. Throws a 'RootMismatch' Exception if the root was found to conflict with the direction of any hybrid edge.</p>
+<p><a id='PhyloNetworks.preorder!' href='#PhyloNetworks.preorder!'>#</a>
+<strong><code>PhyloNetworks.preorder!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>preorder!(net::HybridNetwork)</code></p>
+<p>Updates attribute net.nodes_changed in which the nodes are pre-ordered (also called topological sorting), such that each node is visited after its parent(s). The edges' direction needs to be correct before calling preorder!, using directEdges!</p>
+<p><a id='PhyloNetworks.cladewiseorder!' href='#PhyloNetworks.cladewiseorder!'>#</a>
+<strong><code>PhyloNetworks.cladewiseorder!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>cladewiseorder!(net::HybridNetwork)</code></p>
+<p>Updates attribute net.cladewiseorder_nodeIndex. Used for plotting the network. In the major tree, all nodes in a given clade are consecutive. On a tree, this function also provides a pre-ordering of the nodes. The edges' direction needs to be correct before calling cladewiseorder!, using directEdges!</p>
+<p><a id='PhyloNetworks.rootatnode!' href='#PhyloNetworks.rootatnode!'>#</a>
+<strong><code>PhyloNetworks.rootatnode!</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>rootatnode!(HybridNetwork, nodeNumber::Int64; index=false::Bool)
+rootatnode!(HybridNetwork, Node)
+rootatnode!(HybridNetwork, nodeName::AbstractString)
+</code></pre>
+
+<p>Roots the network/tree object at the node with name 'nodeName' or number 'nodeNumber' (by default) or with index 'nodeNumber' if index=true. Attributes isChild1 and containRoot are updated along the way. Use <code>plot(net, showNodeNumber=true, showEdgeLength=false)</code> to visualize and identify a node of interest.</p>
+<p>Returns the network.</p>
+<p>Warnings:</p>
+<ul>
+<li>If the node is a leaf, the root will be placed along   the edge adjacent to the leaf, with a message. This might add a new node.</li>
+<li>
+<p>If the desired root placement is incompatible with one or more hybrids, then</p>
+</li>
+<li>
+<p>a RootMismatch error is thrown</p>
+</li>
+<li>the input network will still have some attributes modified.</li>
+</ul>
+<p>See also: <code>rootonedge!</code>.</p>
+<p><a id='PhyloNetworks.rootonedge!' href='#PhyloNetworks.rootonedge!'>#</a>
+<strong><code>PhyloNetworks.rootonedge!</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>rootonedge!(HybridNetwork, edgeNumber::Int64; index=false::Bool)
+rootonedge!(HybridNetwork, Edge)
+</code></pre>
+
+<p>Roots the network/tree object along an edge with number 'edgeNumber' (by default) or with index 'edgeNumber if index=true. Attributes isChild1 and containRoot are updated along the way.</p>
+<p>This adds a new node and a new edge to the network. Use <code>plot(net, showEdgeNumber=true, showEdgeLength=false)</code> to visualize and identify an edge of interest.</p>
+<p>See also: <code>rootatnode!</code>.</p>
+<p><a id='PhyloNetworks.hybridatnode!' href='#PhyloNetworks.hybridatnode!'>#</a>
+<strong><code>PhyloNetworks.hybridatnode!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>hybridatnode!(net::HybridNetwork, nodeNumber::Int64)</code></p>
+<p>Changes the hybrid in a cycle to the node with number <code>nodeNumber</code>. This node must be in one (and only one) cycle, otherwise an error will be thrown.</p>
+<p><strong>Example #"</strong></p>
+<pre><code class="julia">julia&gt; net = readTopology(&quot;(A:1.0,((B:1.1,#H1:0.2::0.2):1.2,(((C:0.52,(E:0.5)#H2:0.02::0.7):0.6,(#H2:0.01::0.3,F:0.7):0.8):0.9,(D:0.8)#H1:0.3::0.8):1.3):0.7):0.1;&quot;);
+julia&gt; plot(net, showNodeNumber=true)
+julia&gt; hybridatnode!(net, -4)
+julia&gt; plot(net)
+</code></pre>
+
+<p><a id='PhyloNetworks.setLength!' href='#PhyloNetworks.setLength!'>#</a>
+<strong><code>PhyloNetworks.setLength!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>setLength!(Edge,new length)</code></p>
+<p>set a new length for an object Edge. The new length needs to be positive. For example, if you have a HybridNetwork object net, and do printEdges(net), you can see the list of Edges and their lengths. You can then change the length of the 3rd edge with setLength!(net.edge[3],1.2).</p>
+<p><a id='PhyloNetworks.setGamma!' href='#PhyloNetworks.setGamma!'>#</a>
+<strong><code>PhyloNetworks.setGamma!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>setGamma!(Edge,new gamma)</code></p>
+<p>sets a gamma value for a hybrid edge (it has to be a hybrid edge) and new gamma needs to be (0,1). The function will automatically change the gamma value for the other hybrid edge to 1-gamma. For example, if you have a HybridNetwork object net, and do printEdges(net), you can see the list of Edges and their gammas. You can then change the length of the hybrid edge (assume it is in position 3) with setGamma!(net.edge[3],0.2). This will automatically set the gamma for the other hybrid edge to 0.8.</p>
+<p><a id='PhyloNetworks.deleteleaf!' href='#PhyloNetworks.deleteleaf!'>#</a>
+<strong><code>PhyloNetworks.deleteleaf!</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>deleteleaf!(HybridNetwork,Int64; index=false, simplify=true)
+deleteleaf!(HybridNetwork,leafName::AbstractString; simplify=true)
+deleteleaf!(HybridNetwork,Node; simplify=true)
+</code></pre>
+
+<p>Deletes a leaf node from the network, possibly from its name, number, or index in the network's array of nodes.</p>
+<p>simplify: if true and if deleting the node results in 2 hybrid edges forming a cycle of k=2 nodes, then these hybrid edges are merged and simplified as a single tree edge.</p>
+<p>The first version does <strong>not</strong> require that <code>node</code> is a leaf, so might be used to remove nodes of degree 2. The other versions do, and use the default simplify=true.</p>
+<p>Warning: does <strong>not</strong> update attributes related to level-1 networks, such as inCycle, partition, gammaz, etc. Does not require branch lengths, and designed to work on networks of all levels.</p>
+<p><a id='PhyloNetworks.deleteHybridThreshold!' href='#PhyloNetworks.deleteHybridThreshold!'>#</a>
+<strong><code>PhyloNetworks.deleteHybridThreshold!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>deleteHybridThreshold!(net::HybridNetwork,gamma::Float64)</code></p>
+<p>Deletes from a network all hybrid edges with heritability below a threshold gamma. Returns the network.</p>
+<ul>
+<li>if gamma&lt;0.5: deletes     minor hybrid edges with gamma value &lt;  threshold</li>
+<li>if gamma=0.5: deletes all minor hybrid edges (i.e gamma value &lt;= threshold)</li>
+</ul>
+<p>Warning: assumes correct isMajor attributes.</p>
+<p><a id='Gadfly.plot' href='#Gadfly.plot'>#</a>
+<strong><code>Gadfly.plot</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>plot(net::HybridNetwork; useEdgeLength=false, mainTree=false, showTipLabel=true,
+     showNodeNumber=false, showEdgeLength=false, showGamma=false, edgeColor=colorant&quot;black&quot;,
+     majorHybridEdgeColor=colorant&quot;deepskyblue4&quot;, minorHybridEdgeColor=colorant&quot;deepskyblue&quot;,
+     showEdgeNumber=false, showIntNodeLabel=false, edgeLabel=[], nodeLabel=[])
+</code></pre>
+
+<p>Plots a network, from left to right.</p>
+<ul>
+<li>useEdgeLength: if true, the tree edges and major hybrid edges are   drawn proportionally to their length. Minor hybrid edges are not, however.   Note that edge lengths in coalescent units may scale very poorly with time.</li>
+<li>mainTree: if true, the minor hybrid edges are ommitted.</li>
+<li>showTipLabel: if true, taxon labels are shown. You may need to zoom out to see them.</li>
+<li>showNodeNumbers: if true, nodes are labelled with the number used internally.</li>
+<li>showEdgeLength: if true, edges are labelled with their length (above)</li>
+<li>showGamma: if true, hybrid edges are labelled with their heritability (below)</li>
+<li>edgeColor: color for tree edges. black by default.</li>
+<li>majorHybridEdgeColor: color for major hybrid edges</li>
+<li>minorHybridEdgeColor: color for minor hybrid edges</li>
+<li>showEdgeNumber: if true, edges are labelled with the number used internally.</li>
+<li>showIntNodeLabel: if true, internal nodes are labelled with their names.   Useful for hybrid nodes, which do have tags like '#H1'.</li>
+<li>edgeLabel: dataframe with two columns: the first with edge numbers, the second with labels   (like bootstrap values) to annotate edges. empty by default.</li>
+<li>nodeLabel: dataframe with two columns: the first with node numbers, the second with labels   (like bootstrap values for hybrid relationships) to annotate nodes. empty by default.</li>
+</ul>
+<p>Note that <code>plot</code> actually modifies some (minor) attributes of the network, as it calls <code>directEdges!</code>, <code>preorder!</code> and <code>cladewiseorder!</code>.</p>
+<p>If hybrid edges cross tree and major edges, you may choose to rotate some tree edges to eliminate crossing edges, using <code>rotate!</code>.</p>
+<p><a id='PhyloNetworks.rotate!' href='#PhyloNetworks.rotate!'>#</a>
+<strong><code>PhyloNetworks.rotate!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>rotate!(net::HybridNetwork, nodeNumber::Int64; orderedEdgeNum::Array{Int64,1})</code></p>
+<p>Rotates the order of the node's children edges. Useful for plotting, to remove crossing edges. If <code>node</code> is a tree node with no polytomy, the 2 children edges are switched and the optional argument <code>orderedEdgeNum</code> is ignored.</p>
+<p>Use plot(net, showNodeNumber=true, showEdgeNumber=false) to map node and edge numbers on the network, as shown in the examples below.</p>
+<p>Warning: assumes that edges are correctly directed (isChild1 updated). This is done by plot(net). Otherwise run directEdges!(net).</p>
+<p><strong>Example #"</strong></p>
+<pre><code class="julia">julia&gt; net = readTopology(&quot;(A:1.0,((B:1.1,#H1:0.2::0.2):1.2,(((C:0.52,(E:0.5)#H2:0.02::0.7):0.6,(#H2:0.01::0.3,F:0.7):0.8):0.9,(D:0.8)#H1:0.3::0.8):1.3):0.7):0.1;&quot;);
+julia&gt; plot(net, showNodeNumber=true)
+julia&gt; rotate!(net, -4)
+julia&gt; plot(net)
+julia&gt; net=readTopology(&quot;(4,((1,(2)#H7:::0.864):2.069,(6,5):3.423):0.265,(3,#H7:::0.136):10.0);&quot;);
+julia&gt; plot(net, showNodeNumber=true, showEdgeNumber=true)
+julia&gt; rotate!(net, -1, orderedEdgeNum=[1,12,9])
+julia&gt; plot(net, showNodeNumber=true, showEdgeNumber=true)
+julia&gt; rotate!(net, -3)
+julia&gt; plot(net)
+</code></pre>
+
+<p><a id='Data-and-Topology-read/write-1'></a></p>
+<h2 id="data-and-topology-readwrite">Data and Topology read/write</h2>
+<p><a id='PhyloNetworks.readTopology' href='#PhyloNetworks.readTopology'>#</a>
+<strong><code>PhyloNetworks.readTopology</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>readTopology(file name)
+readTopology(parenthetical description)
+</code></pre>
+
+<p>function to read tree or network topology from parenthetical format. Input: text file or parenthetical format directly. The file name may not start with a left parenthesis, otherwise the file name itself would be interpreted as the parenthetical description.</p>
+<p><a id='PhyloNetworks.readTopologyLevel1' href='#PhyloNetworks.readTopologyLevel1'>#</a>
+<strong><code>PhyloNetworks.readTopologyLevel1</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>readTopologyLevel1(filename)
+readTopologyLevel1(parenthetical format)
+</code></pre>
+
+<p>same as readTopology, reads a tree or network from parenthetical format, but this function enforces the necessary conditions for any starting topology in SNaQ: non-intersecting cycles, no polytomies, unrooted. It sets any missing branch length to 1.0.</p>
+<p><a id='PhyloNetworks.readInputTrees' href='#PhyloNetworks.readInputTrees'>#</a>
+<strong><code>PhyloNetworks.readInputTrees</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>readInputTrees(file)</code></p>
+<p>function to read a text file with a list of trees in parenthetical format (one tree per line), it returns an array of HybridNetwork object.</p>
+<p><a id='PhyloNetworks.readMultiTopology' href='#PhyloNetworks.readMultiTopology'>#</a>
+<strong><code>PhyloNetworks.readMultiTopology</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>readMultiTopology(file)</code></p>
+<p>Read a text file with a list of networks in parenthetical format (one per line). Crash if a network is broken over several lines. Return an array of HybridNetwork object.</p>
+<p><a id='PhyloNetworks.readSnaqNetwork' href='#PhyloNetworks.readSnaqNetwork'>#</a>
+<strong><code>PhyloNetworks.readSnaqNetwork</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>readSnaqNetwork(output file)</code></p>
+<p>function to read the estimated network from an .out file generated by the snaq function</p>
+<p><a id='PhyloNetworks.readTrees2CF' href='#PhyloNetworks.readTrees2CF'>#</a>
+<strong><code>PhyloNetworks.readTrees2CF</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>readTrees2CF(treefile)
+readTrees2CF(vector of trees)
+</code></pre>
+
+<p>Read trees in parenthetical format from a file, or take a vector of trees already read, and calculate the proportion of these trees having a given quartet (concordance factor: CF), for all quartets or for a sample of quartets. Optional arguments include:</p>
+<ul>
+<li>quartetfile: name of text file with list of 4-taxon subsets to be analyzed. If none is specified, the function will list all possible 4-taxon subsets.</li>
+<li>whichQ="rand": to choose a random sample of 4-taxon subsets</li>
+<li>numQ: size of random sample (ignored if whichQ is not set to "rand")</li>
+<li>writeTab=false: does not write the observedCF to a table (default true)</li>
+<li>CFfile: name of file to save the observedCF (default tableCF.txt)</li>
+<li>writeQ=true: save intermediate files with the list of all 4-taxon subsets and chosen random sample (default false).</li>
+</ul>
+<p><a id='PhyloNetworks.readTableCF' href='#PhyloNetworks.readTableCF'>#</a>
+<strong><code>PhyloNetworks.readTableCF</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>readTableCF(file)
+readTableCF(data frame)
+</code></pre>
+
+<p>Read a file or DataFrame object containing a table of concordance factors (CF), with one row per 4-taxon set. The first 4 columns are assumed to give the labels of the 4 taxa in each set (tx1, tx2, tx3, tx4). Columns containing the CFs are assumed to be named 'CF12_34', 'CF13_24' and 'CF14_23', or else are assumed to be columns 5,6,7. If present, a column named 'ngenes' will be used to get the number of loci used to estimate the CFs for each 4-taxon set.</p>
+<p>Optional arguments:</p>
+<ul>
+<li>summaryfile: if specified, a summary file will be created with that name.</li>
+<li>sep (for the second form only): to specify the type of separator in the file, with single quotes: sep=';'.</li>
+</ul>
+<p><a id='PhyloNetworks.readBootstrapTrees' href='#PhyloNetworks.readBootstrapTrees'>#</a>
+<strong><code>PhyloNetworks.readBootstrapTrees</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>readBootstrapTrees(filename)
+</code></pre>
+
+<p>input: name of file containing the path/name to multiple bootstrap files, one per line. Each bootstrap file corresponds to bootstrap trees from a single gene.</p>
+<p>output: vector of vectors of trees.</p>
+<p><a id='PhyloNetworks.writeTopology' href='#PhyloNetworks.writeTopology'>#</a>
+<strong><code>PhyloNetworks.writeTopology</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>writeTopology(net)
+writeTopology(net, filename)
+</code></pre>
+
+<p>write the parenthetical format of a HybridNetwork object, as a string or to a file. Optional arguments (default values):</p>
+<ul>
+<li>di (false): write in format for Dendroscope</li>
+<li>round (false): rounds branch lengths and heritabilities γ</li>
+<li>digits (3): digits after the decimal place for rounding</li>
+</ul>
+<p>If the current root placement is not admissible, other placements are tried. The network is updated with this new root placement, if successful.</p>
+<p><a id='PhyloNetworks.writeMultiTopology' href='#PhyloNetworks.writeMultiTopology'>#</a>
+<strong><code>PhyloNetworks.writeMultiTopology</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>writeMultiTopology(nets, file_name; append=false)
+writeMultiTopology(nets, IO)
+</code></pre>
+
+<p>Write an array of networks in parenthetical format to a file (one network per line). Use the option append=true to append to the file. Otherwise, the default is to create a new file or overwrite it, if it already existed.</p>
+<p><strong>Examples #"</strong></p>
+<pre><code>julia&gt; net = [readTopology(&quot;(D,((A,(B)#H7:::0.864):2.069,(F,E):3.423):0.265,(C,#H7:::0.1361111):10);&quot;),
+              readTopology(&quot;(A,(B,C));&quot;),readTopology(&quot;(E,F);&quot;),readTopology(&quot;(G,H,F);&quot;)];
+
+julia&gt; writeMultiTopology(net, &quot;fournets.net&quot;) # to (over)write to file &quot;fournets.net&quot;
+julia&gt; writeMultiTopology(net, &quot;fournets.net&quot;, append=true) # to append to this file
+julia&gt; writeMultiTopology(net, STDOUT)         # to write to the screen (standard out)
+(D,((A,(B)#H7:::0.864):2.069,(F,E):3.423):0.265,(C,#H7:::0.1361111):10.0);
+(A,(B,C));
+(E,F);
+(G,H,F);
+</code></pre>
+
+<p><a id='PhyloNetworks.mapAllelesCFtable' href='#PhyloNetworks.mapAllelesCFtable'>#</a>
+<strong><code>PhyloNetworks.mapAllelesCFtable</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>mapAllelesCFtable(mapping file, cf file)</code></p>
+<p>function that change the allele names in the CF table to species names. The new DataFrame object is returned. Optional argument: filename for the resulting CF table. If not specified, then no CF is saved as file.</p>
+<p><a id='Network-inference-1'></a></p>
+<h2 id="network-inference">Network inference</h2>
+<p><a id='PhyloNetworks.snaq!' href='#PhyloNetworks.snaq!'>#</a>
+<strong><code>PhyloNetworks.snaq!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>snaq!(T::HybridNetwork, d::DataCF)</code></p>
+<p>Estimate the network (or tree) to fit observed quartet concordance factors (CFs) stored in a DataCF object, using maximum pseudo-likelihood. A level-1 network is assumed. The search starts from topology <code>T</code>, which can be a tree or a network with no more than <code>hmax</code> hybrid nodes. The function name ends with ! because it modifies the CF data <code>d</code> by updating its attributes <code>expCF</code>: CFs expected under the network model. It does <em>not</em> modify <code>T</code>. The quartet pseudo-deviance is the negative log pseudo-likelihood, up to an additive constant, such that a perfect fit corresponds to a deviance of 0.0.</p>
+<p>Output: estimated network.</p>
+<p>There are many optional arguments, including</p>
+<ul>
+<li>hmax: maximum number of hybridizations allowed (default 1)</li>
+<li>verbose: if true, print information about the numerical optimization</li>
+<li>runs: number of independent starting points for the search (default 10)</li>
+<li>outgroup: outgroup taxon to root the estimated topology at the very end</li>
+<li>filename: root name for the output files. Default is "snaq". If empty (""),   files are <em>not</em> created, progress log goes to the screen only (standard out).</li>
+<li>seed: seed to replicate a given search</li>
+</ul>
+<p>The following optional arguments control when to stop the optimization of branch lengths and γ's on each individual candidate network. Defaults are in parentheses:</p>
+<ul>
+<li>ftolRel (1e-5) and ftolAbs (1e-6): relative and absolute differences of the network score   between the current and proposed parameters,</li>
+<li>xtolRel (1e-3) and xtolAbs (1e-4): relative and absolute differences between the current   and proposed parameters.</li>
+</ul>
+<p>Greater values will result in a less thorough but faster search. These parameters are used when evaluating candidate networks only. Branch lengths and γ's are optimized on the last "best" network with different and very thorough tolerance parameters (1e-12 for ftolRel and 1e-10 for the others).</p>
+<p>The following optional arguments control when to stop proposing new network topologies:</p>
+<ul>
+<li>Nfail (100): maximum number of times that new topologies are proposed and rejected (in a row).</li>
+<li>M (10000): the proposed network is accepted if its score is better than the current score by   at least M*ftolAbs.</li>
+</ul>
+<p>Lower values of Nfail and greater values of M would result in a less thorough but faster search.</p>
+<p>See also: <code>topologyMaxQPseudolik!</code> to optimize parameters on a fixed topology, and <code>topologyQPseudolik!</code> to get the deviance (pseudo log-likelihood up to a constant) of a fixed topology with fixed parameters.</p>
+<p>Reference: Claudia Solís-Lemus and Cécile Ané (2016). Inferring phylogenetic networks with maximum pseudolikelihood under incomplete lineage sorting. <a href="http://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1005896">PLoS Genetics</a> 12(3):e1005896</p>
+<p><a id='PhyloNetworks.snaqDebug' href='#PhyloNetworks.snaqDebug'>#</a>
+<strong><code>PhyloNetworks.snaqDebug</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>snaqDebug(currT::HybridNetwork,d::DataCF)</code></p>
+<p>function to replicate a given run that produces error according to the .err file generated by snaq. The same settings used in that run should be used in this function, specially the seed. See the readme file online for more details.</p>
+<p><a id='PhyloNetworks.topologyMaxQPseudolik!' href='#PhyloNetworks.topologyMaxQPseudolik!'>#</a>
+<strong><code>PhyloNetworks.topologyMaxQPseudolik!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>topologyMaxQPseudolik!(net::HybridNetwork, d::DataCF)</code></p>
+<p>Estimate the branch lengths and inheritance probabilities (γ's) for a given network topology. The network is <em>not</em> modified, only the object <code>d</code> is, with updated expected concordance factors.</p>
+<p>Ouput: new network, with optimized parameters (branch lengths and gammas). The maximized quartet pseudo-deviance is the negative log pseudo-likelihood, up to an additive constant, such that a perfect fit corresponds to a deviance of 0.0. This is also an attribute of the network, which can be accessed with <code>net.loglik</code>.</p>
+<p>Optional arguments (default value):</p>
+<ul>
+<li>verbose (false): if true, information on the numerical optimization is printed to screen</li>
+<li>ftolRel (1e-5), ftolAbs (1e-6), xtolRel (1e-3), xtolAbs (1e-4):   absolute and relative tolerance values for the pseudo-deviance function   and the parameters</li>
+</ul>
+<p><a id='PhyloNetworks.topologyQPseudolik!' href='#PhyloNetworks.topologyQPseudolik!'>#</a>
+<strong><code>PhyloNetworks.topologyQPseudolik!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>topologyQPseudolik!(net::HybridNetwork, d::DataCF)</code></p>
+<p>Calculate the quartet pseudo-deviance of a given network/tree for DataCF <code>d</code>. This is the negative log pseudo-likelihood, up to an additive constant, such that a perfect fit corresponds to a deviance of 0.0.</p>
+<p>Be careful if the net object does not have all internal branch lengths specified because then the pseudolikelihood will be meaningless.</p>
+<p>The loglik attribute of the network is undated, and <code>d</code> is updated with the expected concordance factors under the input network.</p>
+<p><a id='PhyloNetworks.fittedQuartetCF' href='#PhyloNetworks.fittedQuartetCF'>#</a>
+<strong><code>PhyloNetworks.fittedQuartetCF</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>fittedQuartetCF(d::DataCF, format::Symbol)</code></p>
+<p>return a data frame with the observed and expected quartet concordance factors after estimation of a network with snaq(T,d). The format can be :wide (default) or :long.</p>
+<ul>
+<li>if wide, the output has one row per 4-taxon set, and each row has 10 columns: 4 columns   for the taxon names, 3 columns for the observed CFs and 3 columns for the expected CF.</li>
+<li>if long, the output has one row per quartet, i.e. 3 rows per 4-taxon sets, and 7 columns:   4 columns for the taxon names, one column to give the quartet resolution, one column for   the observed CF and the last column for the expected CF.</li>
+</ul>
+<p>see also: <code>topologyQPseudolik!</code> and <code>topologyMaxQPseudolik!</code> to update the fitted CF expected under a specific network, inside the DataCF object <code>d</code>.</p>
+<p><a id='PhyloNetworks.bootsnaq' href='#PhyloNetworks.bootsnaq'>#</a>
+<strong><code>PhyloNetworks.bootsnaq</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>bootsnaq(T::HybridNetwork, df::DataFrame)
+bootsnaq(T::HybridNetwork, vector of tree lists)
+</code></pre>
+
+<p>Bootstrap analysis for SNaQ. Bootstrap data can be quartet concordance factors (CF), drawn from sampling uniformly in their credibility intervals, as given in the data frame <code>df</code>. Alternatively, bootstrap data can be gene trees sampled from a vector of tree lists: one list of bootstrap trees per locus (see <code>readBootstrapTrees</code> to generate this, from a file containing a list of bootstrap files: one per locus).</p>
+<p>From each bootstrap replicate, a network is estimated with snaq!, with a search starting from topology <code>T</code>. Optional arguments include the following, with default values in parentheses:</p>
+<ul>
+<li>hmax (1): max number of reticulations in the estimated networks</li>
+<li>nrep (10): number of bootstrap replicates.</li>
+<li>runs (10): number of independent optimization runs for each replicate</li>
+<li>filename (bootsnaq): root name for output files</li>
+<li>seed (0 to get a random seed from the clock): seed for random number generator</li>
+</ul>
+<p><a id='Network-Comparisons-1'></a></p>
+<h2 id="network-comparisons">Network Comparisons</h2>
+<p><a id='PhyloNetworks.majorTree' href='#PhyloNetworks.majorTree'>#</a>
+<strong><code>PhyloNetworks.majorTree</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>majorTree(net::HybridNetwork)</code></p>
+<p>Warning: assumes correct isMajor attributes.</p>
+<p>Extracts the major tree displayed in a network, keeping the major edge and dropping the minor edge at each hybrid node. Returns a HybridNetwork object.</p>
+<p><a id='PhyloNetworks.minorTreeAt' href='#PhyloNetworks.minorTreeAt'>#</a>
+<strong><code>PhyloNetworks.minorTreeAt</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>minorTreeAt(net::HybridNetwork, hybindex::Int64)</code></p>
+<p>Warning: assumes correct isMajor attributes.</p>
+<p>Extracts the tree displayed in the network, following the major hybrid edge at each hybrid node, except at the ith hybrid node (i=hybindex), where the minor hybrid edge is kept instead of the major hybrid edge.</p>
+<p><a id='PhyloNetworks.displayedTrees' href='#PhyloNetworks.displayedTrees'>#</a>
+<strong><code>PhyloNetworks.displayedTrees</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>displayedTrees(net::HybridNetwork, gamma::Float64)</code></p>
+<p>Warning: assumes correct isMajor attributes.</p>
+<p>Extracts all trees displayed in a network, following hybrid edges with heritability &gt;= gamma threshold (or &gt;0.5 if threshold=0.5) and ignoring any hybrid edge with heritability lower than gamma. Returns an array of trees, as HybridNetwork objects.</p>
+<p><a id='PhyloNetworks.displayedNetworkAt!' href='#PhyloNetworks.displayedNetworkAt!'>#</a>
+<strong><code>PhyloNetworks.displayedNetworkAt!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>displayedNetworkAt!(net::HybridNetwork, node::Node)</code></p>
+<p>Warning: assumes correct isMajor attributes.</p>
+<p>Deletes all the minor hybrid edges, except at input node. The network is left with a single hybridization, and otherwise displays the same major tree as before.</p>
+<p><a id='PhyloNetworks.hardwiredClusters' href='#PhyloNetworks.hardwiredClusters'>#</a>
+<strong><code>PhyloNetworks.hardwiredClusters</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>hardwiredClusters(net::HybridNetwork, S::Union{Vector{ASCIIString},Vector{Int64}})</code></p>
+<p>Returns a matrix describing all the hardwired clusters in a network. Warnings: Clusters are rooted, so the root must be correct.           Allows for missing taxa, with entries all 0.</p>
+<p>Each row corresponds to one internal edge, that is, external edges are excluded. If the root is a leaf node, the external edge to that leaf is included (first row). Both parent hybrid edges to a given hybrid node only contribute a single row (they share the same hardwired cluster).</p>
+<ul>
+<li>first column: edge number</li>
+<li>next columns: 0/1 values. 1=descendant of edge, 0=not a descendant, or missing taxon.</li>
+<li>last column:  10/11 values. 10=tree edge, 11=hybrid edge</li>
+</ul>
+<p><a id='PhyloNetworks.hardwiredCluster' href='#PhyloNetworks.hardwiredCluster'>#</a>
+<strong><code>PhyloNetworks.hardwiredCluster</code></strong> &mdash; <em>Function</em>.</p>
+<pre><code>hardwiredCluster(edge::Edge,taxa::Union{Vector{ASCIIString},Vector{Int64}})
+hardwiredCluster!(v::Vector{Bool},edge::Edge,taxa::Union{Vector{ASCIIString},Vector{Int64}})
+hardwiredCluster!(v::Vector{Bool},edge::Edge,taxa::Union{Vector{ASCIIString},Vector{Int64}},
+                  visited::Vector{Int64})
+</code></pre>
+
+<p>Calculate the hardwired cluster of <code>node</code>, coded a vector of booleans: true for taxa that are descendent of nodes, false for other taxa (including missing taxa).</p>
+<p>The node should belong in a rooted network for which isChild1 is up-to-date. Run directEdges! beforehand. This is very important, otherwise one might enter an infinite loop, and the function does not test for this.</p>
+<p>visited: vector of node numbers, of all visited nodes.</p>
+<p><strong>Examples: #"</strong></p>
+<pre><code>julia&gt; net5 = &quot;(A,((B,#H1),(((C,(E)#H2),(#H2,F)),(D)#H1)));&quot; |&gt; readTopology |&gt; directEdges! ;
+
+julia&gt; taxa = net5 |&gt; tipLabels # ABC EF D
+6-element Array{ASCIIString,1}:
+ &quot;A&quot;
+ &quot;B&quot;
+ &quot;C&quot;
+ &quot;E&quot;
+ &quot;F&quot;
+ &quot;D&quot;
+
+julia&gt; hardwiredCluster(net5.edge[12], taxa) # descendants of 12th edge = CEF
+6-element Array{Bool,1}:
+ false
+ false
+  true
+  true
+  true
+ false
+</code></pre>
+
+<p><a id='PhyloNetworks.hardwiredClusterDistance' href='#PhyloNetworks.hardwiredClusterDistance'>#</a>
+<strong><code>PhyloNetworks.hardwiredClusterDistance</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>hardwiredClusterDistance(net1::HybridNetwork, net2::HybridNetwork, rooted::Bool)</code></p>
+<p>Takes 2 networks and returns their hardwired cluster distance, that is, the number of hardwired clusters found in one network and not in the other. Note that this is not a distance per se on the full space of hybrid networks: there are pairs of different networks for which this measure is 0. But it is a distance on some network subspaces.</p>
+<p>If the 2 networks are trees, this is the Robinson-Foulds distance. If rooted=false, the trees are considered unrooted.</p>
+<p><a id='PhyloNetworks.treeEdgesBootstrap' href='#PhyloNetworks.treeEdgesBootstrap'>#</a>
+<strong><code>PhyloNetworks.treeEdgesBootstrap</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>treeEdgesBootstrap(boot_net::Vector{HybridNetwork}, ref_net::HybridNetwork)</code></p>
+<p>read a list of bootstrap networks (<code>boot_net</code>) and a reference network (<code>ref_net</code>), and calculate the bootstrap support of the tree edges in the reference network. All minor hybrid edges (γ&lt;0.5) are removed to extract the major tree from each network. All remaining edges are tree edges, each associated with a bipartition.</p>
+<p>output:</p>
+<ul>
+<li>a data frame with one row per tree edge and two columns: edge number, bootstrap support   (as a percentage)</li>
+<li>the major tree from the reference network, where minor hybrid edges (with γ&lt;0.5)   have been removed.</li>
+</ul>
+<p><a id='PhyloNetworks.hybridBootstrapSupport' href='#PhyloNetworks.hybridBootstrapSupport'>#</a>
+<strong><code>PhyloNetworks.hybridBootstrapSupport</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>hybridBootstrapSupport(boot_net::Vector{HybridNetwork}, ref_net::HybridNetwork; rooted=false)</code></p>
+<p>Match hybrid nodes in a reference network with those in an array of networks, like bootstrap networks. All networks must be fully resolved, and on the same taxon set. If <code>rooted=true</code>, all networks are assumed to have been properly rooted beforehand. Otherwise, the origin of each hybrid edge is considered as an unrooted bipartition (default).</p>
+<p>Two hybrid edges in two networks are said to match if they share the same "hybrid" clade (or recipient) and the same "donor clade", which is a sister to the hybrid clade in the network. Since a hybrid clade has 2 parent edges, it is sister to two clades simultaneously: one is its major sister (following the major hybrid edge with γ&gt;0.5) and one is its minor sister (following the major hybrid edge with γ&lt;0.5).</p>
+<p>To calculate these hybrid and sister clades at a given hybrid node, all other hybrid edges are first removed from the network. Then, the hybrid clade is the hardwired cluster (descendants) of either hybrid edge and major/minor clade is the hardwired cluster of the sibling edge of the major/minor hybrid parent. If <code>rooted=false</code>, sister clades are considered as bipartitions.</p>
+<p>Output:</p>
+<ol>
+<li>a "node" data frame (see below)</li>
+<li>an "edge" data frame (see below)</li>
+<li>a "clade" data frame to describe the make up of all clades found as hybrids or sisters,   starting with a column <code>taxa</code> that lists all taxa. All other columns correspond to a given   clade and contain true/false values. <code>true</code> means that a given taxon belongs in a given clade.   For a clade named <code>H1</code>, for instance, and if the data frame was named <code>cla</code>, the   list of taxa in this clade can be obtained with <code>cla[:taxa][cla[:H1]]</code>.</li>
+<li>an array of gamma values, with one row for each bootstrap network and two columns (major/minor)   for each hybrid edge in the reference network. If this hybrid edge was found in the bootstrap network   (i.e. same hybrid and sister clades, after removal of all other hybrid nodes),   its bootstrap gamma value is recorded here. Otherwise, the gamma entry is 0.0.</li>
+<li>a vector with the number of each hybrid edge in the reference network, in the same order as for the columns in the array of gamma values above.</li>
+</ol>
+<p>The "node data frame has one row per clade and 9 columns giving:</p>
+<ul>
+<li><strong>clade</strong>: the clade's name, like the taxon name (if a hybrid is a single taxon) or      the hybrid tag (like 'H1') in the reference network</li>
+<li><strong>node</strong>: the node number in the reference network. NA if the clade is not in this network.</li>
+<li><strong>hybridnode</strong>: typically the same node number as above, except for hybrid clades in the      reference network. For those, the hybrid node number is listed here.</li>
+<li><strong>edge</strong>: number of the parent edge, parent to the node in column 2,      if found in the ref network. NA otherwise.</li>
+<li><strong>BS_hybrid</strong>: percentage of bootstrap networks in which the clade is found to be a hybrid clade.</li>
+<li><strong>BS_sister</strong>: percentage of bootstrap networks in which the clade is found to be sister to      some hybrid clade (sum of the next 2 columns)</li>
+<li><strong>BS_major_sister</strong>: percentage of bootstrap networks in which the clade is found to be the      major sister to some hybrid clade</li>
+<li><strong>BS_minor_sister</strong>: same as previous, but minor</li>
+<li><strong>BS_hybrid_samesisters</strong>: percentage of bootstrap networks in which the clade is found to be      a hybrid and with the same set of sister clades as in the reference network.      Applies to hybrid clades found in the reference network only, NA for all other clades.</li>
+</ul>
+<p>The "edge" data frame has one row for each pair of clades, and 8 columns:</p>
+<ul>
+<li><strong>edge</strong>: hybrid edge number, if the edge appears in the reference network. NA otherwise.</li>
+<li><strong>hybrid_clade</strong>: name of the clade found to be a hybrid, descendent of 'edge'</li>
+<li><strong>hybrid</strong>: node number of that clade, if it appears in the reference network. NA otherwise.</li>
+<li><strong>sister_clade</strong>: name of the clade that is sister to 'edge', i.e. be sister to a hybrid</li>
+<li><strong>sister</strong>: node number of that clade, if in the ref network.</li>
+<li><strong>BS_hybrid_edge</strong>: percentage of bootstrap networks in which 'edge' is found to be a hybrid      edge, i.e. when the clade in the 'hybrid' column is found to be a hybrid and the clade in      the 'sister' column is one of its sisters.</li>
+<li><strong>BS_major</strong>: percentage of bootstrap networks in which 'edge' is found to be a major hybrid      edge, i.e. when 'hybrid' is found to be a hybrid clade and 'sister' is found to be its      major sister.</li>
+<li><strong>BS_minor</strong>: same as previous, but minor</li>
+</ul>
+          <aside class="copyright" role="note">
+            
+            Documentation built with
+            <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
+            using the
+            <a href="http://squidfunk.github.io/mkdocs-material/" target="_blank">
+              Material
+            </a>
+            theme.
+          </aside>
+          
+            <footer class="footer">
+              
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+        <a href="../../man/bootstrap/" title="Bootstrap">
+          <span class="direction">
+            Previous
+          </span>
+          <div class="page">
+            <div class="button button-previous" role="button" aria-label="Previous">
+              <i class="icon icon-back"></i>
+            </div>
+            <div class="stretch">
+              <div class="title">
+                Bootstrap
+              </div>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+    <div class="next">
+      
+        <a href="../internals/" title="Internals">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Internals
+              </div>
+            </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </nav>
+
+            </footer>
+          
+        </div>
+      </article>
+      <div class="results" role="status" aria-live="polite">
+        <div class="scrollable">
+          <div class="wrapper">
+            <div class="meta"></div>
+            <div class="list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var base_url = '../..';
+      var repo_id  = 'crsl4/PhyloNetworks.jl';
+    </script>
+    <script src="../../assets/javascripts/application-997097ee0c.js"></script>
+    
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+      <script src="../../assets/mathjaxhelper.js"></script>
+    
+    
+  </body>
+</html>

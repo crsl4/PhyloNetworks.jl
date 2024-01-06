@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    
+      
+        <title>Installation - PhyloNetworks.jl</title>
+      
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+    
+    <meta property="og:url" content="None">
+    <meta property="og:title" content="PhyloNetworks.jl">
+    <meta property="og:image" content="None/../../snaq_small.png">
+    <meta name="apple-mobile-web-app-title" content="PhyloNetworks.jl">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="../../snaq_small.png">
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon-e565ddfa3b.ico">
+    <style>
+      @font-face {
+      	font-family: 'Icon';
+      	src: url('../../assets/fonts/icon.eot?52m981');
+      	src: url('../../assets/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+      		   url('../../assets/fonts/icon.woff?52m981')
+               format('woff'),
+      		   url('../../assets/fonts/icon.ttf?52m981')
+               format('truetype'),
+      		   url('../../assets/fonts/icon.svg?52m981#icon')
+               format('svg');
+      	font-weight: normal;
+      	font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="../../assets/stylesheets/application-a422ff04cc.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/palettes-05ab2406df.css">
+    
+    
+      
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <style>
+        body, input {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+        }
+        pre, code {
+          font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+        }
+      </style>
+    
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    <script src="../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    
+  </head>
+  
+  
+  
+  <body class="palette-primary-teal palette-accent-teal">
+    
+      
+      
+    
+    <div class="backdrop">
+      <div class="backdrop-paper"></div>
+    </div>
+    <input class="toggle" type="checkbox" id="toggle-drawer">
+    <input class="toggle" type="checkbox" id="toggle-search">
+    <label class="toggle-button overlay" for="toggle-drawer"></label>
+    <header class="header">
+      <nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        
+          <span class="path">
+            
+              
+                Manual <i class="icon icon-link"></i>
+              
+            
+          </span>
+        
+        Installation
+      </div>
+    </div>
+    
+    
+    <div class="button button-search" role="button" aria-label="Search">
+      <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
+    </div>
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+    </header>
+    <main class="main">
+      
+      <div class="drawer">
+        <nav aria-label="Navigation">
+  
+  <a href="https://github.com/crsl4/PhyloNetworks.jl" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="../../snaq_small.png">
+        </div>
+      
+      <div class="name">
+        <strong>
+          PhyloNetworks.jl
+          <span class="version">
+            
+          </span>
+        </strong>
+        
+          <br>
+          crsl4/PhyloNetworks.jl
+        
+      </div>
+    </div>
+  </a>
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            
+            <a href="https://github.com/crsl4/PhyloNetworks.jl/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/crsl4/PhyloNetworks.jl/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+      <div class="toc">
+        <ul>
+          
+            
+  <li>
+    <a class="" title="Home" href="../..">
+      Home
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <span class="section">Manual</span>
+    <ul>
+      
+        
+  <li>
+    <a class="current" title="Installation" href="./">
+      Installation
+    </a>
+    
+      
+        
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Installation of Julia" href="#installation-of-julia">
+                Installation of Julia
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Installation of the package PhyloNetworks" href="#installation-of-the-package-phylonetworks">
+                Installation of the package PhyloNetworks
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Test example" href="#test-example">
+                Test example
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Julia types" href="#julia-types">
+                Julia types
+              </a>
+            </li>
+          
+        </ul>
+      
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Input Data for SNaQ" href="../inputdata/">
+      Input Data for SNaQ
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="TICR pipeline" href="../ticr_howtogetQuartetCFs/">
+      TICR pipeline
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Network estimation and display" href="../snaq_plot/">
+      Network estimation and display
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Fixed Network" href="../fixednetworkoptim/">
+      Fixed Network
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Extract Expected CFs" href="../expectedCFs/">
+      Extract Expected CFs
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Bootstrap" href="../bootstrap/">
+      Bootstrap
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Multiple Alleles" href="../multiplealleles/">
+      Multiple Alleles
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Trait Evolution" href="../trait_tree/">
+      Trait Evolution
+    </a>
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
+            
+  <li>
+    <span class="section">Library</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Public" href="../../lib/public/">
+      Public
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Internals" href="../../lib/internals/">
+      Internals
+    </a>
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+      <article class="article">
+        <div class="wrapper">
+          
+          <p><a id='Installation-1'></a></p>
+<h1 id="installation">Installation</h1>
+<p><a id='Installation-of-Julia-1'></a></p>
+<h2 id="installation-of-julia">Installation of Julia</h2>
+<p>Julia is a high-level and interactive programming language (like R or Matlab), but it is also high-performance (like C). To install Julia, go to http://julialang.org/downloads/ For a basic tutorial on Julia, see http://learnxinyminutes.com/docs/julia/</p>
+<p>IMPORTANT: Julia code is just-in-time compiled. This means that the first time you run a function, it will be compiled at that moment. So, please be patient! Future calls to the function will be much much faster. Trying out toy examples for the first calls is a good idea.</p>
+<p>Users should have Julia 0.4 or above.</p>
+<p><a id='Installation-of-the-package-PhyloNetworks-1'></a></p>
+<h2 id="installation-of-the-package-phylonetworks">Installation of the package PhyloNetworks</h2>
+<p>To install the package, type inside Julia:</p>
+<pre><code class="julia">Pkg.add(&quot;PhyloNetworks&quot;)
+</code></pre>
+
+<p>The first step can take a few minutes, be patient. If you already installed the package and want the latest registered version, just do this (which will update all of your packages):</p>
+<pre><code class="julia">Pkg.update()
+</code></pre>
+
+<p>WARNING: It is important to update the package regularly as it is undergoing constant development. Join the google group for updates <a href="https://groups.google.com/forum/#!forum/phylonetworks-users/new">here</a>.</p>
+<p><code>Pkg.update()</code> will install the latest registered version, but there could be other improvements in the <code>master</code> branch of the repository. If you want to update to the latest unregistered version of the package, you can do <code>Pkg.checkout("PhyloNetworks")</code> just beware that the latest changes could be not as robust. If you want to go back to the registered package, you can do <code>Pkg.free("PhyloNetworks")</code>.</p>
+<p>Similarly, you can pin a version of the package <code>Pkg.pin("PhyloNetworks")</code> so that <code>Pkg.update()</code> will not modify it. You can always free a pinned package with <code>Pkg.free("PhyloNetworks")</code>. More on checked and pinned packages <a href="http://docs.julialang.org/en/release-0.4/manual/packages/">here</a>.</p>
+<!– If, for some reason, the *Pkg.update* function does not update to the latest version, users can do the following through the terminal:     cd HOME/.julia/v0.4/PhyloNetworks/     git pull where HOME is replaced by your home directory. –>
+
+<p>The PhyloNetworks package has dependencies like NLopt and Gadfly (see the REQUIRE file for the full list), but everything is installed automatically.</p>
+<p><a id='Test-example-1'></a></p>
+<h2 id="test-example">Test example</h2>
+<p>To check that your installation worked, type this in Julia to load the package. This is something to type every time you start a Julia session:</p>
+<pre><code class="julia">using PhyloNetworks;
+</code></pre>
+
+<p>This step can also take a while, if Julia needs to pre-compile the code (after a package update for instance). Here is a very small test for the installation of PhyloNetworks.</p>
+<pre><code class="julia">net = readTopology(&quot;(A,(B,(C,D)));&quot;);
+tipLabels(net)
+</code></pre>
+
+<pre><code>4-element Array{String,1}:
+ &quot;A&quot;
+ &quot;B&quot;
+ &quot;C&quot;
+ &quot;D&quot;
+</code></pre>
+
+<p>You can see a list of all the functions with</p>
+<pre><code class="julia">whos(PhyloNetworks)
+</code></pre>
+
+<p>and press <code>?</code> inside Julia to switch to help mode, followed by the name of a function (or type) to get more details about it.</p>
+<p><a id='Julia-types-1'></a></p>
+<h2 id="julia-types">Julia types</h2>
+<p>Objects in Julia are called <em>types</em>. We show here small example on how to get more info on an object, what's its type, and how to manipulate objects. For example, let's take an object <code>d</code> created from reading in some data (see <a href="../inputdata/#Input-for-SNaQ-1">Input for SNaQ</a>):</p>
+<pre><code class="julia">d=readTrees2CF(&quot;tableCF.txt&quot;);
+</code></pre>
+
+<p>Typing the following command will provide a list of objects saved in memory, including <code>d</code> that we just created:</p>
+<pre><code class="julia">whos()
+</code></pre>
+
+<p>If we want to know the type of a particular object, we do:</p>
+<pre><code class="julia">typeof(d)
+</code></pre>
+
+<p>which shows us that <code>d</code> if of type <code>DataCF</code>. If we want to know about the attributes the object has, we can type <code>?</code> in Julia, followed by <em>DataCF</em> for a description. We can also ask for a list of all its attributes with</p>
+<pre><code class="julia">fieldnames(d)
+</code></pre>
+
+<p>For example, we see that one attribute is <code>numQuartets</code>: its the number of 4-taxon subsets in the data. To see what this number is:</p>
+<pre><code class="julia">d.numQuartets
+</code></pre>
+
+<p>We also noticed an attribute <em>quartet</em>. It is a vector of Quartet objects inside <code>d</code>, so</p>
+<pre><code class="julia">d.quartet[1].taxon
+</code></pre>
+
+<p>will provide the list of taxon names for the first 4-taxon subset in the data. We can corroborate this is the firs 4-taxon subset by checking the file <em>tableCF.txt</em>.</p>
+<p>To see the observed CF, we can type</p>
+<pre><code class="julia">d.quartet[1].obsCF
+</code></pre>
+
+<p>We can verify the type with</p>
+<pre><code class="julia">typeof(d.quartet[1])
+</code></pre>
+
+<p>You can also read a simple network in Julia and print the list of edges</p>
+<pre><code class="julia">str = &quot;(A,((B,#H1),(C,(D)#H1)));&quot;;
+net = readTopology(str)
+printEdges(net)
+</code></pre>
+
+<p>You see that the edges do not have branch lengths, and the hybrid edges do not have gamma values, you can set them with</p>
+<pre><code class="julia">setLength!(net.edge[1],1.9)
+setGamma!(net.edge[3],0.8)
+printEdges(net)
+</code></pre>
+
+<p>where 1 and 3 correspond to the position of the given edge to modify in the list of edges. You can only change the gamma value of hybrid edges. Such an attempt below will cause an error with a message to explain that the edge was a tree edge:</p>
+<pre><code class="julia">setGamma!(net.edge[4],0.7)
+# should return this:
+# ERROR: cannot change gamma in a tree edge
+</code></pre>
+          <aside class="copyright" role="note">
+            
+            Documentation built with
+            <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
+            using the
+            <a href="http://squidfunk.github.io/mkdocs-material/" target="_blank">
+              Material
+            </a>
+            theme.
+          </aside>
+          
+            <footer class="footer">
+              
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+        <a href="../.." title="Home">
+          <span class="direction">
+            Previous
+          </span>
+          <div class="page">
+            <div class="button button-previous" role="button" aria-label="Previous">
+              <i class="icon icon-back"></i>
+            </div>
+            <div class="stretch">
+              <div class="title">
+                Home
+              </div>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+    <div class="next">
+      
+        <a href="../inputdata/" title="Input Data for SNaQ">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Input Data for SNaQ
+              </div>
+            </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </nav>
+
+            </footer>
+          
+        </div>
+      </article>
+      <div class="results" role="status" aria-live="polite">
+        <div class="scrollable">
+          <div class="wrapper">
+            <div class="meta"></div>
+            <div class="list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var base_url = '../..';
+      var repo_id  = 'crsl4/PhyloNetworks.jl';
+    </script>
+    <script src="../../assets/javascripts/application-997097ee0c.js"></script>
+    
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+      <script src="../../assets/mathjaxhelper.js"></script>
+    
+    
+  </body>
+</html>

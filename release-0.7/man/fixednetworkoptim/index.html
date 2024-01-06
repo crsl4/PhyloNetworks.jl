@@ -1,0 +1,800 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PhyloNetworks is a Julia package for the manipulation, visualization and inference of phylogenetic networks.">
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.4, mkdocs-material-2.9.2">
+    
+    
+      
+        <title>Candidate Networks - PhyloNetworks.jl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.ba0fd1a6.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.6079476c.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#candidate-networks" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="PhyloNetworks.jl" class="md-header-nav__button md-logo">
+          
+            <img src="../../snaq_small.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                PhyloNetworks.jl
+              </span>
+              <span class="md-header-nav__topic">
+                Candidate Networks
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <span class="md-nav__button md-logo">
+      
+        <img src="../../snaq_small.png" width="48" height="48">
+      
+    </span>
+    PhyloNetworks.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Manual
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Manual
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../inputdata/" title="Input Data for SNaQ" class="md-nav__link">
+      Input Data for SNaQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-nav__link">
+      TICR pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../snaq_plot/" title="Network estimation and display" class="md-nav__link">
+      Network estimation and display
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dist_reroot/" title="Network comparison and manipulation" class="md-nav__link">
+      Network comparison and manipulation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Candidate Networks
+      </label>
+    
+    <a href="./" title="Candidate Networks" class="md-nav__link md-nav__link--active">
+      Candidate Networks
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#optimizing-parameters-for-a-given-network" title="Optimizing parameters for a given network" class="md-nav__link">
+    Optimizing parameters for a given network
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-score-with-no-optimization" title="Network Score with no optimization" class="md-nav__link">
+    Network Score with no optimization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#candidate-networks-compatible-with-a-known-outgroup" title="Candidate networks compatible with a known outgroup" class="md-nav__link">
+    Candidate networks compatible with a known outgroup
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../expectedCFs/" title="Extract Expected CFs" class="md-nav__link">
+      Extract Expected CFs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../multiplealleles/" title="Multiple Alleles" class="md-nav__link">
+      Multiple Alleles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../trait_tree/" title="Continuous Trait Evolution" class="md-nav__link">
+      Continuous Trait Evolution
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Library
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Library
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/public/" title="Public" class="md-nav__link">
+      Public
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/internals/" title="Internals" class="md-nav__link">
+      Internals
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#optimizing-parameters-for-a-given-network" title="Optimizing parameters for a given network" class="md-nav__link">
+    Optimizing parameters for a given network
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-score-with-no-optimization" title="Network Score with no optimization" class="md-nav__link">
+    Network Score with no optimization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#candidate-networks-compatible-with-a-known-outgroup" title="Candidate networks compatible with a known outgroup" class="md-nav__link">
+    Candidate networks compatible with a known outgroup
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/crsl4/PhyloNetworks.jl/edit/master/docs/man/fixednetworkoptim.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><a id='Candidate-Networks-1'></a></p>
+<h1 id="candidate-networks">Candidate Networks</h1>
+<p><a id='Optimizing-parameters-for-a-given-network-1'></a></p>
+<h2 id="optimizing-parameters-for-a-given-network">Optimizing parameters for a given network</h2>
+<p>For a given network topology, we can optimize the branch lengths and inheritance probabilities (γ) with the pseudolikelihood. This is useful if we have a few candidate networks to compare. Each network can be optimized individually, and the network with the best pseudolikelihood can be chosen.</p>
+<p>The score being optimized is the pseudo-deviance, i.e. the negative log pseudo-likelihood up to an additive constant (the lower the better).</p>
+<p>Following our example in <a href="../snaq_plot/#Getting-a-Network-1">Getting a Network</a>, we can optimize parameters on the true network (the one originally used to simulate the data):</p>
+<div class="codehilite"><pre><span></span><span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">truenet</span> <span class="o">=</span> <span class="nt">readTopology</span><span class="o">(</span><span class="s2">&quot;((((D:0.4,C:0.4):4.8,((A:0.8,B:0.8):2.2)#H1:2.2::0.7):4.0,(#H1:0::0.3,E:3.0):6.2):2.0,O:11.2);&quot;</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">net1alt</span> <span class="o">=</span> <span class="nt">topologyMaxQPseudolik</span><span class="o">!(</span><span class="nt">truenet</span><span class="o">,</span> <span class="nt">raxmlCF</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">writeTopology</span><span class="o">(</span><span class="nt">net1alt</span><span class="o">,</span> <span class="nt">round</span><span class="o">=</span><span class="nt">true</span><span class="o">)</span>
+<span class="s2">&quot;(D,C,(((A,B):0.987)#H1:8.376::0.721,((#H1:0.0::0.279,E):1.287,O):1.181):7.615);&quot;</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">net1alt</span><span class="p">.</span><span class="nc">loglik</span> <span class="err">#</span> <span class="nt">pseudo</span> <span class="nt">deviance</span><span class="o">,</span> <span class="nt">actually</span>
+<span class="nt">29</span><span class="p">.</span><span class="nc">94130186108919</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">PhyloPlots</span><span class="p">,</span> <span class="n">RCall</span>
+<span class="n">R</span><span class="s">&quot;name &lt;- function(x) file.path(&#39;..&#39;, &#39;assets&#39;, &#39;figures&#39;, x)&quot;</span>
+<span class="n">R</span><span class="s">&quot;svg(name(&#39;truenet_opt.svg&#39;), width=4, height=4)&quot;</span>
+<span class="n">R</span><span class="s">&quot;par(mar = c(0, 0, 0, 0))&quot;</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">net1alt</span><span class="p">,</span> <span class="o">:</span><span class="n">R</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">);</span>
+<span class="n">R</span><span class="s">&quot;dev.off()&quot;</span>
+</pre></div>
+
+
+<p><img alt="truenet_opt" src="../../assets/figures/truenet_opt.svg" /></p>
+<p>We get a score of 29.941, which is comparable to the score of the SNaQ network (net1: 28.315), especially compared to the score of the best tree (net0: 53.532). This begs the question: is the true network within the "range" of uncertainty? We can run a <a href="../bootstrap/#Bootstrap-1">Bootstrap</a> analysis to measure uncertainty in our network inference.</p>
+<p>For a more thorough optimization, we may increase the requirements before the search stops (but the optimization will take longer). It makes no difference on this small data set.</p>
+<div class="codehilite"><pre><span></span><span class="n">net1par</span> <span class="o">=</span> <span class="n">topologyMaxQPseudolik!</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">raxmlCF</span><span class="p">,</span> <span class="n">ftolRel</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">xtolAbs</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span>
+<span class="n">net1par</span><span class="o">.</span><span class="n">loglik</span>
+</pre></div>
+
+
+<p><a id='Network-Score-with-no-optimization-1'></a></p>
+<h2 id="network-score-with-no-optimization">Network Score with no optimization</h2>
+<p>For a network with given branch lengths and γ heritabilies, we can compute the pseudolikelihood with:</p>
+<div class="codehilite"><pre><span></span>julia&gt; topologyQPseudolik!(truenet,raxmlCF);
+
+julia&gt; truenet.loglik
+153.5310295393005
+</pre></div>
+
+
+<p>This function is not maximizing the pseudolikelihood, it is simply computing the pseudolikelihood (or deviance) for the given branch lengths and probabilities of inheritance. At the moment, both of these functions require that the given network is of level 1 (cycles don't overlap).</p>
+<p><a id='Candidate-networks-compatible-with-a-known-outgroup-1'></a></p>
+<h2 id="candidate-networks-compatible-with-a-known-outgroup">Candidate networks compatible with a known outgroup</h2>
+<p>If the network was estimated via <code>snaq!</code>, it might turn out to be impossible to root our estimated network with a known outgroup (see section <a href="../dist_reroot/#What-if-the-root-conflicts-with-the-direction-of-a-reticulation?-1">What if the root conflicts with the direction of a reticulation?</a>.) At this time, <code>snaq!</code> does not impose any rooting constraint on the network: the search for the lowest score considers all level-1 networks, including those that are incompatible with a known outgroup. (The monophyly of outgroups is not imposed either, like in many other methods.)</p>
+<p>If the estimated network cannot be rooted with the known outgroup, we can check the <code>.networks</code> output file. It has a list of networks that are slight modifications of the best network, where the modifications changed the direction of one reticulation at a time. For each modified network, the score was calculated. So if we find in this list a modified network that has a score close to that of the best network, and that can be re-rooted with our known root position, then this modified network is a better candidate than the network with the best score.</p>
+<p>Below is what the <code>net1.networks</code> file looks like, after performing the analysis in the section <a href="../snaq_plot/#Network-Estimation-1">Network Estimation</a>. Scroll to the right to see the scores.</p>
+<div class="codehilite"><pre><span></span><span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,((</span><span class="nt">O</span><span class="o">,(</span><span class="nt">E</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">19558838614943078</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">31352437658618976</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">6640664399202987</span><span class="o">,(</span><span class="nt">B</span><span class="o">,(</span><span class="nt">A</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">8044116138505693</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">);,</span> <span class="nt">with</span> <span class="nt">-loglik</span> <span class="nt">28</span><span class="p">.</span><span class="nc">31506721890958</span> <span class="o">(</span><span class="nt">best</span> <span class="nt">network</span> <span class="nt">found</span><span class="o">,</span> <span class="nt">remaining</span> <span class="nt">sorted</span> <span class="nt">by</span> <span class="nt">log-pseudolik</span><span class="o">;</span> <span class="nt">the</span> <span class="nt">smaller</span><span class="o">,</span> <span class="nt">the</span> <span class="nt">better</span><span class="o">)</span>
+<span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,((</span><span class="nt">O</span><span class="o">,(</span><span class="nt">E</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">8150784689693145</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">9336405757682176</span><span class="o">,(</span><span class="nt">B</span><span class="o">,(</span><span class="nt">A</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">18492153103068557</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">25386142779877724</span><span class="o">)</span><span class="p">:</span><span class="nd">1</span><span class="p">.</span><span class="nc">8758156446611114</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">);,</span> <span class="nt">with</span> <span class="nt">-loglik</span> <span class="nt">31</span><span class="p">.</span><span class="nc">535560380783814</span>
+<span class="o">(</span><span class="nt">B</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="p">:</span><span class="nd">9</span><span class="p">.</span><span class="nc">90999345612101</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">2555404440833535</span><span class="o">,(</span><span class="nt">A</span><span class="o">,(</span><span class="nt">E</span><span class="o">,(</span><span class="nt">O</span><span class="o">,((</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">3419231810962026</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">7444595559166465</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">19994859441332047</span><span class="o">)</span><span class="p">:</span><span class="nd">2</span><span class="p">.</span><span class="nc">5014911511063644</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">7957621793330066</span><span class="o">);,</span> <span class="nt">with</span> <span class="nt">-loglik</span> <span class="nt">56</span><span class="p">.</span><span class="nc">64548310161462</span>
+<span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,((</span><span class="nt">O</span><span class="o">,(</span><span class="nt">E</span><span class="o">,((</span><span class="nt">B</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">7957543284159452</span><span class="o">,</span><span class="nt">A</span><span class="o">)</span><span class="p">:</span><span class="nd">4</span><span class="p">.</span><span class="nc">786202415937916</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">004527712280136759</span><span class="o">)</span><span class="p">:</span><span class="nd">1</span><span class="p">.</span><span class="nc">7952610454570868</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">20424567158405482</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">);,</span> <span class="nt">with</span> <span class="nt">-loglik</span> <span class="nt">67</span><span class="p">.</span><span class="nc">17775727492258</span>
+<span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,(</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">32947301811471164</span><span class="o">,(</span><span class="nt">B</span><span class="o">,(</span><span class="nt">A</span><span class="o">,(</span><span class="nt">E</span><span class="o">,(</span><span class="nt">O</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">6705269818852884</span><span class="o">)</span><span class="p">:</span><span class="nd">1</span><span class="p">.</span><span class="nc">371799259141243</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">0</span><span class="o">)</span><span class="p">:</span><span class="nd">6</span><span class="p">.</span><span class="nc">397073999864152</span><span class="o">)</span><span class="p">:</span><span class="nd">7</span><span class="p">.</span><span class="nc">677245926003807</span><span class="o">);,</span> <span class="nt">with</span> <span class="nt">-loglik</span> <span class="nt">199</span><span class="p">.</span><span class="nc">11401961057143</span>
+</pre></div>
+
+
+<p>We can read this file and look at its list of networks like this:</p>
+<div class="codehilite"><pre><span></span><span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">file</span> <span class="o">=</span> <span class="s2">&quot;net1.networks&quot;</span><span class="o">;</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="err">#</span> <span class="nt">or</span> <span class="nt">use</span> <span class="nt">the</span> <span class="nt">example</span> <span class="nt">file</span> <span class="nt">available</span> <span class="nt">with</span> <span class="nt">the</span> <span class="nt">package</span><span class="o">:</span>
+       <span class="nt">file</span> <span class="o">=</span> <span class="nt">joinpath</span><span class="o">(</span><span class="nt">Pkg</span><span class="p">.</span><span class="nc">dir</span><span class="o">(</span><span class="s2">&quot;PhyloNetworks&quot;</span><span class="o">),</span><span class="s2">&quot;examples&quot;</span><span class="o">,</span><span class="s2">&quot;net1.networks&quot;</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">netlist</span> <span class="o">=</span> <span class="nt">readMultiTopology</span><span class="o">(</span><span class="nt">file</span><span class="o">)</span> <span class="err">#</span> <span class="nt">read</span> <span class="nt">the</span> <span class="nt">full</span> <span class="nt">list</span> <span class="nt">of</span> <span class="nt">networks</span> <span class="nt">in</span> <span class="nt">that</span> <span class="nt">file</span>
+<span class="nt">5-element</span> <span class="nt">Array</span><span class="p">{</span><span class="err">PhyloNetworks.HybridNetwork,1</span><span class="p">}</span><span class="o">:</span>
+ <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">HybridNetwork</span><span class="o">,</span> <span class="nt">Rooted</span> <span class="nt">Network</span>
+<span class="nt">12</span> <span class="nt">edges</span>
+<span class="nt">12</span> <span class="nt">nodes</span><span class="o">:</span> <span class="nt">6</span> <span class="nt">tips</span><span class="o">,</span> <span class="nt">1</span> <span class="nt">hybrid</span> <span class="nt">nodes</span><span class="o">,</span> <span class="nt">5</span> <span class="nt">internal</span> <span class="nt">tree</span> <span class="nt">nodes</span><span class="o">.</span>
+<span class="nt">tip</span> <span class="nt">labels</span><span class="o">:</span> <span class="nt">C</span><span class="o">,</span> <span class="nt">D</span><span class="o">,</span> <span class="nt">O</span><span class="o">,</span> <span class="nt">E</span><span class="o">,</span> <span class="o">...</span>
+<span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,((</span><span class="nt">O</span><span class="o">,(</span><span class="nt">E</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">196</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">314</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">664</span><span class="o">,(</span><span class="nt">B</span><span class="o">,(</span><span class="nt">A</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">804</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">);</span>
+
+ <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">HybridNetwork</span><span class="o">,</span> <span class="nt">Rooted</span> <span class="nt">Network</span>
+<span class="nt">12</span> <span class="nt">edges</span>
+<span class="nt">12</span> <span class="nt">nodes</span><span class="o">:</span> <span class="nt">6</span> <span class="nt">tips</span><span class="o">,</span> <span class="nt">1</span> <span class="nt">hybrid</span> <span class="nt">nodes</span><span class="o">,</span> <span class="nt">5</span> <span class="nt">internal</span> <span class="nt">tree</span> <span class="nt">nodes</span><span class="o">.</span>
+<span class="nt">tip</span> <span class="nt">labels</span><span class="o">:</span> <span class="nt">C</span><span class="o">,</span> <span class="nt">D</span><span class="o">,</span> <span class="nt">O</span><span class="o">,</span> <span class="nt">E</span><span class="o">,</span> <span class="o">...</span>
+<span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,((</span><span class="nt">O</span><span class="o">,(</span><span class="nt">E</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">815</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">934</span><span class="o">,(</span><span class="nt">B</span><span class="o">,(</span><span class="nt">A</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">185</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">254</span><span class="o">)</span><span class="p">:</span><span class="nd">1</span><span class="p">.</span><span class="nc">876</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">);</span>
+
+ <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">HybridNetwork</span><span class="o">,</span> <span class="nt">Rooted</span> <span class="nt">Network</span>
+<span class="nt">12</span> <span class="nt">edges</span>
+<span class="nt">12</span> <span class="nt">nodes</span><span class="o">:</span> <span class="nt">6</span> <span class="nt">tips</span><span class="o">,</span> <span class="nt">1</span> <span class="nt">hybrid</span> <span class="nt">nodes</span><span class="o">,</span> <span class="nt">5</span> <span class="nt">internal</span> <span class="nt">tree</span> <span class="nt">nodes</span><span class="o">.</span>
+<span class="nt">tip</span> <span class="nt">labels</span><span class="o">:</span> <span class="nt">B</span><span class="o">,</span> <span class="nt">A</span><span class="o">,</span> <span class="nt">E</span><span class="o">,</span> <span class="nt">O</span><span class="o">,</span> <span class="o">...</span>
+<span class="o">(</span><span class="nt">B</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="p">:</span><span class="nd">9</span><span class="p">.</span><span class="nc">91</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">256</span><span class="o">,(</span><span class="nt">A</span><span class="o">,(</span><span class="nt">E</span><span class="o">,(</span><span class="nt">O</span><span class="o">,((</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">342</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">744</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">2</span><span class="o">)</span><span class="p">:</span><span class="nd">2</span><span class="p">.</span><span class="nc">501</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">796</span><span class="o">);</span>
+
+ <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">HybridNetwork</span><span class="o">,</span> <span class="nt">Rooted</span> <span class="nt">Network</span>
+<span class="nt">12</span> <span class="nt">edges</span>
+<span class="nt">12</span> <span class="nt">nodes</span><span class="o">:</span> <span class="nt">6</span> <span class="nt">tips</span><span class="o">,</span> <span class="nt">1</span> <span class="nt">hybrid</span> <span class="nt">nodes</span><span class="o">,</span> <span class="nt">5</span> <span class="nt">internal</span> <span class="nt">tree</span> <span class="nt">nodes</span><span class="o">.</span>
+<span class="nt">tip</span> <span class="nt">labels</span><span class="o">:</span> <span class="nt">C</span><span class="o">,</span> <span class="nt">D</span><span class="o">,</span> <span class="nt">O</span><span class="o">,</span> <span class="nt">E</span><span class="o">,</span> <span class="o">...</span>
+<span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,((</span><span class="nt">O</span><span class="o">,(</span><span class="nt">E</span><span class="o">,((</span><span class="nt">B</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">796</span><span class="o">,</span><span class="nt">A</span><span class="o">)</span><span class="p">:</span><span class="nd">4</span><span class="p">.</span><span class="nc">786</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">005</span><span class="o">)</span><span class="p">:</span><span class="nd">1</span><span class="p">.</span><span class="nc">795</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">204</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">);</span>
+
+ <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">HybridNetwork</span><span class="o">,</span> <span class="nt">Rooted</span> <span class="nt">Network</span>
+<span class="nt">12</span> <span class="nt">edges</span>
+<span class="nt">12</span> <span class="nt">nodes</span><span class="o">:</span> <span class="nt">6</span> <span class="nt">tips</span><span class="o">,</span> <span class="nt">1</span> <span class="nt">hybrid</span> <span class="nt">nodes</span><span class="o">,</span> <span class="nt">5</span> <span class="nt">internal</span> <span class="nt">tree</span> <span class="nt">nodes</span><span class="o">.</span>
+<span class="nt">tip</span> <span class="nt">labels</span><span class="o">:</span> <span class="nt">C</span><span class="o">,</span> <span class="nt">D</span><span class="o">,</span> <span class="nt">B</span><span class="o">,</span> <span class="nt">A</span><span class="o">,</span> <span class="o">...</span>
+<span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,(</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">329</span><span class="o">,(</span><span class="nt">B</span><span class="o">,(</span><span class="nt">A</span><span class="o">,(</span><span class="nt">E</span><span class="o">,(</span><span class="nt">O</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">671</span><span class="o">)</span><span class="p">:</span><span class="nd">1</span><span class="p">.</span><span class="nc">372</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">0</span><span class="o">)</span><span class="p">:</span><span class="nd">6</span><span class="p">.</span><span class="nc">397</span><span class="o">)</span><span class="p">:</span><span class="nd">7</span><span class="p">.</span><span class="nc">677</span><span class="o">);</span>
+</pre></div>
+
+
+<p>Next, we would like to extract the network scores from the file. Below is a one-liner to do this (we make Julia send a <code>sed</code> command to the shell –sorry, Mac or Linux for this.)</p>
+<div class="codehilite"><pre><span></span>julia&gt; scoresInString = readstring(`sed -E &#39;s/.+with -loglik ([0-9]+.[0-9]+).+/\1/&#39; $file`)
+&quot;28.31506721890958\n31.53556038078381\n56.6454831016146\n67.1777572749225\n199.1140196105714\n&quot;
+
+julia&gt; scores = parse.(Float64, split(scoresInString))
+5-element Array{Float64,1}:
+  28.3151
+  31.5356
+  56.6455
+  67.1778
+ 199.114
+
+julia&gt; # next: update the &quot;loglik&quot; of each network with the score read from the file
+       for i in eachindex(netlist)
+          netlist[i].loglik = scores[i]
+          println(&quot;net $i in the list: score = &quot;,scores[i])
+       end
+net 1 in the list: score = 28.31506721890958
+net 2 in the list: score = 31.53556038078381
+net 3 in the list: score = 56.6454831016146
+net 4 in the list: score = 67.1777572749225
+net 5 in the list: score = 199.1140196105714
+</pre></div>
+
+
+<p>The first network in the list is the best network returned by <code>snaq!</code>. We see that the second network has a score that's not too far, but the other networks have worse scores. The best network and its best modification (second network in the list) are shown below. We chose to show edge numbers, to use them later to re-root the networks.</p>
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">:</span><span class="n">R</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">showEdgeNumber</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">tipOffset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">);</span>
+<span class="n">R</span><span class="s">&quot;mtext(&#39;best net, score=28.3&#39;, line=-1)&quot;</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">:</span><span class="n">R</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">showEdgeNumber</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">tipOffset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">);</span>
+<span class="n">R</span><span class="s">&quot;mtext(&#39;direction modified, score=31.5&#39;, line=-1)&quot;</span><span class="p">;</span>
+</pre></div>
+
+
+<p><img alt="othernets before reroot" src="../../assets/figures/fixednetworkoptim_othernets1.svg" /></p>
+<p>Now imagine that our outgroup is taxon A.</p>
+<ul>
+<li>best network: we would get a "RootMismatch" error if we tried to set the root on the external edge 9 to A, with <code>rootatnode!(netlist[1], "A")</code> (see section <a href="../dist_reroot/#What-if-the-root-conflicts-with-the-direction-of-a-reticulation?-1">What if the root conflicts with the direction of a reticulation?</a>). But we could root the best network on the major parent edge to A, edge 10 (rooted network on the left below).</li>
+<li>For the second best network in our list, there are 2 ways to root it with A: on the external edge 8 to A (top right), or on its parent edge 10 (bottom right). These 2 options give quite different rooted versions of the network, one of which requires the existence of an unsampled taxon, sister to BOECD, that would have contributed to introgression into an ancestor of E. The second rooted version says that an ancestor of (or sister to) A contributed to the introgression into the ancestor of E. A is an outgroup in both cases, but the second case is more parsimonious, in the sense that it does not require the existence of an unsampled taxon.</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="n">rootonedge!</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">10</span><span class="p">);</span> <span class="c"># root best net to make A outgroup</span>
+<span class="n">rotate!</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">4</span><span class="p">);</span> <span class="c"># to &#39;un-cross&#39; edges</span>
+<span class="n">rotate!</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">6</span><span class="p">);</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">:</span><span class="n">R</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">tipOffset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">);</span>
+<span class="n">R</span><span class="s">&quot;mtext(&#39;best net, score=28.3&#39;, line=-1)&quot;</span><span class="p">;</span>
+<span class="n">rootatnode!</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s">&quot;A&quot;</span><span class="p">);</span> <span class="c"># net with modified direction: first way to make A outgroup</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">:</span><span class="n">R</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">tipOffset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">);</span>
+<span class="n">R</span><span class="s">&quot;mtext(&#39;second best in list, score=31.5</span><span class="se">\n</span><span class="s">requires unsampled population&#39;, line=-2)&quot;</span><span class="p">;</span>
+<span class="n">rootonedge!</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">10</span><span class="p">)</span> <span class="c"># net with modified direction: second way to make A outgroup</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">netlist</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">:</span><span class="n">R</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">tipOffset</span><span class="o">=</span><span class="mf">0.1</span><span class="p">);</span>
+<span class="n">R</span><span class="s">&quot;mtext(&#39;second best in list, score=31.5</span><span class="se">\n</span><span class="s">different root position&#39;, line=-2)&quot;</span><span class="p">;</span>
+</pre></div>
+
+
+<p><img alt="othernets after reroot" src="../../assets/figures/fixednetworkoptim_othernets2.svg" /></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../dist_reroot/" title="Network comparison and manipulation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Network comparison and manipulation
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../expectedCFs/" title="Extract Expected CFs" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Extract Expected CFs
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.a59e2a89.js"></script>
+      
+      <script>app.initialize({version:"0.17.4",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="../../assets/mathjaxhelper.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

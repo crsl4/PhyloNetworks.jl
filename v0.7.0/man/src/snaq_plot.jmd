@@ -1,0 +1,249 @@
+```{julia; eval=true; echo=false}
+using PhyloNetworks
+raxmltrees = joinpath(Pkg.dir("PhyloNetworks"),"examples","raxmltrees.tre")
+raxmlCF = readTrees2CF(raxmltrees, writeTab=false, writeSummary=false)
+astralfile = joinpath(Pkg.dir("PhyloNetworks"),"examples","astral.tre")
+astraltree = readMultiTopology(astralfile)[102] # 102th tree = last tree here
+net0 = readTopology(joinpath(Pkg.dir("PhyloNetworks"),"examples","net0.out"))
+net1 = readTopology(joinpath(Pkg.dir("PhyloNetworks"),"examples","net1.out"))
+net2 = readTopology(joinpath(Pkg.dir("PhyloNetworks"),"examples","net2.out"))
+net3 = readTopology(joinpath(Pkg.dir("PhyloNetworks"),"examples","net3.out"))
+net0.loglik = 53.53150526187732
+net1.loglik = 28.31506721890958
+net2.loglik = 28.31506721890957
+net3.loglik = 28.315067218909626
+```
+# Getting a Network
+
+## Network Estimation
+
+SNaQ implements the statistical inference method in
+[Sol&iacute;s-Lemus and An&eacute; 2016](http://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1005896).
+The procedure involves a numerical optimization of branch lengths and inheritance
+probabilities and a heuristic search in the space of phylogenetic networks.
+
+After [Input for SNaQ](@ref), we can estimate the network using the
+input data `raxmlCF` and starting from tree (or network) `astraltree`.
+We first impose the constraint of at most 0 hybrid node,
+that is, we ask for a tree.
+```{julia; eval=false}
+net0 = snaq!(astraltree,raxmlCF, hmax=0, filename="net0", seed=1234)
+```
+Part of the screen output shows this:
+
+    MaxNet is (C,D,((B,A):1.395762055180493,(O,E):0.48453400554506426):10.0);
+    with -loglik 53.53150526187732
+
+This parenthetical (extended Newick) description is not very
+human-friendly, so we plot the tree:
+```{julia; eval=false; label="net0_1"; fig_width=4; fig_height=4}
+plot(net0)
+```
+![net0_1](../assets/figures/snaq_plot_net0_1_1.png)
+
+We can use this tree as a starting point to search for the best
+network allowing for at most `hmax=1` hybrid node (which is the default).
+```{julia; eval=false}
+net1 = snaq!(net0,raxmlCF, hmax=1, filename="net1", seed=2345)
+```
+part of screen output:
+
+    best network and networks with different hybrid/gene flow directions printed to .networks file
+    MaxNet is (C,D,((O,(E,#H7:::0.19558838614943078):0.31352437658618976):0.6640664399202987,(B,(A)#H7:::0.8044116138505693):10.0):10.0);
+    with -loglik 28.31506721890958
+
+To visualize the estimated network, we can use the companion package
+[PhyloPlots](https://github.com/cecileane/PhyloPlots.jl).
+```{julia; eval=false; label="net1_1"; fig_width=4; fig_height=4}
+using PhyloPlots
+plot(net1, showGamma=true)
+```
+![net1_1](../assets/figures/snaq_plot_net1_1_1.png)
+
+This network has A as a hybrid, 80.4% sister to B,
+and 19.6% sister to E (which is otherwise sister to O).
+C & D are sister to each other.
+We can also check the output files created by `snaq!`:
+```julia
+less("net1.err") # would provide info about errors, if any
+less("net1.out") # main output file with the estimated network from each run
+less("net1.networks") # extra info
+```
+when viewing these result files with `less`
+within Julia, use arrows to scroll down and type `q` to quit viewing the files.
+The file `net1.networks` contains a list of networks obtained from
+the estimated network, `net1`, by changing the direction of each hybridization,
+and by moving
+the placement of the hybrid node to another node inside the cycle,
+along with its pseudolikelihood score.
+
+The function name `snaq!` ends with ! because it modifies the argument `raxmlCF`
+by including the expected CF. Type `?` then `snaq!` to get help on that function.
+
+The main output file, here `net1.out` (or `snaq.out` by default) has the estimated
+network in parenthetical format, but we can also print it directly to the screen:
+```{julia; eval=true; results="markup"; term=true}
+net1
+writeTopology(net1)  # writes to screen, full precision for branch lengths and γ
+writeTopology(net1, round=true, digits=2)
+writeTopology(net1,di=true) # γ omitted: for dendroscope
+writeTopology(net1, "bestnet_h1.tre") # writes to file: creates or overwrites file
+```
+```{julia; eval=true; echo=false}
+rm("bestnet_h1.tre")
+```
+The option `di=true` is for the parenthetical format used by
+[Dendroscope](http://dendroscope.org/) (without reticulation heritabilities).
+Copy this parenthetical description and paste it into Dendroscope,
+or use the plotting function described below.
+
+We can go on and let the network have up to 2 or 3 hybrid nodes:
+```{julia; eval=false}
+net2 = snaq!(net1,raxmlCF, hmax=2, filename="net2", seed=3456)
+net3 = snaq!(net0,raxmlCF, hmax=3, filename="net3", seed=4567)
+```
+and plot them (they are identical):
+```{julia; eval=false; label="net23"}
+plot(net2, showGamma=true)
+plot(net3, showGamma=true)
+```
+![net23 1](../assets/figures/snaq_plot_net23_1.png)
+![net23 2](../assets/figures/snaq_plot_net23_2.png)
+
+with this screen output for net2 (only 1 hybrid node found):
+
+    MaxNet is (C,D,((B,(A)#H7:::0.804411606649347):10.0,(O,(#H7:::0.19558839335065303,E):0.3135243143217013):0.664066456871298):10.0);
+    with -loglik 28.31506721890957
+
+and this output for net3 (again, only 1 hybrid found):
+
+    MaxNet is (D,C,((O,(E,#H7:::0.19558839257941849):0.3135243301652981):0.6640664138384673,(B,(A)#H7:::0.8044116074205815):10.0):10.0);
+    with -loglik 28.315067218909626
+
+## parallel computation
+
+For network estimation, multiple runs can done in parallel.
+For example, if your machine has 4 or more processors (or cores),
+you can tell julia to use 4 processors by starting julia with `julia -p 4`,
+or by starting julia the usual way (`julia`) and then adding processors with:
+
+```julia
+addprocs(4)
+```
+
+If we load a package (`using PhyloNetworks`) before adding processors,
+then we need to re-load it again so that all processors have access to it:
+
+```julia
+@everywhere using PhyloNetworks
+```
+
+After that, running any of the `snaq!(...)` command will use
+different cores for different runs, as processors become available.
+Fewer details are printed to the log file when multiple cores
+are used in parallel.
+
+When running `bootsnaq`, the analysis of each bootstrap replicate
+will use multiple cores to parallelize separate runs of that particular
+bootstrap replicate. You may parallelize things further by running
+`bootsnaq` multiple times (on separate machines for instance), each time
+for a small subset of bootstrap replicates, and with a different seed each time.
+
+You may tell julia to add more processors than your machine has,
+but you will not receive any performance benefits.
+At any time during the julia session, `nworkers()` tells us how many
+worker processors julia has access to.
+
+## choosing the number of hybridizations
+
+Each network has a `loglik` attribute, which is its pseudo deviance:
+twice the negative log-likelihood up to a constant (the constant is
+such that the score is 0 if the network fits the data perfectly).
+The lower the better. We can plot these scores across hybrid values:
+```{julia; eval=false; label="scores_heuristic"; fig_width=4; fig_height=4}
+using Gadfly
+scores = [net0.loglik, net1.loglik, net2.loglik, net3.loglik]
+plot(x=collect(0:3), y=scores, Geom.point, Geom.line)
+```
+![scores_heuristic](../assets/figures/snaq_plot_scores_heuristic_1.png)
+
+Here the slope heuristic suggests a single hybrid node:
+the score does not get much better beyond h=1.
+
+## Network Visualization
+
+```{julia; eval=false; results="markup"; label="net1_1"; fig_width=4; fig_height=4}
+p = plot(net1, showGamma=true)
+```
+![net1_1](../assets/figures/snaq_plot_net1_1_1.png)
+
+This will open a browser where the plot will appear
+(unless you use [Juno](http://junolab.org),
+which would capture and display the plot).
+To get a pdf version, for instance:
+(see [Gadfly tutorial](http://gadflyjl.org/) for other formats)
+```julia
+using Gadfly
+draw(PDF("bestnet_h1.pdf", 4inch, 4inch),p)
+```
+The plot function has many options, to annotate nodes and edges
+(with γ heritabilities as show above, for example).
+Type `?` to switch to the help mode
+of Julia, then type the name of the function, here `plot`.
+Edge colors can be modified, for instance.
+```{julia; eval=false; results="markup"; label="net1_2"; fig_width=4; fig_height=4}
+# using Gadfly # if not done earlier, for colorant
+plot(net1, showEdgeLength=true, minorHybridEdgeColor=colorant"tan")
+```
+![net1_2](../assets/figures/snaq_plot_net1_2_1.png)
+
+Edge lengths are shown, too. They were estimated in coalescent units:
+number of generations / effective population size.
+Some edge lengths are not identifiable, hence not shown.
+
+Networks can also be displayed through R, using
+[RCall](https://github.com/JuliaInterop/RCall.jl)
+instead of [Gadfly](gadflyjl.org/).
+To do so, add the argument `:RCall` after the network,
+like this for example:
+
+```julia
+plot(net,:RCall, tipOffset=0.5, edgeColor="tomato4",
+     minorHybridEdgeColor="skyblue", majorHybridEdgeColor="tan");
+```
+
+## Re-rooting networks
+
+SNaQ infers an unrooted semi-directed network.
+The direction of hybrid edges can be inferred,
+but the direction of tree edges cannot be inferred.
+To obtain a representative visualization,
+it is best to root the network first, using one or more outgroup.
+Go to [Comparing and manipulating networks](@ref) for this.
+
+## Candidate Network Evaluation
+
+From a set of candidate networks, one might simply need to score of each network
+to pick the best. Here, the score is the negative log pseudo-likelihood, and the
+lower the better. See the section to get the score of [Candidate Networks](@ref).
+
+## SNaQ error reporting
+
+Please report any bugs and errors by opening an
+[issue](https://github.com/crsl4/PhyloNetworks.jl/issues/new).
+The easiest way to provide information on the error is by checking the
+`.err` file, which will show the number of runs that
+failed and the corresponding seed to replicate the run.
+In case of an error, the `.err` file might look like:
+`Total errors: 1 in seeds [4545]`.
+To replicate the bug (necessary to fix it!),
+you can run the following function with the same settings that caused the error:
+
+```julia
+snaqDebug(startnetwork, raxmlCF, hmax=2, seed=4545)
+```
+
+This will create two files: `snaqDebug.log` and `debug.log`,
+with information on steps to retrace the bug.
+You can attach them to your issue (or send them offline),
+to help us fix the bug.

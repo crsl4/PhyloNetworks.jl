@@ -1,0 +1,51 @@
+```{julia; eval=true; echo=false}
+using PhyloNetworks
+raxmltrees = joinpath(Pkg.dir("PhyloNetworks"),"examples","raxmltrees.tre")
+raxmlCF = readTrees2CF(raxmltrees, writeTab=false, writeSummary=false)
+truenet = readTopology("((((D:0.4,C:0.4):4.8,((A:0.8,B:0.8):2.2)#H1:2.2::0.7):4.0,(#H1:0::0.3,E:3.0):6.2):2.0,O:11.2);");
+```
+
+# Extract Expected CFs
+
+A good way to visualize the "goodness-of-fit" of a given estimated network to the data
+is to plot the observed CF versus the expected CF. If the network is a good fit, then the dots
+in the plot will be close to the diagonal (x=y line).
+The following function will create a dataframe with the observed and expected CFs,
+which are all saved in the DataCF object after running snaq:
+```{julia; eval=true; results="markup"; term=true}
+topologyMaxQPseudolik!(truenet, raxmlCF);
+df_wide = fittedQuartetCF(raxmlCF) # same as fittedQuartetCF(raxmlCF, :wide)
+df_long = fittedQuartetCF(raxmlCF, :long)
+```
+It is important to have run `snaq!`, `topologyQPseudolik!` or `topologyMaxQPseudolik!`
+before making these tables, or the result would be meaningless.
+These functions update the fitted concordance factors (those expected under the network)
+inside the DataCF object `raxmlCF`.
+
+Now, we can plot them with any of the Julia packages for plotting. For example:
+```{julia; eval=false; label="obsvsfitted"; fig_width=5; fig_height=4}
+using Gadfly
+plot(layer(df_long, Geom.point, x="obsCF", y="expCF"),
+     layer(x=0:1,y=0:1, Geom.line), # diagonal line
+     Guide.xlabel("CF observed in gene trees"), Guide.ylabel("CF expected from network"))
+```
+![obsvsfitted](../assets/figures/expectedCFs_obsvsfitted_1.png)
+
+To export this table and explore the fit of the network with other tools:
+```julia
+using CSV
+CSV.write("fittedCF.csv", df_long)
+```
+
+To highlight quartets that include taxon A, say,
+if we suspect that it is an unrecognized hybrid, one may do this.
+But very many points are overlapping, and this particular plot
+is not very satisfying as it is.
+```{julia; eval=false}
+using DataFramesMeta # install this package with Pkg.add("DataFramesMeta") if not done before
+mycolor = @with(df_long, (:tx1 .== "A") | (:tx2 .== "A") | (:tx3 .== "A") | (:tx4 .== "A"));
+# 'mycolor' is true for quartets having taxon A, false for others
+plot(layer(df_long, x="obsCF", y="expCF", color=mycolor, Geom.point),
+     layer(x=0:1,y=0:1, Geom.line),
+     Guide.colorkey("has taxon A?"))
+```

@@ -1,0 +1,756 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PhyloNetworks is a Julia package for the manipulation, visualization and inference of phylogenetic networks.">
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.5, mkdocs-material-2.9.4">
+    
+    
+      
+        <title>Parsimony on networks - PhyloNetworks.jl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.451f80e5.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#parsimony-on-networks" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="PhyloNetworks.jl" class="md-header-nav__button md-logo">
+          
+            <img src="../../snaq_small.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                PhyloNetworks.jl
+              </span>
+              <span class="md-header-nav__topic">
+                Parsimony on networks
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="PhyloNetworks.jl" class="md-nav__button md-logo">
+      
+        <img src="../../snaq_small.png" width="48" height="48">
+      
+    </a>
+    PhyloNetworks.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Manual
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Manual
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../inputdata/" title="Input Data for SNaQ" class="md-nav__link">
+      Input Data for SNaQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-nav__link">
+      TICR pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../snaq_plot/" title="Network estimation and display" class="md-nav__link">
+      Network estimation and display
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dist_reroot/" title="Network comparison and manipulation" class="md-nav__link">
+      Network comparison and manipulation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fixednetworkoptim/" title="Candidate Networks" class="md-nav__link">
+      Candidate Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../expectedCFs/" title="Extract Expected CFs" class="md-nav__link">
+      Extract Expected CFs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../multiplealleles/" title="Multiple Alleles" class="md-nav__link">
+      Multiple Alleles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../trait_tree/" title="Continuous Trait Evolution" class="md-nav__link">
+      Continuous Trait Evolution
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Parsimony on networks
+      </label>
+    
+    <a href="./" title="Parsimony on networks" class="md-nav__link md-nav__link--active">
+      Parsimony on networks
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parsimony-score-of-a-given-network" title="Parsimony score of a given network" class="md-nav__link">
+    Parsimony score of a given network
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finding-the-most-parsimonious-network" title="Finding the most parsimonious network" class="md-nav__link">
+    Finding the most parsimonious network
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Library
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Library
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/public/" title="Public" class="md-nav__link">
+      Public
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/internals/" title="Internals" class="md-nav__link">
+      Internals
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parsimony-score-of-a-given-network" title="Parsimony score of a given network" class="md-nav__link">
+    Parsimony score of a given network
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finding-the-most-parsimonious-network" title="Finding the most parsimonious network" class="md-nav__link">
+    Finding the most parsimonious network
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/crsl4/PhyloNetworks.jl/edit/master/docs/man/parsimony.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><a id='Parsimony-on-networks-1'></a></p>
+<h1 id="parsimony-on-networks">Parsimony on networks</h1>
+<p><a id='Parsimony-score-of-a-given-network-1'></a></p>
+<h2 id="parsimony-score-of-a-given-network">Parsimony score of a given network</h2>
+<p>We can calculate the parsimony score of a given network topology and a given set of characters. The characters could be in a CSV file in this format:</p>
+<table>
+<thead>
+<tr>
+<th align="left">taxon</th>
+<th align="left">trait1</th>
+<th align="left">trait2</th>
+<th align="left">trait3</th>
+<th align="left">trait4</th>
+<th align="left">trait5</th>
+<th align="left">trait6 ...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">English</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">3</td>
+</tr>
+<tr>
+<td align="left">...</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">...</td>
+</tr>
+</tbody>
+</table>
+<p>The trait values can be integer numbers, or strings. The data table may have missing data, and may contain extra taxa that we might want to exclude.</p>
+<p>An example file comes with the package, available <a href="https://github.com/crsl4/PhyloNetworks/blob/master/examples/Swadesh.csv">here</a> or <a href="https://raw.githubusercontent.com/crsl4/PhyloNetworks/master/examples/Swadesh.csv">here</a>.</p>
+<p>First, we need to read the trait table as a DataFrame object:</p>
+<div class="codehilite"><pre><span></span>julia&gt; using CSV, DataFrames
+
+julia&gt; csvfile = joinpath(Pkg.dir(&quot;PhyloNetworks&quot;),&quot;examples&quot;,&quot;Swadesh.csv&quot;);
+
+julia&gt; dat = CSV.read(csvfile);
+
+julia&gt; head(dat) # head shows the first 6 rows only
+5×11 DataFrames.DataFrame
+│ Row │ taxon      │ x1 │ x2 │ x3 │ x4 │ x5 │ x6 │ x7 │ x8 │ x9 │ x10 │
+├─────┼────────────┼────┼────┼────┼────┼────┼────┼────┼────┼────┼─────┤
+│ 1   │ English    │ 1  │ 1  │ 1  │ 1  │ 1  │ 1  │ 1  │ 1  │ 1  │ 1   │
+│ 2   │ German     │ 1  │ 2  │ 2  │ 1  │ 2  │ 2  │ 1  │ 2  │ 1  │ 2   │
+│ 3   │ Norwegian  │ 1  │ 2  │ 1  │ 1  │ 3  │ 3  │ 1  │ 3  │ 1  │ 1   │
+│ 4   │ Spanish    │ 1  │ 2  │ 2  │ 2  │ 4  │ 4  │ 2  │ 4  │ 2  │ 3   │
+│ 5   │ Portuguese │ 1  │ 2  │ 2  │ 2  │ 4  │ 4  │ 2  │ 4  │ 2  │ 3   │
+</pre></div>
+
+
+<p>Then, we need to convert the DataFrame object <code>dat</code> into a vector of species and traits. The species names are in column 1 named <code>taxon</code>, and the traits are in columns 2-11. The trait data need to be converted to a list of vectors, with one vector for each species. An internal function is provided for this:</p>
+<div class="codehilite"><pre><span></span>julia&gt; species, traits = PhyloNetworks.readCSVtoArray(dat);
+
+julia&gt; species
+5-element Array{String,1}:
+ &quot;English&quot;
+ &quot;German&quot;
+ &quot;Norwegian&quot;
+ &quot;Spanish&quot;
+ &quot;Portuguese&quot;
+
+julia&gt; traits
+5-element Array{Array{Any,1},1}:
+ Any[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+ Any[1, 2, 2, 1, 2, 2, 1, 2, 1, 2]
+ Any[1, 2, 1, 1, 3, 3, 1, 3, 1, 1]
+ Any[1, 2, 2, 2, 4, 4, 2, 4, 2, 3]
+ Any[1, 2, 2, 2, 4, 4, 2, 4, 2, 3]
+</pre></div>
+
+
+<p>Then, we read the network as usual:</p>
+<div class="codehilite"><pre><span></span>julia&gt; net = readTopology(&quot;(Spanish,((English)#H1,(Norwegian,(German,#H1))));&quot;);
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">PhyloPlots</span><span class="p">,</span> <span class="n">RCall</span>
+<span class="n">R</span><span class="s">&quot;par&quot;</span><span class="p">(</span><span class="n">mar</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]);</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="o">:</span><span class="n">R</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">7.5</span><span class="p">]);</span>
+</pre></div>
+
+
+<p><img alt="parsimony-fixed-net" src="../../assets/figures/parsimony-fixed-net.svg" /></p>
+<p>There are different types of parsimony scores on networks. Currently, we have implemented the <strong>softwired</strong> criterion only, with two different functions: <a href="../../lib/public/#PhyloNetworks.parsimonySoftwired"><code>parsimonySoftwired</code></a> and <a href="../../lib/public/#PhyloNetworks.parsimonyGF"><code>parsimonyGF</code></a>.</p>
+<p>The function <code>parsimonySoftwired</code> uses a faster algorithm than <code>parsimonyGF</code>, but can solve the softwired criterion only.</p>
+<div class="codehilite"><pre><span></span>julia&gt; score = parsimonySoftwired(net, species, traits)
+17.0
+
+julia&gt; score = parsimonyGF(net,species,traits,:softwired)
+17.0
+</pre></div>
+
+
+<p><a id='Finding-the-most-parsimonious-network-1'></a></p>
+<h2 id="finding-the-most-parsimonious-network">Finding the most parsimonious network</h2>
+<p>The function <a href="../../lib/public/#PhyloNetworks.maxParsimonyNet"><code>maxParsimonyNet</code></a> searches for the most parsimonious level-1 network. It uses the <code>parsimonyGF</code> function, with softwired criterion as default, which will be extended to other criteria later.</p>
+<p>Just like <a href="../../lib/public/#PhyloNetworks.snaq!"><code>snaq!</code></a>, <a href="../../lib/public/#PhyloNetworks.maxParsimonyNet"><code>maxParsimonyNet</code></a> requires a starting topology, which can be a tree or a level-1 network, and returns a level-1 network. Taxa present in the data but absent from the starting topology will be ignored during the search.</p>
+<div class="codehilite"><pre><span></span><span class="n">starttree</span> <span class="o">=</span> <span class="n">readTopology</span><span class="p">(</span><span class="s">&quot;(((English,German),Norwegian),Spanish);&quot;</span><span class="p">);</span>
+<span class="n">net1</span> <span class="o">=</span> <span class="n">maxParsimonyNet</span><span class="p">(</span><span class="n">starttree</span><span class="p">,</span> <span class="n">dat</span><span class="p">,</span> <span class="n">hmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">outgroup</span><span class="o">=</span><span class="s">&quot;Spanish&quot;</span><span class="p">,</span> <span class="n">rootname</span><span class="o">=</span><span class="s">&quot;swadesh&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The example data is very small: only 1 of the 11 traits is parsimony informative, on the 4 taxa specified by the starting topology. So these data happen to be compatible with a tree, and that tree is returned despite allowing for up to 1 reticulation: <code>(Spanish,((English,Norwegian),German));</code>.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../trait_tree/" title="Continuous Trait Evolution" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Continuous Trait Evolution
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../lib/public/" title="Public" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Public
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.30f6b8b1.js"></script>
+      
+      <script>app.initialize({version:"0.17.5",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="../../assets/mathjaxhelper.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

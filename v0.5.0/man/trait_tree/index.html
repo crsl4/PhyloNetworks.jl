@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    
+      
+        <title>Trait Evolution - PhyloNetworks.jl</title>
+      
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+    
+    <meta property="og:url" content="None">
+    <meta property="og:title" content="PhyloNetworks.jl">
+    <meta property="og:image" content="None/../../snaq_small.png">
+    <meta name="apple-mobile-web-app-title" content="PhyloNetworks.jl">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="../../snaq_small.png">
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon-e565ddfa3b.ico">
+    <style>
+      @font-face {
+      	font-family: 'Icon';
+      	src: url('../../assets/fonts/icon.eot?52m981');
+      	src: url('../../assets/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+      		   url('../../assets/fonts/icon.woff?52m981')
+               format('woff'),
+      		   url('../../assets/fonts/icon.ttf?52m981')
+               format('truetype'),
+      		   url('../../assets/fonts/icon.svg?52m981#icon')
+               format('svg');
+      	font-weight: normal;
+      	font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="../../assets/stylesheets/application-a422ff04cc.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/palettes-05ab2406df.css">
+    
+    
+      
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <style>
+        body, input {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+        }
+        pre, code {
+          font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+        }
+      </style>
+    
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    <script src="../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    
+  </head>
+  
+  
+  
+  <body class="palette-primary-teal palette-accent-teal">
+    
+      
+      
+    
+    <div class="backdrop">
+      <div class="backdrop-paper"></div>
+    </div>
+    <input class="toggle" type="checkbox" id="toggle-drawer">
+    <input class="toggle" type="checkbox" id="toggle-search">
+    <label class="toggle-button overlay" for="toggle-drawer"></label>
+    <header class="header">
+      <nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        
+          <span class="path">
+            
+              
+                Manual <i class="icon icon-link"></i>
+              
+            
+          </span>
+        
+        Trait Evolution
+      </div>
+    </div>
+    
+    
+    <div class="button button-search" role="button" aria-label="Search">
+      <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
+    </div>
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+    </header>
+    <main class="main">
+      
+      <div class="drawer">
+        <nav aria-label="Navigation">
+  
+  <a href="https://github.com/crsl4/PhyloNetworks.jl" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="../../snaq_small.png">
+        </div>
+      
+      <div class="name">
+        <strong>
+          PhyloNetworks.jl
+          <span class="version">
+            
+          </span>
+        </strong>
+        
+          <br>
+          crsl4/PhyloNetworks.jl
+        
+      </div>
+    </div>
+  </a>
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            
+            <a href="https://github.com/crsl4/PhyloNetworks.jl/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/crsl4/PhyloNetworks.jl/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+      <div class="toc">
+        <ul>
+          
+            
+  <li>
+    <a class="" title="Home" href="../..">
+      Home
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <span class="section">Manual</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Installation" href="../installation/">
+      Installation
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Input Data for SNaQ" href="../inputdata/">
+      Input Data for SNaQ
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="TICR pipeline" href="../ticr_howtogetQuartetCFs/">
+      TICR pipeline
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Network estimation and display" href="../snaq_plot/">
+      Network estimation and display
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Fixed Network" href="../fixednetworkoptim/">
+      Fixed Network
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Extract Expected CFs" href="../expectedCFs/">
+      Extract Expected CFs
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Bootstrap" href="../bootstrap/">
+      Bootstrap
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Multiple Alleles" href="../multiplealleles/">
+      Multiple Alleles
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="current" title="Trait Evolution" href="./">
+      Trait Evolution
+    </a>
+    
+      
+        
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Simulation" href="#simulation">
+                Simulation
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Phylogenetic Regression" href="#phylogenetic-regression">
+                Phylogenetic Regression
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Ancestral State Reconstruction" href="#ancestral-state-reconstruction">
+                Ancestral State Reconstruction
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Data Imputation" href="#data-imputation">
+                Data Imputation
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Phylogenetic ANOVA" href="#phylogenetic-anova">
+                Phylogenetic ANOVA
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Pagel's Lambda" href="#pagels-lambda">
+                Pagel's Lambda
+              </a>
+            </li>
+          
+        </ul>
+      
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
+            
+  <li>
+    <span class="section">Library</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Public" href="../../lib/public/">
+      Public
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Internals" href="../../lib/internals/">
+      Internals
+    </a>
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+      <article class="article">
+        <div class="wrapper">
+          
+          <p><a id='Trait-Evolution-1'></a></p>
+<h1 id="trait-evolution">Trait Evolution</h1>
+<p>Once the network is inferred, we can use it for downstream analysis, including for Phylogenetic Comparative Methods (PCM).</p>
+<p>The following examples show how to use functions to analyze trait evolution, in the special case when the evolutionary network is in fact a phylogenetic tree. This tree is assumed to be rooted, fixed, and with branch lengths.</p>
+<p>The examples below use a dataset described in Mahler et al. (2013)<sup id="fnref:fn1"><a class="footnote-ref" href="#fn:fn1" rel="footnote">1</a></sup>, available on Dryad <sup id="fnref:fn2"><a class="footnote-ref" href="#fn:fn2" rel="footnote">2</a></sup>. We can read it in from file <code>examples/lizard_tree.txt</code> <a href="https://github.com/crsl4/PhyloNetworks.jl/blob/master/examples/lizard_tree.txt">(here)</a> in Newick format:</p>
+<pre><code class="julia">phy = readTopology(joinpath(Pkg.dir(&quot;PhyloNetworks&quot;), &quot;examples&quot;, &quot;lizard_tree.txt&quot;));
+</code></pre>
+
+<p><a id='Simulation-1'></a></p>
+<h2 id="simulation">Simulation</h2>
+<p>Tools are available to simulate trait data on a given phylogenetic tree. For now, only simulations according to a simple Brownian Motion (BM) are implemented.</p>
+<p>We first need to create an object of class <a href="../../lib/public/#PhyloNetworks.ParamsBM"><code>ParamsBM</code></a><code>&lt;:ParamsProcess</code>:</p>
+<pre><code class="julia">params_simu = ParamsBM(2, 0.5) # BM with mean 2 and variance 0.5
+</code></pre>
+
+<p>We can then simulate according to these parameters on the phylogeny, using function <a href="../../lib/public/#PhyloNetworks.simulate"><code>simulate</code></a>.</p>
+<pre><code class="julia">sim = simulate(phy, params_simu) # simulate a BM on phy
+</code></pre>
+
+<p>This creates an object of class <a href="../../lib/public/#PhyloNetworks.TraitSimulation"><code>TraitSimulation</code></a>, from which we can extract  the data at the tips, thanks to the method <a href="../../lib/public/#Base.getindex-Tuple{PhyloNetworks.TraitSimulation,Symbol}"><code>getindex(::TraitSimulation, ::Symbol)</code></a>:</p>
+<pre><code class="julia">pred = sim[:Tips]
+</code></pre>
+
+<p>We can also extract the simulated values at the internal nodes of the phylogeny:</p>
+<pre><code class="julia">predNodes = sim[:InternalNodes]
+</code></pre>
+
+<p>Both extractors create an <code>Array</code> with one column, and as many lines as the number of tips (respectively, internal nodes) there are in the phylogeny.  It is sorted in the same order as the tips (respectively, internal nodes) of the phylogeny used to simulate it.</p>
+<p><a id='Phylogenetic-Regression-1'></a></p>
+<h2 id="phylogenetic-regression">Phylogenetic Regression</h2>
+<p>The main function that can be used to do phylogenetic regression is the function <a href="../../lib/public/#PhyloNetworks.phyloNetworklm"><code>phyloNetworklm</code></a>. It is based on function <code>lm</code> from package <a href="https://github.com/JuliaStats/GLM.jl">GLM</a>, and inherits from a lot of its features.</p>
+<p>In this example, we simulate data for later analysis. We use the predictor simulated above to create a new trait that depends linearly on the predictor, with a noise that has a phylogenetic structure:</p>
+<pre><code class="julia">noise = simulate(phy, ParamsBM(0, 0.1)) # Phylogenetic residuals
+trait = 10 + 2 * pred + noise[:Tips] # Trait to study
+</code></pre>
+
+<p>Below, we create a data frame that contains the trait, the predictor, and the tip names.  In order to avoid confusion, it is important that the data frame contains an extra column specifying the tip names, labeled <code>tipNames</code>.</p>
+<pre><code class="julia">using DataFrames
+dat = DataFrame(trait = trait, pred = pred, tipNames = tipLabels(sim))
+</code></pre>
+
+<p>Phylogenetic regression / ANOVA can then be done like with the <a href="https://github.com/JuliaStats/GLM.jl">GLM</a> package, using formulas. We just need to specify the phylogeny we are using:</p>
+<pre><code class="julia">fitTrait = phyloNetworklm(trait ~ pred, dat, phy)
+</code></pre>
+
+<p>This returns an object of type <a href="../../lib/public/#PhyloNetworks.PhyloNetworkLinearModel"><code>PhyloNetworkLinearModel</code></a><code>&lt;:LinPredModel</code>. It is dominated by the GLM type <code>LinPredModel</code>, which means that all base functions from Julia <a href="https://github.com/JuliaStats/StatsBase.jl">StatsBase</a> can be applied to it. See the documentation for this type for a list of all functions that can be used. Some functions allow the user to retrieve directly the estimated parameters of the BM, and are specific to this object.</p>
+<pre><code class="julia">@doc PhyloNetworkLinearModel # list all base functions
+sigma2_estim(fitTrait) # estimated variance of the BM
+mu_estim(fitTrait) # estimated root value of the BM
+</code></pre>
+
+<p><a id='Ancestral-State-Reconstruction-1'></a></p>
+<h2 id="ancestral-state-reconstruction">Ancestral State Reconstruction</h2>
+<p>When we know the model of evolution that the traits followed, we can do ancestral state reconstruction, finding the Best Linear Unbiased Predictor (BLUP) and their prediction intervals, for the trait values at internal nodes.</p>
+<p><a id='From-known-parameters-1'></a></p>
+<h3 id="from-known-parameters">From known parameters</h3>
+<p>Here, we simulated the predictor trait ourselves, so we know the exact model of evolution that generated the data. In this favorable case, an ancestral state reconstruction can be obtained using function <a href="../../lib/public/#PhyloNetworks.ancestralStateReconstruction"><code>ancestralStateReconstruction</code></a>:</p>
+<pre><code class="julia">ancPred = ancestralStateReconstruction(phy, pred, params_simu)
+</code></pre>
+
+<p>The object created has type <a href="../../lib/public/#PhyloNetworks.ReconstructedStates"><code>ReconstructedStates</code></a>. Several extractors can be applied to it:</p>
+<pre><code class="julia">expectations(ancPred) # The predictors
+stderr(ancPred) # The standard errors associated
+predint(ancPred) # The prediction interval (default to 95%)
+</code></pre>
+
+<p>The <code>PhyloNetworks</code> plot function can be used to plot the ancestral states or prediction intervals on the tree, using the <code>nodeLabel</code> argument, and the <a href="../../lib/public/#PhyloNetworks.expectationsPlot"><code>expectationsPlot</code></a> or <a href="../../lib/public/#PhyloNetworks.predintPlot"><code>predintPlot</code></a> utility function:</p>
+<pre><code class="julia">ancExpe = expectationsPlot(ancPred) # Format the expected ancestral states for the plot
+plot(phy, nodeLabel = ancExpe)
+
+ancInt = predintPlot(ancPred) # Format the prediction intervals for the plot
+plot(phy, nodeLabel = ancInt)
+</code></pre>
+
+<p>As we know the true ancestral states here, we can compare them to our estimation. In particular, we can count the number of times the true value lies in the prediction interval. This should be true about 95% of the times.</p>
+<pre><code class="julia">sum((predNodes .&lt; predint(ancPred)[1:99, 2]) &amp; (predNodes .&gt; predint(ancPred)[1:99, 1]))
+</code></pre>
+
+<p><a id='From-estimated-parameters-1'></a></p>
+<h3 id="from-estimated-parameters">From estimated parameters</h3>
+<p>In real applications though, we do not have access to the true parameters of the process that generated the data. If we make an assumption on process (like a BM for the residuals here), we can estimate it using the previous function. To fit a regular BM, we just need to do a regression of the trait against a simple intercept:</p>
+<pre><code class="julia">fitPred = phyloNetworklm(pred ~ 1, dat, phy)
+</code></pre>
+
+<p>We can then apply the <a href="../../lib/public/#PhyloNetworks.ancestralStateReconstruction"><code>ancestralStateReconstruction</code></a> function directly to the fitted object:</p>
+<pre><code class="julia">ancPredApprox = ancestralStateReconstruction(fitPred)
+</code></pre>
+
+<p>The prediction intervals ignore the fact that we estimated the process parameters, so they are less accurate and the function throws a warning. The output is an object of the same <a href="../../lib/public/#PhyloNetworks.ReconstructedStates"><code>ReconstructedStates</code></a> type as earlier, and the same extractors can be applied to it:</p>
+<pre><code class="julia">plot(phy, ancPredApprox)
+</code></pre>
+
+<p>For convenience, the two steps described above (fitting against the intercept, and then do ancestral state reconstruction) can be done all at once with a single call of the function <a href="../../lib/public/#PhyloNetworks.ancestralStateReconstruction"><code>ancestralStateReconstruction</code></a> on a DataFrame with the trait to reconstruct, and the tip labels:</p>
+<pre><code class="julia">datPred = DataFrame(pred = pred, tipNames = tipLabels(sim))
+ancPredApprox = ancestralStateReconstruction(datPred, phy)
+plot(phy, ancPredApprox)
+</code></pre>
+
+<p>This produces the exact same results.</p>
+<p><a id='With-known-predictors-1'></a></p>
+<h3 id="with-known-predictors">With known predictors</h3>
+<p>At this point, it might be tempting to apply this function to the trait we simulated earlier as a linear combination of the predictor and a phylogenetic noise.  However, this cannot be done directly:</p>
+<pre><code class="julia">ancTrait = ancestralStateReconstruction(fitTrait) # Throws an error !
+</code></pre>
+
+<p>This is because the model we used to fit the trait (a regression with one predictor and an intercept) is not compatible with the simple model of Brownian evolution that we assumed for the ancestral state reconstruction. As the predictor used is not known for ancestral states, it is not possible to reconstruct the trait for this particular model.</p>
+<p>The only option we have is to provide the function with the predictor's ancestral states, if they are known. They are known indeed in this toy example that we generated ourselves, so we can reconstruct our trait doing the following:</p>
+<pre><code class="julia">ancTrait = ancestralStateReconstruction(fitTrait, [ones(99, 1) predNodes])
+plot(phy, ancTrait)
+</code></pre>
+
+<p>where we provided the ancestral predictors as a matrix, containing the intercept, and the known predictor at the nodes. The user must be very careful with this function, as no check is done for the order of the predictors, that must be in the same order as the internal nodes of the phylogeny. As ancestral predictors are often unknown, the use of this functionality is discouraged.</p>
+<p><a id='Data-Imputation-1'></a></p>
+<h2 id="data-imputation">Data Imputation</h2>
+<p>There is no theoretical difference between an internal node, for which we could not measure the value of the trait, and a missing value at a tip of the phylogeny. Consequently, the previous <a href="../../lib/public/#PhyloNetworks.ancestralStateReconstruction"><code>ancestralStateReconstruction</code></a> function can be used to do data imputation. To see this, let's add some missing values in the <code>pred</code> array we used earlier:</p>
+<pre><code class="julia">datPred[[2, 6, 15, 38, 54, 89], :pred] = NA;
+ancPredApprox = ancestralStateReconstruction(datPred, phy)
+plot(phy, ancPredApprox)
+</code></pre>
+
+<p>In the plotting function, a prediction interval is shown for the missing values.</p>
+<p><a id='Phylogenetic-ANOVA-1'></a></p>
+<h2 id="phylogenetic-anova">Phylogenetic ANOVA</h2>
+<p>As mentioned above, the <a href="../../lib/public/#PhyloNetworks.phyloNetworklm"><code>phyloNetworklm</code></a>function is based on the <code>lm</code> function from <a href="https://github.com/JuliaStats/GLM.jl">GLM</a>. This means that it inherits from most of its features, and in particular, it can handle formulas with factors or interactions. To see this, let's load a subset of the lizard dataset <sup id="fnref:fn1"><a class="footnote-ref" href="#fn:fn1" rel="footnote">1</a></sup> we already used:</p>
+<pre><code class="julia">dat = readtable(joinpath(Pkg.dir(&quot;PhyloNetworks&quot;), &quot;examples&quot;, &quot;lizard_trait.txt&quot;));
+</code></pre>
+
+<p>This example file can be accessed <a href="https://github.com/crsl4/PhyloNetworks.jl/blob/master/examples/lizard_trait.txt">here</a>. This DataFrame has four columns: <code>tipNames</code> contains the tips names of the species, matching the one on the phylogeny we already loaded earlier; <code>AVG_SVL</code> is the average body size ("Snout to Vent Length"); <code>AVG_ltoe_IV</code> and <code>AVG_lfing_IV</code> are the average length of the fourth toe and finger; and <code>region</code> is a factor with 4 levels coding for the region where each species is found. See the description of the dataset on Dryad<sup id="fnref:fn2"><a class="footnote-ref" href="#fn:fn2" rel="footnote">2</a></sup> for further information, and other measured traits.</p>
+<p>For the sake of this example, let's assume that we want to do a regression of the SVL length against the toe and finger lengths, taking the region into account, and with an interaction between the finger length and the region. (This model has no biological basis. It is just meant to show the possibilities of the function). First, we need to make sure that the region information is indeed considered as a factor. This is done by transforming the region column into a <code>PooledDataArray</code>:</p>
+<pre><code class="julia">dat[:region] = PooledDataArray(dat[:region]); # Pool by region
+</code></pre>
+
+<p>Then, we just need to apply <a href="../../lib/public/#PhyloNetworks.phyloNetworklm"><code>phyloNetworklm</code></a> with the right formula:</p>
+<pre><code class="julia">fitAnova = phyloNetworklm(AVG_SVL ~ AVG_ltoe_IV + AVG_lfing_IV * region, dat, phy)
+</code></pre>
+
+<p>As before, a summary is shown by default, and all the functions that can be applied to a <code>lm</code> result still apply here.</p>
+<p><a id='Pagel's-Lambda-1'></a></p>
+<h2 id="pagels-lambda">Pagel's Lambda</h2>
+<p>One classical question about trait evolution is the amount of "phylogenetic signal" in a dataset, that is, the importance of the tree structure to explain variation in the observed traits. One way of doing measuring that is to use Pagel's lambda<sup id="fnref:fn3"><a class="footnote-ref" href="#fn:fn3" rel="footnote">3</a></sup> transformation of the branch lengths. This model assumes a BM on a tree where the internal branches are multiplied by a factor $\lambda$, while the external branches are modified so that the total hight of the tree is constant. Hence, $\lambda$ varies between $0$ (the tree has no influence on the data) and $1$ (the tree is unchanged).</p>
+<p>We can illustrate this with the predictor trait we used earlier. We use the same function as before, only indicating the model we want to use:</p>
+<pre><code class="julia">fitPagel = phyloNetworklm(pred ~ 1, datPred, phy, model = &quot;lambda&quot;)
+</code></pre>
+
+<p>As it is indeed generated according to a plain BM on the phylogeny, the estimated $\lambda$ should be close to $1$. It can be extracted with function <code>lambda_estim</code>:</p>
+<pre><code class="julia">lambda_estim(fitPagel)
+</code></pre>
+
+<p>Note that we took a version of the dataset with missing values, that can be readily handed by the function <a href="../../lib/public/#PhyloNetworks.phyloNetworklm"><code>phyloNetworklm</code></a>.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:fn1">
+<p>Mahler DL, Ingram T, Revell LJ, Losos JB (2013). Exceptional      convergence on the macroevolutionary landscape in island lizard radiations.     Science 341(6143): 292-295. http://dx.doi.org/10.1126/science.1232392&#160;<a class="footnote-backref" href="#fnref:fn1" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:fn2">
+<p>Mahler DL, Ingram T, Revell LJ, Losos JB (2013). Data from: Exceptional     convergence on the macroevolutionary landscape in island lizard radiations.     Dryad Digital Repository. http://dx.doi.org/10.5061/dryad.9g182&#160;<a class="footnote-backref" href="#fnref:fn2" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:fn3">
+<p>Pagel M (1999). Inferring the historical patterns of biological     evolution. Nature. 401: 877–884. doi:10.1038/44766&#160;<a class="footnote-backref" href="#fnref:fn3" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+          <aside class="copyright" role="note">
+            
+            Documentation built with
+            <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
+            using the
+            <a href="http://squidfunk.github.io/mkdocs-material/" target="_blank">
+              Material
+            </a>
+            theme.
+          </aside>
+          
+            <footer class="footer">
+              
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+        <a href="../multiplealleles/" title="Multiple Alleles">
+          <span class="direction">
+            Previous
+          </span>
+          <div class="page">
+            <div class="button button-previous" role="button" aria-label="Previous">
+              <i class="icon icon-back"></i>
+            </div>
+            <div class="stretch">
+              <div class="title">
+                Multiple Alleles
+              </div>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+    <div class="next">
+      
+        <a href="../../lib/public/" title="Public">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Public
+              </div>
+            </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </nav>
+
+            </footer>
+          
+        </div>
+      </article>
+      <div class="results" role="status" aria-live="polite">
+        <div class="scrollable">
+          <div class="wrapper">
+            <div class="meta"></div>
+            <div class="list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var base_url = '../..';
+      var repo_id  = 'crsl4/PhyloNetworks.jl';
+    </script>
+    <script src="../../assets/javascripts/application-997097ee0c.js"></script>
+    
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+      <script src="../../assets/mathjaxhelper.js"></script>
+    
+    
+  </body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    
+      
+        <title>Network estimation and display - PhyloNetworks.jl</title>
+      
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+    
+    <meta property="og:url" content="None">
+    <meta property="og:title" content="PhyloNetworks.jl">
+    <meta property="og:image" content="None/../../snaq_small.png">
+    <meta name="apple-mobile-web-app-title" content="PhyloNetworks.jl">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="../../snaq_small.png">
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../None">
+    <link rel="icon" type="image/x-icon" href="../../None">
+    <style>
+      @font-face {
+      	font-family: 'Icon';
+      	src: url('../../assets/fonts/icon.eot?52m981');
+      	src: url('../../assets/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+      		   url('../../assets/fonts/icon.woff?52m981')
+               format('woff'),
+      		   url('../../assets/fonts/icon.ttf?52m981')
+               format('truetype'),
+      		   url('../../assets/fonts/icon.svg?52m981#icon')
+               format('svg');
+      	font-weight: normal;
+      	font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="../../assets/stylesheets/application-0dac3e5884.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/palettes-05ab2406df.css">
+    
+    
+      
+      
+      
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <style>
+        body, input {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+        }
+        pre, code {
+          font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+        }
+      </style>
+    
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    <script src="../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    
+  </head>
+  
+  
+  
+  <body class="palette-primary-teal palette-accent-teal">
+    
+      
+      
+    
+    <div class="backdrop">
+      <div class="backdrop-paper"></div>
+    </div>
+    <input class="toggle" type="checkbox" id="toggle-drawer">
+    <input class="toggle" type="checkbox" id="toggle-search">
+    <label class="toggle-button overlay" for="toggle-drawer"></label>
+    <header class="header">
+      <nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        
+          <span class="path">
+            
+              
+                Manual <i class="icon icon-link"></i>
+              
+            
+          </span>
+        
+        Network estimation and display
+      </div>
+    </div>
+    
+    
+    <div class="button button-search" role="button" aria-label="Search">
+      <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
+    </div>
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+    </header>
+    <main class="main">
+      
+      <div class="drawer">
+        <nav aria-label="Navigation">
+  
+  <a href="https://github.com/crsl4/PhyloNetworks.jl" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="../../snaq_small.png">
+        </div>
+      
+      <div class="name">
+        <strong>
+          PhyloNetworks.jl
+          <span class="version">
+            
+          </span>
+        </strong>
+        
+          <br>
+          crsl4/PhyloNetworks.jl
+        
+      </div>
+    </div>
+  </a>
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            
+            <a href="https://github.com/crsl4/PhyloNetworks.jl/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/crsl4/PhyloNetworks.jl/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+      <div class="toc">
+        <ul>
+          
+            
+  <li>
+    <a class="" title="Home" href="../..">
+      Home
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <span class="section">Manual</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Installation" href="../installation/">
+      Installation
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Input Data for SNaQ" href="../inputdata/">
+      Input Data for SNaQ
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="TICR pipeline" href="../ticr_howtogetQuartetCFs/">
+      TICR pipeline
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="current" title="Network estimation and display" href="./">
+      Network estimation and display
+    </a>
+    
+      
+        
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Network Estimation" href="#network-estimation">
+                Network Estimation
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Network Visualization" href="#network-visualization">
+                Network Visualization
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Re-rooting networks" href="#re-rooting-networks">
+                Re-rooting networks
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Candidate Network Evaluation" href="#candidate-network-evaluation">
+                Candidate Network Evaluation
+              </a>
+            </li>
+          
+        </ul>
+      
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Fixed Network" href="../fixednetworkoptim/">
+      Fixed Network
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Extract Expected CFs" href="../expectedCFs/">
+      Extract Expected CFs
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Bootstrap" href="../bootstrap/">
+      Bootstrap
+    </a>
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
+            
+  <li>
+    <span class="section">Library</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Public" href="../../lib/public/">
+      Public
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Internals" href="../../lib/internals/">
+      Internals
+    </a>
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+      <article class="article">
+        <div class="wrapper">
+          
+          <p><a id='Getting-a-Network-1'></a></p>
+<h1 id="getting-a-network">Getting a Network</h1>
+<p><a id='Network-Estimation-1'></a></p>
+<h2 id="network-estimation">Network Estimation</h2>
+<p>After <a href="../inputdata/#Input-for-SNaQ-1">Input for SNaQ</a>, we can estimate the network using the input data <code>d</code> and starting from tree (or network) <code>T</code>:</p>
+<pre><code class="julia">net1=snaq!(T,d,filename=&quot;net1_snaq&quot;);
+less(&quot;net1_snaq.err&quot;)
+less(&quot;net1_snaq.out&quot;)
+less(&quot;net1_snaq.networks&quot;)
+net2=snaq!(T,d,hmax=2, filename=&quot;net2_snaq&quot;);
+</code></pre>
+
+<p>when viewing the result files "net1_snaq.err" and "net1_snaq.out" with <code>less</code> within Julia, use arrows to scroll down and type <code>q</code> to quit viewing the files. The "net1_snaq.networks" file contains a list of networks obtained from moving the placement of the hybrid node to another node inside the cycle, along with its pseudolikelihood score.</p>
+<p>The option <code>hmax</code> corresponds to the maximum number of hybridizations allowed, 1 by default. The function name <code>snaq!</code> ends with ! because it modifies the argument <code>d</code> by including the expected CF. Type <code>?</code> then <code>snaq!</code> to get help on that function.</p>
+<p>The estimation function creates a <code>.out</code> file (<code>snaq.out</code> by default) with the estimated network in parenthetical format, which you can also print directly to the screen like this:</p>
+<pre><code class="julia">net1
+writeTopology(net1)                   # topology to screen, full precision for branch lengths and γ
+writeTopology(net1,di=true)           # γ omitted: for dendroscope
+writeTopology(net1, &quot;bestnet_h1.tre&quot;) # topology to file 'bestnet_h1.tre': creates or overwrites file
+less(&quot;bestnet_h1.tre&quot;)                # just view the file
+</code></pre>
+
+<p>The option <code>di=true</code> is for the parenthetical format used by <a href="http://dendroscope.org/">Dendroscope</a> (without reticulation heritabilities). Copy this parenthetical description and paste it into Dendroscope, or use the plotting function described below.</p>
+<p><a id='SNaQ-error-1'></a></p>
+<h3 id="snaq-error">SNaQ error</h3>
+<p>Please report any bugs and errors to <em>claudia@stat.wisc.edu</em>, so we can debug it. The easiest way to do it is by checking the <code>.err</code> file which will show the number of runs that failed by a bug and the corresponding seed to replicate the run. This is an example of what the <code>.err</code> file looks like: <code>Total errors: 1 in seeds [4545]</code>. You need to run the following function with the same settings that caused the error:</p>
+<pre><code class="julia">snaqDebug(T,d,hmax=2,seed=4545)
+</code></pre>
+
+<p>This will create two files: <em>snaqDebug.log</em> and <em>debug.log</em> which you can then send to <em>claudia@stat.wisc.edu</em> with subject "SNaQ bug found" or something similar. I will not have access to any part of your data, the files simply print out the steps to retrace the bug, and hopefully fix it.</p>
+<p><a id='Network-Visualization-1'></a></p>
+<h2 id="network-visualization">Network Visualization</h2>
+<p>To visualize the network:</p>
+<pre><code class="julia">p = plot(net1, showGamma=true)
+</code></pre>
+
+<p>This function will open a browser where the plot will appear. To get a pdf version of the plot:</p>
+<pre><code class="julia">using Gadfly
+draw(PDF(&quot;bestnet_h1.pdf&quot;, 4inch, 4inch),p)
+</code></pre>
+
+<p>The plot function has many options. Type <code>?</code> to switch to the help mode of Julia, then type the name of the function, here <code>plot</code>. Edge colors can be modified, for instance.</p>
+<pre><code class="julia"># using Gadfly # if not done earlier
+plot(net1, showEdgeLength=true, minorHybridEdgeColor=colorant&quot;tan&quot;)
+</code></pre>
+
+<p><a id='Re-rooting-networks-1'></a></p>
+<h2 id="re-rooting-networks">Re-rooting networks</h2>
+<p>SNaQ infers an unrooted semi-directed network, in the sense that the direction of tree edges cannot be inferred, but the direction of hybrid edges can be inferred. To obtain a representative visualization, it is best to root the network first, using one or more outgroup. If there is a single outgroup, the network can be rooted with this outgroup, if compatible, like this:</p>
+<pre><code class="julia">rootatnode!(net1, &quot;4&quot;)
+plot(net1, showGamma=true)
+</code></pre>
+
+<p>Here we used taxon "4" as outgroup. More options are available, to root the network either at a give node or along a given edge. Use the help mode (type <code>?</code>) to get help on the functions <code>rootatnode!</code> and <code>rootonedge!</code> to get more info.</p>
+<p>If the network is plotted with crossing edges, you may identify ways to rotate the children edges at some nodes to untangle some crossing edges. This can be done using the function <code>rotate!</code>. Type <code>?</code> then <code>rotate!</code> to get help and examples.</p>
+<p><a id='Candidate-Network-Evaluation-1'></a></p>
+<h2 id="candidate-network-evaluation">Candidate Network Evaluation</h2>
+<p>From a set of candidate networks, one might simply need to score of each network to pick the best. Here, the score is the negative log pseudo-likelihood, and the lower the better. See the section to get the score of a <a href="../fixednetworkoptim/#Fixed-Network-1">Fixed Network</a>.</p>
+<p>Else: go next to <a href="../expectedCFs/#Extract-Expected-CFs-1">Extract Expected CFs</a> to see how your network fits your data, or go for a <a href="../bootstrap/#Bootstrap-1">Bootstrap</a> analysis to quantify support for tree edges and hybrid edges.</p>
+          <aside class="copyright" role="note">
+            
+            Documentation built with
+            <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
+            using the
+            <a href="http://squidfunk.github.io/mkdocs-material/" target="_blank">
+              Material
+            </a>
+            theme.
+          </aside>
+          
+            <footer class="footer">
+              
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+        <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline">
+          <span class="direction">
+            Previous
+          </span>
+          <div class="page">
+            <div class="button button-previous" role="button" aria-label="Previous">
+              <i class="icon icon-back"></i>
+            </div>
+            <div class="stretch">
+              <div class="title">
+                TICR pipeline
+              </div>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+    <div class="next">
+      
+        <a href="../fixednetworkoptim/" title="Fixed Network">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Fixed Network
+              </div>
+            </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </nav>
+
+            </footer>
+          
+        </div>
+      </article>
+      <div class="results" role="status" aria-live="polite">
+        <div class="scrollable">
+          <div class="wrapper">
+            <div class="meta"></div>
+            <div class="list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var base_url = '../..';
+      var repo_id  = 'crsl4/PhyloNetworks.jl';
+    </script>
+    <script src="../../assets/javascripts/application-997097ee0c.js"></script>
+    
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+      <script src="../../assets/mathjaxhelper.js"></script>
+    
+    
+  </body>
+</html>

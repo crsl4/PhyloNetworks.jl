@@ -1,0 +1,703 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PhyloNetworks is a Julia package for the manipulation, visualization and inference of phylogenetic networks.">
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.4, mkdocs-material-2.9.2">
+    
+    
+      
+        <title>Extract Expected CFs - PhyloNetworks.jl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.ba0fd1a6.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.6079476c.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#extract-expected-cfs" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="PhyloNetworks.jl" class="md-header-nav__button md-logo">
+          
+            <img src="../../snaq_small.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                PhyloNetworks.jl
+              </span>
+              <span class="md-header-nav__topic">
+                Extract Expected CFs
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <span class="md-nav__button md-logo">
+      
+        <img src="../../snaq_small.png" width="48" height="48">
+      
+    </span>
+    PhyloNetworks.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Manual
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Manual
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../inputdata/" title="Input Data for SNaQ" class="md-nav__link">
+      Input Data for SNaQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-nav__link">
+      TICR pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../snaq_plot/" title="Network estimation and display" class="md-nav__link">
+      Network estimation and display
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dist_reroot/" title="Network comparison and manipulation" class="md-nav__link">
+      Network comparison and manipulation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fixednetworkoptim/" title="Candidate Networks" class="md-nav__link">
+      Candidate Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Extract Expected CFs" class="md-nav__link md-nav__link--active">
+      Extract Expected CFs
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../multiplealleles/" title="Multiple Alleles" class="md-nav__link">
+      Multiple Alleles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../trait_tree/" title="Continuous Trait Evolution" class="md-nav__link">
+      Continuous Trait Evolution
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Library
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Library
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/public/" title="Public" class="md-nav__link">
+      Public
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/internals/" title="Internals" class="md-nav__link">
+      Internals
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/crsl4/PhyloNetworks.jl/edit/master/docs/man/expectedCFs.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><a id='Extract-Expected-CFs-1'></a></p>
+<h1 id="extract-expected-cfs">Extract Expected CFs</h1>
+<p>A good way to visualize the "goodness-of-fit" of a given estimated network to the data is to plot the observed CF versus the expected CF. If the network is a good fit, then the dots in the plot will be close to the diagonal (x=y line). The following function will create a dataframe with the observed and expected CFs, which are all saved in the DataCF object after running snaq:</p>
+<div class="codehilite"><pre><span></span>julia&gt; topologyMaxQPseudolik!(truenet, raxmlCF);
+
+julia&gt; df_wide = fittedQuartetCF(raxmlCF) # same as fittedQuartetCF(raxmlCF, :wide)
+15×10 DataFrames.DataFrame. Omitted printing of 2 columns
+│ Row │ tx1 │ tx2 │ tx3 │ tx4 │ obsCF12  │ obsCF13   │ obsCF14   │ expCF12     │
+├─────┼─────┼─────┼─────┼─────┼──────────┼───────────┼───────────┼─────────────┤
+│ 1   │ A   │ B   │ C   │ D   │ 1.0      │ 0.0       │ 0.0       │ 0.999949    │
+│ 2   │ A   │ B   │ C   │ E   │ 0.833333 │ 0.0333333 │ 0.133333  │ 0.835101    │
+│ 3   │ A   │ B   │ C   │ O   │ 0.866667 │ 0.0       │ 0.133333  │ 0.860271    │
+│ 4   │ A   │ B   │ D   │ E   │ 0.833333 │ 0.0333333 │ 0.133333  │ 0.835101    │
+│ 5   │ A   │ B   │ D   │ O   │ 0.866667 │ 0.0       │ 0.133333  │ 0.860271    │
+│ 6   │ A   │ B   │ E   │ O   │ 0.833333 │ 0.0666667 │ 0.1       │ 0.844588    │
+│ 7   │ A   │ C   │ D   │ E   │ 0.0      │ 0.0       │ 1.0       │ 0.000123577 │
+│ 8   │ A   │ C   │ D   │ O   │ 0.0      │ 0.0       │ 1.0       │ 0.000133914 │
+│ 9   │ A   │ C   │ E   │ O   │ 0.533333 │ 0.333333  │ 0.133333  │ 0.598761    │
+│ 10  │ A   │ D   │ E   │ O   │ 0.533333 │ 0.333333  │ 0.133333  │ 0.598761    │
+│ 11  │ B   │ C   │ D   │ E   │ 0.0      │ 0.0       │ 1.0       │ 0.000123577 │
+│ 12  │ B   │ C   │ D   │ O   │ 0.0      │ 0.0       │ 1.0       │ 0.000133914 │
+│ 13  │ B   │ C   │ E   │ O   │ 0.666667 │ 0.266667  │ 0.0666667 │ 0.598761    │
+│ 14  │ B   │ D   │ E   │ O   │ 0.666667 │ 0.266667  │ 0.0666667 │ 0.598761    │
+│ 15  │ C   │ D   │ E   │ O   │ 1.0      │ 0.0       │ 0.0       │ 0.999898    │
+
+julia&gt; df_long = fittedQuartetCF(raxmlCF, :long)
+45×7 DataFrames.DataFrame
+│ Row │ tx1 │ tx2 │ tx3 │ tx4 │ quartet │ obsCF     │ expCF      │
+├─────┼─────┼─────┼─────┼─────┼─────────┼───────────┼────────────┤
+│ 1   │ A   │ B   │ C   │ D   │ 12_34   │ 1.0       │ 0.999949   │
+│ 2   │ A   │ B   │ C   │ D   │ 13_24   │ 0.0       │ 2.52737e-5 │
+│ 3   │ A   │ B   │ C   │ D   │ 14_23   │ 0.0       │ 2.52737e-5 │
+│ 4   │ A   │ B   │ C   │ E   │ 12_34   │ 0.833333  │ 0.835101   │
+│ 5   │ A   │ B   │ C   │ E   │ 13_24   │ 0.0333333 │ 0.0824494  │
+│ 6   │ A   │ B   │ C   │ E   │ 14_23   │ 0.133333  │ 0.0824494  │
+│ 7   │ A   │ B   │ C   │ O   │ 12_34   │ 0.866667  │ 0.860271   │
+│ 8   │ A   │ B   │ C   │ O   │ 13_24   │ 0.0       │ 0.0698646  │
+⋮
+│ 37  │ B   │ C   │ E   │ O   │ 12_34   │ 0.666667  │ 0.598761   │
+│ 38  │ B   │ C   │ E   │ O   │ 13_24   │ 0.266667  │ 0.302023   │
+│ 39  │ B   │ C   │ E   │ O   │ 14_23   │ 0.0666667 │ 0.099216   │
+│ 40  │ B   │ D   │ E   │ O   │ 12_34   │ 0.666667  │ 0.598761   │
+│ 41  │ B   │ D   │ E   │ O   │ 13_24   │ 0.266667  │ 0.302023   │
+│ 42  │ B   │ D   │ E   │ O   │ 14_23   │ 0.0666667 │ 0.099216   │
+│ 43  │ C   │ D   │ E   │ O   │ 12_34   │ 1.0       │ 0.999898   │
+│ 44  │ C   │ D   │ E   │ O   │ 13_24   │ 0.0       │ 5.09658e-5 │
+│ 45  │ C   │ D   │ E   │ O   │ 14_23   │ 0.0       │ 5.09658e-5 │
+</pre></div>
+
+
+<p>It is important to have run <code>snaq!</code>, <code>topologyQPseudolik!</code> or <code>topologyMaxQPseudolik!</code> before making these tables, or the result would be meaningless. These functions update the fitted concordance factors (those expected under the network) inside the DataCF object <code>raxmlCF</code>.</p>
+<p>Here is one way to plot them, via R again, and using the R package <code>ggplot2</code>.</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">RCall</span>
+</pre></div>
+
+
+<p>To install ggplot2 if not installed already, do: <code>R"install.packages('ggplot2', dep=TRUE)"</code></p>
+<!– next: not run, would require installing ggplot2 by travis: about 6min –>
+
+<div class="codehilite"><pre><span></span><span class="nd">@rlibrary</span> <span class="n">ggplot2</span>
+<span class="n">ggplot</span><span class="p">(</span><span class="n">df_long</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=:</span><span class="n">obsCF</span><span class="p">,</span><span class="n">y</span><span class="o">=:</span><span class="n">expCF</span><span class="p">))</span> <span class="o">+</span> <span class="n">theme_classic</span><span class="p">()</span> <span class="o">+</span>
+    <span class="n">geom_segment</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">xend</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">yend</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;#008080&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span> <span class="o">+</span> <span class="c"># diagonal line</span>
+    <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;#008080&quot;</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">position_jitter</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">0.005</span><span class="p">))</span> <span class="o">+</span>
+    <span class="n">ylab</span><span class="p">(</span><span class="s">&quot;quartet CF expected from network&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">xlab</span><span class="p">(</span><span class="s">&quot;quartet CF observed in gene trees&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">coord_equal</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+
+
+<!– ggsave(joinpath("..", "assets", "figures", "expCFs_obsvsfitted.svg"), scale=1, width=6, height=5); # hide –>
+
+<p><img alt="obsvsfitted" src="../../assets/figures/expCFs_obsvsfitted.svg" /></p>
+<p>Many points are overlapping, so they were "jittered" a little to see them all better. There are always many points overlapping on the bottom-left corner: concordance factors of 0.0 for quartet resolutions not observed, and not expected.   To export the table of quartet CFs and explore the fit of the network with other tools:</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">CSV</span>
+<span class="n">CSV</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;fittedCF.csv&quot;</span><span class="p">,</span> <span class="n">df_long</span><span class="p">)</span>
+</pre></div>
+
+
+<p>alternative code to get a similar plot with <a href="http://gadflyjl.org/">Gadfly</a>:</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">Gadfly</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">layer</span><span class="p">(</span><span class="n">df_long</span><span class="p">,</span> <span class="n">Geom</span><span class="o">.</span><span class="n">point</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s">&quot;obsCF&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">&quot;expCF&quot;</span><span class="p">),</span>
+     <span class="n">layer</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="n">Geom</span><span class="o">.</span><span class="n">line</span><span class="p">),</span> <span class="c"># diagonal line</span>
+     <span class="n">Guide</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;CF observed in gene trees&quot;</span><span class="p">),</span> <span class="n">Guide</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;CF expected from network&quot;</span><span class="p">))</span>
+</pre></div>
+
+
+<p>We could highlight quartets that include taxon A, say, if we suspect that it is an unrecognized hybrid. Many points are overlapping, like before, so they are again "jittered" a bit.</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">DataFrames</span>
+<span class="n">df_long</span><span class="p">[</span><span class="o">:</span><span class="n">has_A</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;no&quot;</span> <span class="c"># add a column to our data, to indicate which 4-taxon sets have A or not</span>
+<span class="k">for</span> <span class="n">r</span> <span class="kp">in</span> <span class="n">eachrow</span><span class="p">(</span><span class="n">df_long</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s">&quot;A&quot;</span> <span class="o">∈</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="o">:</span><span class="n">tx1</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="o">:</span><span class="n">tx2</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="o">:</span><span class="n">tx3</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="o">:</span><span class="n">tx4</span><span class="p">]]</span>
+       <span class="n">r</span><span class="p">[</span><span class="o">:</span><span class="n">has_A</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;yes&quot;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+<span class="n">df_long</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>45×8 DataFrames.DataFrame
+│ Row │ tx1 │ tx2 │ tx3 │ tx4 │ quartet │ obsCF     │ expCF      │ has_A │
+├─────┼─────┼─────┼─────┼─────┼─────────┼───────────┼────────────┼───────┤
+│ 1   │ A   │ B   │ C   │ D   │ 12_34   │ 1.0       │ 0.999949   │ yes   │
+│ 2   │ A   │ B   │ C   │ D   │ 13_24   │ 0.0       │ 2.52737e-5 │ yes   │
+│ 3   │ A   │ B   │ C   │ D   │ 14_23   │ 0.0       │ 2.52737e-5 │ yes   │
+│ 4   │ A   │ B   │ C   │ E   │ 12_34   │ 0.833333  │ 0.835101   │ yes   │
+│ 5   │ A   │ B   │ C   │ E   │ 13_24   │ 0.0333333 │ 0.0824494  │ yes   │
+│ 6   │ A   │ B   │ C   │ E   │ 14_23   │ 0.133333  │ 0.0824494  │ yes   │
+│ 7   │ A   │ B   │ C   │ O   │ 12_34   │ 0.866667  │ 0.860271   │ yes   │
+│ 8   │ A   │ B   │ C   │ O   │ 13_24   │ 0.0       │ 0.0698646  │ yes   │
+⋮
+│ 37  │ B   │ C   │ E   │ O   │ 12_34   │ 0.666667  │ 0.598761   │ no    │
+│ 38  │ B   │ C   │ E   │ O   │ 13_24   │ 0.266667  │ 0.302023   │ no    │
+│ 39  │ B   │ C   │ E   │ O   │ 14_23   │ 0.0666667 │ 0.099216   │ no    │
+│ 40  │ B   │ D   │ E   │ O   │ 12_34   │ 0.666667  │ 0.598761   │ no    │
+│ 41  │ B   │ D   │ E   │ O   │ 13_24   │ 0.266667  │ 0.302023   │ no    │
+│ 42  │ B   │ D   │ E   │ O   │ 14_23   │ 0.0666667 │ 0.099216   │ no    │
+│ 43  │ C   │ D   │ E   │ O   │ 12_34   │ 1.0       │ 0.999898   │ no    │
+│ 44  │ C   │ D   │ E   │ O   │ 13_24   │ 0.0       │ 5.09658e-5 │ no    │
+│ 45  │ C   │ D   │ E   │ O   │ 14_23   │ 0.0       │ 5.09658e-5 │ no    │
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="n">ggplot</span><span class="p">(</span><span class="n">df_long</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=:</span><span class="n">obsCF</span><span class="p">,</span> <span class="n">y</span><span class="o">=:</span><span class="n">expCF</span><span class="p">,</span> <span class="n">color</span><span class="o">=:</span><span class="n">has_A</span><span class="p">))</span> <span class="o">+</span> <span class="n">theme_classic</span><span class="p">()</span> <span class="o">+</span>
+    <span class="n">geom_segment</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">xend</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">yend</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&quot;black&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span> <span class="o">+</span> <span class="c"># diagonal line</span>
+    <span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="n">position_jitter</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mf">0.005</span><span class="p">))</span> <span class="o">+</span>
+    <span class="n">ylab</span><span class="p">(</span><span class="s">&quot;quartet CF expected from network&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">xlab</span><span class="p">(</span><span class="s">&quot;quartet CF observed in gene trees&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">coord_equal</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+
+
+<!– ggsave(joinpath("..", "assets", "figures", "expCFs_obsvsfitted_A.svg"), width=6, height=5); # hide –>
+
+<p><img alt="obsvsfitted A present or not" src="../../assets/figures/expCFs_obsvsfitted_A.svg" /></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../fixednetworkoptim/" title="Candidate Networks" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Candidate Networks
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../bootstrap/" title="Bootstrap" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Bootstrap
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.a59e2a89.js"></script>
+      
+      <script>app.initialize({version:"0.17.4",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="../../assets/mathjaxhelper.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

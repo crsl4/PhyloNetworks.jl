@@ -1,0 +1,292 @@
+```{julia; eval=true; echo=false}
+using PhyloNetworks
+```
+# Continuous Trait Evolution
+
+Once the network is inferred, we can take
+these species relationships into account when studying the distribution of quantitative
+traits measured for extant species.
+This is the goal of phylogenetic comparative methods (PCM).
+
+We assume a fixed network, correctly rooted, with branch lengths
+proportional to calendar time. Here, we consider the true network that was
+used in the previous sections, and which is ultrametric (all the tips are contemporary).
+```{julia; eval=true; label="truenet"; fig_width=4; fig_height=4}
+truenet = readTopology("((((D:0.4,C:0.4):4.8,((A:0.8,B:0.8):2.2)#H1:2.2::0.7):4.0,(#H1:0::0.3,E:3.0):6.2):2.0,O:11.2);")
+plot(truenet, useEdgeLength=true, showGamma=true)
+```
+
+## Trait simulation
+
+We start by generating continuous traits to study. We simulate three
+traits on the network (two independent, one dependent),
+using a Brownian Motion (BM) model of trait evolution on the network. We start
+by choosing the parameters of the BM (ancestral mean and variance), by creating
+objects of class [`ParamsBM`](@ref)`<:ParamsProcess`.
+```{julia; eval=true}
+params_trait1 = ParamsBM( 2, 0.5) # BM with mean  2 and variance 0.5
+params_trait2 = ParamsBM(-2, 1)   # BM with mean -2 and variance 1.0
+```
+We then simulate the independent traits according to these parameters, using
+function [`simulate`](@ref) (fixing the seed, for reproducibility).
+```{julia; eval=true; resuls="markup"}
+srand(18480224)
+sim1 = simulate(truenet, params_trait1) # simulate a BM on truenet
+sim2 = simulate(truenet, params_trait2)
+```
+This creates objects of class [`TraitSimulation`](@ref), from which we can
+extract the data at the tips, thanks to the method
+[`getindex(::TraitSimulation, ::Symbol)`](@ref).
+```{julia; eval=true; resuls="markup"}
+trait1 = sim1[:Tips] # trait 1 at the tips (data)
+trait2 = sim2[:Tips]
+```
+This extractor creates an `Array` with one column, and as many lines as the
+number of tips there are in the phylogeny.  It is sorted in the same order as
+the tips of the phylogeny used to simulate it.  
+If needed, we could also extract the simulated values at the internal nodes
+in the tre:
+```{julia; eval=false}
+sim1[:InternalNodes]
+```
+
+Finally, we generate the last trait correlated with trait 1
+(but not trait 2), with phylogenetic noise.
+```{julia; eval=true}
+srand(18700904)
+noise = simulate(truenet, ParamsBM(0, 0.1)) # phylogenetic residuals
+trait3 = 10 + 2 * trait1 + noise[:Tips] # trait to study. independent of trait2
+```
+
+## Phylogenetic regression
+
+Assume that we measured the three traits above, and that we wanted to study the
+impact of traits 1 and 2 on trait 3. To do that, we can perform a phylogenetic
+regression.
+
+In order to avoid confusion, the function takes in a `DataFrame`, that has an
+extra column with the names of the tips of the network, labeled `tipNames`.
+Here, we generated the traits ourselves, so they are all in the same order.
+```{julia; eval=true; results="markup"; term=true}
+using DataFrames
+dat = DataFrame(trait1 = trait1, trait2 = trait2, trait3 = trait3,
+                tipNames = tipLabels(sim1))
+```
+
+Phylogenetic regression / ANOVA is based on the
+[GLM](https://github.com/JuliaStats/GLM.jl) package, with the network as an
+extra argument, using funtion [`phyloNetworklm`](@ref).
+```{julia; eval=true; results="markup"; term=true}
+fitTrait3 = phyloNetworklm(@formula(trait3 ~ trait1 + trait2), dat, truenet)
+```
+From this, we can see that the intercept, the coefficient for trait 1
+and the variance of the noise are correctly estimated
+(given that there are only 6 taxa).
+In addition, the Student test for the coefficient
+associated with trait 2 has a high p-value, which means that this coefficient
+is not significantly different from 0. This is consistent with the
+way we simulated trait 3.
+
+The function returns an object of type [`PhyloNetworkLinearModel`](@ref)`<:LinPredModel`.
+It is a subtype of the GLM type `LinPredModel`, which means that all base
+functions from Julia [StatsBase](https://github.com/JuliaStats/StatsBase.jl) can
+be applied to it. See the documentation for this type for a list of all
+functions that can be used. Some functions allow the user to retrieve directly
+the estimated parameters of the BM, and are specific to this object.
+```{julia; eval=true; term=true}
+sigma2_estim(fitTrait3) # estimated variance of the BM
+mu_estim(fitTrait3) # estimated root value of the BM
+```
+
+## Ancestral State Reconstruction
+
+
+### From known parameters
+
+If we assume that we know the exact model of evolution that generated the
+traits, we can do ancestral trait reconstruction. Here, we simulated trait 1
+ourselves, so we can use the true process, with the true parameters.
+In other words, we can reconstruct the state at the internal nodes,
+given the values at the tips, the known value at the root
+and the known BM variance.
+```{julia; eval=true}
+ancTrait1 = ancestralStateReconstruction(truenet, trait1, params_trait1)
+```
+Function [`ancestralStateReconstruction`](@ref) creates an object with type
+[`ReconstructedStates`](@ref). Several extractors can be applied to it:
+```{julia; eval=true; results="markup"; term=true}
+expectations(ancTrait1) # predictions
+stderr(ancTrait1) # associated standard errors
+predint(ancTrait1) # prediction interval (default to 95%)
+```
+We can plot the ancestral states or prediction intervals on the tree, using the
+`nodeLabel` argument of the `plot` function.
+```{julia; eval=true; label="ancestral_expe"; fig_width=4; fig_height=4}
+ancExpe = expectationsPlot(ancTrait1); # format expected ancestral states for the plot
+plot(truenet, nodeLabel = ancExpe)
+```
+```{julia; eval=true; label="ancestral_predint"; fig_width=6; fig_height=4}
+ancInt = predintPlot(ancTrait1) # format the prediction intervals for the plot
+plot(truenet, nodeLabel = ancInt)
+```
+
+As we know the true ancestral states here, we can compare them to our
+estimation.
+```{julia; eval=true; term=true; results="markup"}
+predictions = DataFrame(infPred=predint(ancTrait1)[1:7, 1],
+                        trueValue=sim1[:InternalNodes],
+                        supPred=predint(ancTrait1)[1:7, 2])
+```
+
+### From estimated parameters
+
+In real applications though, we do not have access to the true parameters of the
+process that generated the data. We can estimate it using the previous function.
+To fit a regular BM, we just need to do a regression of trait 1 against a simple
+intercept:
+```{julia; eval=true}
+fitTrait1 = phyloNetworklm(@formula(trait1 ~ 1), dat, truenet)
+```
+We can then apply the [`ancestralStateReconstruction`](@ref) function directly
+to the fitted object:
+```{julia; eval=true}
+ancTrait1Approx = ancestralStateReconstruction(fitTrait1)
+```
+The prediction intervals ignore the fact that we estimated the process
+parameters, so they are less accurate and the function throws a warning.
+The output is an object of the same [`ReconstructedStates`](@ref) type as earlier,
+and the same extractors can be applied to it:
+```{julia; eval=true; label="ancestral1"; fig_width=6; fig_height=4}
+plot(truenet, nodeLabel = expectationsPlot(ancTrait1Approx))
+```
+For convenience, the two steps described above (fitting against the
+intercept, and then do ancestral state reconstruction) can be done all at once
+with a single call of the function [`ancestralStateReconstruction`](@ref) on a
+DataFrame with the trait to reconstruct, and the tip labels:
+```{julia; eval=true; label="ancestral2"; fig_width=6; fig_height=4}
+datTrait1 = DataFrame(trait1 = trait1, tipNames = tipLabels(sim1))
+ancTrait1Approx = ancestralStateReconstruction(datTrait1, truenet)
+plot(truenet, nodeLabel = predintPlot(ancTrait1Approx))
+```
+This produces the exact same results.
+
+### Data imputation
+
+Note that there is no theoretical difference between an internal node, for which
+we could not measure the value of the trait, and a missing value at a tip of the
+network. Consequently, the previous [`ancestralStateReconstruction`](@ref)
+function can be used to do data imputation. To see this, let's add some missing
+values in trait 1.
+```{julia; eval=true; label="ancestral3"; fig_width=6; fig_height=4}
+datTrait1[[2], :trait1] = NA # second row: for taxon C
+ancTrait1Approx = ancestralStateReconstruction(datTrait1, truenet)
+plot(truenet, nodeLabel = predintPlot(ancTrait1Approx))
+```
+In the plotting function, a prediction interval is shown for the missing
+values.
+
+### With known predictors
+
+At this point, it might be tempting to apply this function to trait 3 we
+simulated earlier as a linear combination of trait 1 and a phylogenetic
+noise. However, this cannot be done directly:
+```{julia; eval=false}
+ancTrait3 = ancestralStateReconstruction(fitTrait3) # Throws an error !
+```
+This is because the model we used to fit the trait (a regression with one
+predictor and an intercept) is not compatible with the simple model of Brownian
+evolution that we assumed for the ancestral state reconstruction. As the
+predictor used is not known for ancestral states, it is not possible to
+reconstruct the trait for this particular model.
+
+The only option we have is to provide the function with the predictor's
+ancestral states, if they are known. They are known indeed in this
+toy example that we generated ourselves, so we can reconstruct our trait
+doing the following:
+```{julia; eval=true; label="ancestral4"; fig_width=6; fig_height=4}
+ancTrait3 = ancestralStateReconstruction(fitTrait3,
+              [ones(7, 1) sim1[:InternalNodes] sim2[:InternalNodes]])
+plot(truenet, nodeLabel = predintPlot(ancTrait3))
+```
+where we provided the ancestral predictors as a matrix, containing the
+intercept, and the known predictor at the nodes. The user must be very careful
+with this function, as no check is done for the order of the predictors, that
+must be in the same order as the internal nodes of the phylogeny. As ancestral
+predictors are often unknown, the use of this functionality is discouraged.
+
+
+## Phylogenetic ANOVA
+
+As mentioned above, the [`phyloNetworklm`](@ref) function is based on the `lm` function
+from [GLM](https://github.com/JuliaStats/GLM.jl). This means that it
+inherits from most of its features, and in particular, it can handle formulas
+with factors or interactions.
+For example, in lizards, we might want to do a regression of toe length against
+body length and the region where each species is found, where this region is coded
+into 4 categories (say). We might also want to include an interaction effect
+between body length and region.
+(This model has no biological basis. It is just meant to show the possibilities
+of the function).
+
+To illustrate the use of categorical predictors of particular interest
+in a network with reticulations, let's assume that some heterosis took place
+after the hybridization event, so that tips "A" and "B" have larger mean
+compared to the others.
+```{julia; eval=true; results="markup"}
+delta = 5.0; # value of heterosis
+underHyb = [(n == "A" || n == "B") for n in tipLabels(sim1)] # tips under hybrid
+underHyb
+for i in 1:length(trait3)
+    underHyb[i] && (trait3[i]+=delta) # add delta to tips A and B
+end
+trait3 # changed: +5 was added by the previous loop to A and B
+```
+The categorical variable `underHyb` separates tips "A" and "B" from the others.
+We need to mark it as a factor, not a numerical variable, i.e. as a `PooledDataArray`.
+```{julia; eval=true}
+dat = DataFrame(trait1 = trait1, trait2 = trait2, trait3 = trait3,
+                underHyb = underHyb,
+                tipNames = tipLabels(sim1))
+dat[:underHyb] = PooledDataArray(dat[:underHyb])
+```
+Now we can include this factor in the regression.
+```{julia; eval=true; results="markup"; term=true}
+fitTrait = phyloNetworklm(@formula(trait3 ~ trait1 + underHyb), dat, truenet)
+```
+In this case, the categorical variable indicating which tips are descendants
+of the reticulation event is indeed relevant, and the heterosis effect
+is recovered.
+
+This is a very simple example of how to include heterosis, but some general
+functions to test for it, on networks with more than on hybrid, are also
+available.
+
+
+## Pagel's Lambda
+
+One classical question about trait evolution is the amount of
+"phylogenetic signal" in a dataset, that is, the importance of the tree
+structure to explain variation in the observed traits.
+One way of doing measuring that is to use
+Pagel's lambda[^fn3] transformation of the branch lengths. This model assumes a
+BM on a tree where the internal branches are multiplied by a factor λ,
+while the external branches are modified so that the total height of the tree is
+constant. Hence, λ varies between 0 (the tree has no influence on
+the data) and 1 (the tree is unchanged).
+Using the same branch length transformations, this model can
+be straightforwardly extended to phylogenetic networks.
+
+We can illustrate this with the predictor trait we used earlier. We use the
+same function as before, only indicating the model we want to use:
+```{julia; eval=true; results="markup"}
+fitPagel = phyloNetworklm(@formula(trait1 ~ 1), dat, truenet, model="lambda")
+```
+As it is indeed generated according to a plain BM on the phylogeny, the
+estimated λ should be close to 1. It can be extracted with function
+`lambda_estim`:
+```{julia; eval=true; results="markup"; term=true}
+lambda_estim(fitPagel)
+```
+
+[^fn3]: Pagel M (1999). Inferring the historical patterns of biological
+        evolution. Nature. 401: 877–884. doi:10.1038/44766

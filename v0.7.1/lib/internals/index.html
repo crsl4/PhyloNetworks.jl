@@ -1,0 +1,1924 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PhyloNetworks is a Julia package for the manipulation, visualization and inference of phylogenetic networks.">
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.4, mkdocs-material-2.9.2">
+    
+    
+      
+        <title>Internals - PhyloNetworks.jl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.ba0fd1a6.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.6079476c.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#internal-documentation" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="PhyloNetworks.jl" class="md-header-nav__button md-logo">
+          
+            <img src="../../snaq_small.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                PhyloNetworks.jl
+              </span>
+              <span class="md-header-nav__topic">
+                Internals
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <span class="md-nav__button md-logo">
+      
+        <img src="../../snaq_small.png" width="48" height="48">
+      
+    </span>
+    PhyloNetworks.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Manual
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Manual
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/inputdata/" title="Input Data for SNaQ" class="md-nav__link">
+      Input Data for SNaQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-nav__link">
+      TICR pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/snaq_plot/" title="Network estimation and display" class="md-nav__link">
+      Network estimation and display
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/dist_reroot/" title="Network comparison and manipulation" class="md-nav__link">
+      Network comparison and manipulation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/fixednetworkoptim/" title="Candidate Networks" class="md-nav__link">
+      Candidate Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/expectedCFs/" title="Extract Expected CFs" class="md-nav__link">
+      Extract Expected CFs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/multiplealleles/" title="Multiple Alleles" class="md-nav__link">
+      Multiple Alleles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/trait_tree/" title="Continuous Trait Evolution" class="md-nav__link">
+      Continuous Trait Evolution
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Library
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Library
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../public/" title="Public" class="md-nav__link">
+      Public
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Internals
+      </label>
+    
+    <a href="./" title="Internals" class="md-nav__link md-nav__link--active">
+      Internals
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#contents" title="Contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index" title="Index" class="md-nav__link">
+    Index
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types" title="types" class="md-nav__link">
+    types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#functions" title="functions" class="md-nav__link">
+    functions
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#contents" title="Contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index" title="Index" class="md-nav__link">
+    Index
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types" title="types" class="md-nav__link">
+    types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#functions" title="functions" class="md-nav__link">
+    functions
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/crsl4/PhyloNetworks.jl/edit/master/docs/lib/internals.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><a id='Internal-Documentation-1'></a></p>
+<h1 id="internal-documentation">Internal Documentation</h1>
+<p><a id='Contents-1'></a></p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="./#Internal-Documentation-1">Internal Documentation</a><ul>
+<li><a href="./#Contents-1">Contents</a></li>
+<li><a href="./#Index-1">Index</a></li>
+<li><a href="./#types-1">types</a></li>
+<li><a href="./#functions-1">functions</a></li>
+</ul>
+</li>
+</ul>
+<p><a id='Index-1'></a></p>
+<h2 id="index">Index</h2>
+<ul>
+<li><a href="./#PhyloNetworks.ANode"><code>PhyloNetworks.ANode</code></a></li>
+<li><a href="./#PhyloNetworks.MatrixTopologicalOrder"><code>PhyloNetworks.MatrixTopologicalOrder</code></a></li>
+<li><a href="./#Base.getindex"><code>Base.getindex</code></a></li>
+<li><a href="./#Base.getindex"><code>Base.getindex</code></a></li>
+<li><a href="./#PhyloNetworks.addAlternativeHybridizations!-Tuple{PhyloNetworks.HybridNetwork,DataFrames.DataFrame}"><code>PhyloNetworks.addAlternativeHybridizations!</code></a></li>
+<li><a href="./#PhyloNetworks.afterOptBL!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Bool,Bool,Bool,Integer,Array{Int64,1}}"><code>PhyloNetworks.afterOptBL!</code></a></li>
+<li><a href="./#PhyloNetworks.afterOptBLAll!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Integer,Bool,Float64,Float64,Bool,Array{Int64,1},Float64,Float64,Float64}"><code>PhyloNetworks.afterOptBLAll!</code></a></li>
+<li><a href="./#PhyloNetworks.afterOptBLRepeat!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Integer,Bool,Bool,Bool,Array{Int64,1}}"><code>PhyloNetworks.afterOptBLRepeat!</code></a></li>
+<li><a href="./#PhyloNetworks.anova-Union{Tuple{T}, Tuple{Vararg{StatsModels.DataFrameRegressionModel{PhyloNetworks.PhyloNetworkLinearModel,T},N} where N}} where T"><code>PhyloNetworks.anova</code></a></li>
+<li><a href="./#PhyloNetworks.assignhybridnames!-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.assignhybridnames!</code></a></li>
+<li><a href="./#PhyloNetworks.blobInfo"><code>PhyloNetworks.blobInfo</code></a></li>
+<li><a href="./#PhyloNetworks.breakedge!-Tuple{PhyloNetworks.Edge,PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.breakedge!</code></a></li>
+<li><a href="./#PhyloNetworks.calculateObsCFAll!-Tuple{PhyloNetworks.DataCF,Union{Array{Int64,1}, Array{String,1}}}"><code>PhyloNetworks.calculateObsCFAll!</code></a></li>
+<li><a href="./#PhyloNetworks.checkNumHybEdges!-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.checkNumHybEdges!</code></a></li>
+<li><a href="./#PhyloNetworks.deleteEdge!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.Edge}"><code>PhyloNetworks.deleteEdge!</code></a></li>
+<li><a href="./#PhyloNetworks.deleteHybridEdge!"><code>PhyloNetworks.deleteHybridEdge!</code></a></li>
+<li><a href="./#PhyloNetworks.deleteLeaf!-Tuple{PhyloNetworks.Network,AbstractString}"><code>PhyloNetworks.deleteLeaf!</code></a></li>
+<li><a href="./#PhyloNetworks.deleteNode!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.Node}"><code>PhyloNetworks.deleteNode!</code></a></li>
+<li><a href="./#PhyloNetworks.descendants-Tuple{PhyloNetworks.Edge}"><code>PhyloNetworks.descendants</code></a></li>
+<li><a href="./#PhyloNetworks.displayedNetworks!"><code>PhyloNetworks.displayedNetworks!</code></a></li>
+<li><a href="./#PhyloNetworks.fuseedgesat!-Tuple{Integer,PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.fuseedgesat!</code></a></li>
+<li><a href="./#PhyloNetworks.gammaZero!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,PhyloNetworks.Edge,Bool,Bool,Integer,Array{Int64,1}}"><code>PhyloNetworks.gammaZero!</code></a></li>
+<li><a href="./#PhyloNetworks.getChild-Tuple{PhyloNetworks.Edge}"><code>PhyloNetworks.getChild</code></a></li>
+<li><a href="./#PhyloNetworks.getChildren-Tuple{PhyloNetworks.Node}"><code>PhyloNetworks.getChildren</code></a></li>
+<li><a href="./#PhyloNetworks.getDataValue!-Tuple{IO,Int64,Array{Int64,1}}"><code>PhyloNetworks.getDataValue!</code></a></li>
+<li><a href="./#PhyloNetworks.getMajorParent-Tuple{PhyloNetworks.Node}"><code>PhyloNetworks.getMajorParent</code></a></li>
+<li><a href="./#PhyloNetworks.getMajorParentEdge-Tuple{PhyloNetworks.Node}"><code>PhyloNetworks.getMajorParentEdge</code></a></li>
+<li><a href="./#PhyloNetworks.getMinorParent"><code>PhyloNetworks.getMinorParent</code></a></li>
+<li><a href="./#PhyloNetworks.getMinorParentEdge"><code>PhyloNetworks.getMinorParentEdge</code></a></li>
+<li><a href="./#PhyloNetworks.getParent-Tuple{PhyloNetworks.Edge}"><code>PhyloNetworks.getParent</code></a></li>
+<li><a href="./#PhyloNetworks.getParents-Tuple{PhyloNetworks.Node}"><code>PhyloNetworks.getParents</code></a></li>
+<li><a href="./#PhyloNetworks.getPartner-Tuple{Any}"><code>PhyloNetworks.getPartner</code></a></li>
+<li><a href="./#PhyloNetworks.getTipSubmatrix-Tuple{Array{T,2} where T,PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.getTipSubmatrix</code></a></li>
+<li><a href="./#PhyloNetworks.hybridEdges-Tuple{PhyloNetworks.Node,PhyloNetworks.Edge}"><code>PhyloNetworks.hybridEdges</code></a></li>
+<li><a href="./#PhyloNetworks.hybridEdges-Tuple{PhyloNetworks.Node}"><code>PhyloNetworks.hybridEdges</code></a></li>
+<li><a href="./#PhyloNetworks.inheritanceWeight-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.inheritanceWeight</code></a></li>
+<li><a href="./#PhyloNetworks.initializeWeightsFromLeaves!-Tuple{AbstractArray,PhyloNetworks.HybridNetwork,Any,Any,Symbol}"><code>PhyloNetworks.initializeWeightsFromLeaves!</code></a></li>
+<li><a href="./#PhyloNetworks.initializeWeightsFromLeavesSoftwired!-Tuple{AbstractArray,PhyloNetworks.HybridNetwork,Any,Any}"><code>PhyloNetworks.initializeWeightsFromLeavesSoftwired!</code></a></li>
+<li><a href="./#PhyloNetworks.majoredgelength-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.majoredgelength</code></a></li>
+<li><a href="./#PhyloNetworks.majoredgematrix-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.majoredgematrix</code></a></li>
+<li><a href="./#PhyloNetworks.makemissing!-Tuple{AbstractArray{T,1} where T}"><code>PhyloNetworks.makemissing!</code></a></li>
+<li><a href="./#PhyloNetworks.mapAllelesCFtable!-Tuple{DataFrames.DataFrame,DataFrames.DataFrame,Array{Int64,1},Bool,AbstractString}"><code>PhyloNetworks.mapAllelesCFtable!</code></a></li>
+<li><a href="./#PhyloNetworks.minorreticulationgamma-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.minorreticulationgamma</code></a></li>
+<li><a href="./#PhyloNetworks.minorreticulationlength-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.minorreticulationlength</code></a></li>
+<li><a href="./#PhyloNetworks.minorreticulationmatrix-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.minorreticulationmatrix</code></a></li>
+<li><a href="./#PhyloNetworks.moveHybrid!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.Edge,Bool,Bool,Integer,Array{Int64,1}}"><code>PhyloNetworks.moveHybrid!</code></a></li>
+<li><a href="./#PhyloNetworks.nparams-Tuple{PhyloNetworks.TraitSubstitutionModel{T} where T}"><code>PhyloNetworks.nparams</code></a></li>
+<li><a href="./#PhyloNetworks.optBL!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Bool,Float64,Float64,Float64,Float64}"><code>PhyloNetworks.optBL!</code></a></li>
+<li><a href="./#PhyloNetworks.optTopLevel!-Tuple{PhyloNetworks.HybridNetwork,Float64,Integer,PhyloNetworks.DataCF,Integer,Float64,Float64,Float64,Float64,Bool,Bool,Array{Int64,1},IO,IO,Bool}"><code>PhyloNetworks.optTopLevel!</code></a></li>
+<li><a href="./#PhyloNetworks.optTopRun1!-Tuple{PhyloNetworks.HybridNetwork,Any,Integer,PhyloNetworks.DataCF,Integer,Float64,Float64,Float64,Float64,Bool,Bool,Array{Int64,1},Integer,IO,Bool,Float64,IO}"><code>PhyloNetworks.optTopRun1!</code></a></li>
+<li><a href="./#PhyloNetworks.optTopRuns!-Tuple{PhyloNetworks.HybridNetwork,Float64,Integer,PhyloNetworks.DataCF,Integer,Float64,Float64,Float64,Float64,Bool,Bool,Array{Int64,1},Integer,AbstractString,AbstractString,Integer,Float64}"><code>PhyloNetworks.optTopRuns!</code></a></li>
+<li><a href="./#PhyloNetworks.pairwiseTaxonDistanceGrad-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.pairwiseTaxonDistanceGrad</code></a></li>
+<li><a href="./#PhyloNetworks.parseEdgeData!-Tuple{IO,PhyloNetworks.Edge,PhyloNetworks.Node,Array{Int64,1}}"><code>PhyloNetworks.parseEdgeData!</code></a></li>
+<li><a href="./#PhyloNetworks.parseHybridNode!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,String,PhyloNetworks.HybridNetwork,Array{String,1}}"><code>PhyloNetworks.parseHybridNode!</code></a></li>
+<li><a href="./#PhyloNetworks.parseRemainingSubtree!-Tuple{IO,Array{Int64,1},PhyloNetworks.HybridNetwork,Array{String,1}}"><code>PhyloNetworks.parseRemainingSubtree!</code></a></li>
+<li><a href="./#PhyloNetworks.parseTreeNode!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.parseTreeNode!</code></a></li>
+<li><a href="./#PhyloNetworks.parsimonyBottomUpFitch!-Union{Tuple{PhyloNetworks.Node,Dict{Int64,Set{T}},Array{Int64,1}}, Tuple{T}} where T"><code>PhyloNetworks.parsimonyBottomUpFitch!</code></a></li>
+<li><a href="./#PhyloNetworks.parsimonyBottomUpGF!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,Integer,AbstractArray,AbstractArray,AbstractArray,AbstractArray}"><code>PhyloNetworks.parsimonyBottomUpGF!</code></a></li>
+<li><a href="./#PhyloNetworks.parsimonyBottomUpSoftwired!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,Integer,AbstractArray,AbstractArray}"><code>PhyloNetworks.parsimonyBottomUpSoftwired!</code></a></li>
+<li><a href="./#PhyloNetworks.parsimonyDiscreteFitch-Union{Tuple{PhyloNetworks.HybridNetwork,Dict{String,T}}, Tuple{T}} where T"><code>PhyloNetworks.parsimonyDiscreteFitch</code></a></li>
+<li><a href="./#PhyloNetworks.parsimonySummaryFitch-Union{Tuple{PhyloNetworks.HybridNetwork,Dict{Int64,Set{T}}}, Tuple{T}} where T"><code>PhyloNetworks.parsimonySummaryFitch</code></a></li>
+<li><a href="./#PhyloNetworks.parsimonyTopDownFitch!-Union{Tuple{PhyloNetworks.Node,Dict{Int64,Set{T}}}, Tuple{T}} where T"><code>PhyloNetworks.parsimonyTopDownFitch!</code></a></li>
+<li><a href="./#PhyloNetworks.proposedTop!-Tuple{Integer,PhyloNetworks.HybridNetwork,Bool,Integer,Integer,Array{Int64,1},Array{Int64,1},Bool}"><code>PhyloNetworks.proposedTop!</code></a></li>
+<li><a href="./#PhyloNetworks.readStartTop-Tuple{AbstractString,PhyloNetworks.DataCF}"><code>PhyloNetworks.readStartTop</code></a></li>
+<li><a href="./#PhyloNetworks.readSubtree!-Tuple{IO,PhyloNetworks.Node,Array{Int64,1},PhyloNetworks.HybridNetwork,Array{String,1}}"><code>PhyloNetworks.readSubtree!</code></a></li>
+<li><a href="./#PhyloNetworks.recursionPostOrder-Tuple{Array{PhyloNetworks.Node,1},Function,Function,Function,Any}"><code>PhyloNetworks.recursionPostOrder</code></a></li>
+<li><a href="./#PhyloNetworks.recursionPreOrder-Tuple{Array{PhyloNetworks.Node,1},Function,Function,Function,Function,Any}"><code>PhyloNetworks.recursionPreOrder</code></a></li>
+<li><a href="./#PhyloNetworks.recursionPreOrder!"><code>PhyloNetworks.recursionPreOrder!</code></a></li>
+<li><a href="./#PhyloNetworks.removeHybrid!-Tuple{PhyloNetworks.Network,PhyloNetworks.Node}"><code>PhyloNetworks.removeHybrid!</code></a></li>
+<li><a href="./#PhyloNetworks.resetEdgeNumbers!-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.resetEdgeNumbers!</code></a></li>
+<li><a href="./#PhyloNetworks.resetNodeNumbers!-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.resetNodeNumbers!</code></a></li>
+<li><a href="./#PhyloNetworks.sameTaxa-Tuple{PhyloNetworks.Quartet,PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.sameTaxa</code></a></li>
+<li><a href="./#PhyloNetworks.sampleBootstrapTrees-Tuple{Array{Array{PhyloNetworks.HybridNetwork,1},1}}"><code>PhyloNetworks.sampleBootstrapTrees</code></a></li>
+<li><a href="./#PhyloNetworks.sampleCFfromCI"><code>PhyloNetworks.sampleCFfromCI</code></a></li>
+<li><a href="./#PhyloNetworks.setBLfromDivergenceTimes!-Tuple{PhyloNetworks.HybridNetwork,Dict{Int64,Float64}}"><code>PhyloNetworks.setBLfromDivergenceTimes!</code></a></li>
+<li><a href="./#PhyloNetworks.setBranchLength!-Tuple{PhyloNetworks.Edge,Number}"><code>PhyloNetworks.setBranchLength!</code></a></li>
+<li><a href="./#PhyloNetworks.setGammaBLfromGammaz!-Tuple{PhyloNetworks.Node,PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.setGammaBLfromGammaz!</code></a></li>
+<li><a href="./#PhyloNetworks.setNonIdBL!-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.setNonIdBL!</code></a></li>
+<li><a href="./#PhyloNetworks.showQ-Tuple{IO,PhyloNetworks.TraitSubstitutionModel{T} where T}"><code>PhyloNetworks.showQ</code></a></li>
+<li><a href="./#PhyloNetworks.sortUnionTaxa!-Tuple{Any}"><code>PhyloNetworks.sortUnionTaxa!</code></a></li>
+<li><a href="./#PhyloNetworks.symmetricNet-Tuple{Int64,Int64,Int64,Real,Real}"><code>PhyloNetworks.symmetricNet</code></a></li>
+<li><a href="./#PhyloNetworks.symmetricNet"><code>PhyloNetworks.symmetricNet</code></a></li>
+<li><a href="./#PhyloNetworks.symmetricTree"><code>PhyloNetworks.symmetricTree</code></a></li>
+<li><a href="./#PhyloNetworks.synchronizePartnersData!-Tuple{PhyloNetworks.Edge,PhyloNetworks.Node}"><code>PhyloNetworks.synchronizePartnersData!</code></a></li>
+<li><a href="./#PhyloNetworks.taxadiff-Tuple{Array{PhyloNetworks.Quartet,1},PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.taxadiff</code></a></li>
+<li><a href="./#PhyloNetworks.traverseContainRoot!-Tuple{PhyloNetworks.Node,PhyloNetworks.Edge,Array{PhyloNetworks.Edge,1},Array{Bool,1}}"><code>PhyloNetworks.traverseContainRoot!</code></a></li>
+<li><a href="./#PhyloNetworks.updatePostOrder!"><code>PhyloNetworks.updatePostOrder!</code></a></li>
+<li><a href="./#PhyloNetworks.updatePreOrder!"><code>PhyloNetworks.updatePreOrder!</code></a></li>
+<li><a href="./#PhyloNetworks.writeTopologyLevel1-Tuple{PhyloNetworks.HybridNetwork}"><code>PhyloNetworks.writeTopologyLevel1</code></a></li>
+</ul>
+<p><a id='types-1'></a></p>
+<h2 id="types">types</h2>
+<p><a id='PhyloNetworks.ANode' href='#PhyloNetworks.ANode'>#</a>
+<strong><code>PhyloNetworks.ANode</code></strong> &mdash; <em>Type</em>.</p>
+<p><code>ANode</code></p>
+<p>Abstract node. An object of type <code>Edge</code> has a <code>node</code> attribute, which is an vector of (2) ANode objects. The object of type <code>Node</code> is an <code>ANode</code>, and has an <code>edge</code> attribute, which is vector of <code>Edge</code> objects.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/types.jl#L17-L24' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.MatrixTopologicalOrder' href='#PhyloNetworks.MatrixTopologicalOrder'>#</a>
+<strong><code>PhyloNetworks.MatrixTopologicalOrder</code></strong> &mdash; <em>Type</em>.</p>
+<p><code>MatrixTopologicalOrder</code></p>
+<p>Matrix associated to an <a href="../public/#PhyloNetworks.HybridNetwork"><code>HybridNetwork</code></a> sorted in topological order.</p>
+<p>The following functions and extractors can be applied to it: <a href="../public/#PhyloNetworks.tipLabels"><code>tipLabels</code></a>, <code>obj[:Tips]</code>, <code>obj[:InternalNodes]</code>, <code>obj[:TipsNodes]</code> (see documentation for function <a href="./#Base.getindex"><code>getindex(::MatrixTopologicalOrder, ::Symbol)</code></a>).</p>
+<p>Functions <a href="../public/#PhyloNetworks.sharedPathMatrix"><code>sharedPathMatrix</code></a> and <a href="../public/#PhyloNetworks.simulate"><code>simulate</code></a> return objects of this type.</p>
+<p>The <code>MatrixTopologicalOrder</code> object has fields: <code>V</code>, <code>nodeNumbersTopOrder</code>, <code>internalNodeNumbers</code>, <code>tipNumbers</code>, <code>tipNames</code>, <code>indexation</code>. Type in "?MatrixTopologicalOrder.field" to get documentation on a specific field.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/traits.jl#L11-L22' class='documenter-source'>source</a><br></p>
+<p><a id='functions-1'></a></p>
+<h2 id="functions">functions</h2>
+<p><a id='Base.getindex' href='#Base.getindex'>#</a>
+<strong><code>Base.getindex</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>getindex(obj, d,[ indTips, msng])</code></p>
+<p>Getting submatrices of an object of type <a href="./#PhyloNetworks.MatrixTopologicalOrder"><code>MatrixTopologicalOrder</code></a>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>obj::MatrixTopologicalOrder</code>: the matrix from which to extract.</li>
+<li>
+<p><code>d::Symbol</code>: a symbol precising which sub-matrix to extract. Can be:</p>
+<ul>
+<li><code>:Tips</code> columns and/or rows corresponding to the tips</li>
+<li><code>:InternalNodes</code> columns and/or rows corresponding to the internal nodes</li>
+<li><code>:TipsNodes</code> columns corresponding to internal nodes, and row to tips (works only is indexation="b")</li>
+<li><code>indTips::Vector{Int}</code>: optional argument precising a specific order for the tips (internal use).</li>
+<li><code>msng::BitArray{1}</code>: optional argument precising the missing tips (internal use).</li>
+</ul>
+</li>
+</ul>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/traits.jl#L223-L237' class='documenter-source'>source</a><br></p>
+<p><a id='Base.getindex' href='#Base.getindex'>#</a>
+<strong><code>Base.getindex</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>getindex(obj, d)</code></p>
+<p>Getting submatrices of an object of type <a href="../public/#PhyloNetworks.TraitSimulation"><code>TraitSimulation</code></a>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>obj::TraitSimulation</code>: the matrix from which to extract.</li>
+<li>
+<p><code>d::Symbol</code>: a symbol precising which sub-matrix to extract. Can be:</p>
+<ul>
+<li><code>:Tips</code> columns and/or rows corresponding to the tips</li>
+<li><code>:InternalNodes</code> columns and/or rows corresponding to the internal nodes</li>
+</ul>
+</li>
+</ul>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/traits.jl#L1002-L1012' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.addAlternativeHybridizations!-Tuple{PhyloNetworks.HybridNetwork,DataFrames.DataFrame}' href='#PhyloNetworks.addAlternativeHybridizations!-Tuple{PhyloNetworks.HybridNetwork,DataFrames.DataFrame}'>#</a>
+<strong><code>PhyloNetworks.addAlternativeHybridizations!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="nt">addAlternativeHybridizations</span><span class="o">!(</span><span class="nt">net</span><span class="p">::</span><span class="nd">HybridNetwork</span><span class="o">,</span> <span class="nt">BSe</span><span class="p">::</span><span class="nd">DataFrame</span><span class="o">;</span>
+                              <span class="nt">cutoff</span><span class="o">=</span><span class="nt">10</span><span class="p">::</span><span class="nd">Number</span><span class="o">,</span> <span class="nt">top</span><span class="o">=</span><span class="nt">3</span><span class="p">::</span><span class="nd">Int</span><span class="o">)</span>
+</pre></div>
+
+
+<p>Modify the network <code>net</code> (the best network estimated with snaq) by adding other hybridizations that are present in the bootstrap networks. By default, it will only consider hybrid edges with more than 10% bootstrap support (<code>cutoff</code>) and it will only include the three top hybridizations (<code>top</code>) sorted by bootstrap support. The function also modifies the dataframe <code>BSe</code> obtained with <code>hybridBootstrapSupport</code>. In the original <code>BSe</code> dataframe, hybrid edges that do not appear in the best network have a missing number. After the hybrid edges are added with <code>addAlternativeHybridizations</code>, <code>BSe</code> is modified to include the edge numbers of the newly added hybrid edges. Note that the function only adds the hybrid edges as minor to keep the underlying tree topology.</p>
+<p><strong>example</strong></p>
+<div class="codehilite"><pre><span></span><span class="n">bootnet</span> <span class="o">=</span> <span class="n">readMultiTopology</span><span class="p">(</span><span class="s">&quot;bootstrap-networks.txt&quot;</span><span class="p">)</span>
+<span class="n">bestnet</span> <span class="o">=</span> <span class="n">readTopology</span><span class="p">(</span><span class="s">&quot;best.tre&quot;</span><span class="p">)</span>
+<span class="n">BSn</span><span class="p">,</span> <span class="n">BSe</span><span class="p">,</span> <span class="n">BSc</span><span class="p">,</span> <span class="n">BSgam</span><span class="p">,</span> <span class="n">BSedgenum</span> <span class="o">=</span> <span class="n">hybridBootstrapSupport</span><span class="p">(</span><span class="n">bootnet</span><span class="p">,</span> <span class="n">bestnet</span><span class="p">);</span>
+<span class="n">addAlternativeHybridizations!</span><span class="p">(</span><span class="n">bestnet</span><span class="p">,</span><span class="n">BSe</span><span class="p">)</span>
+<span class="k">using</span> <span class="n">PhyloPlots</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">bestnet</span><span class="p">,</span> <span class="n">edgeLabel</span><span class="o">=</span><span class="n">BSe</span><span class="p">[[</span><span class="o">:</span><span class="n">edge</span><span class="p">,</span><span class="o">:</span><span class="n">BS_hybrid_edge</span><span class="p">]])</span>
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/addHybrid.jl#L354-L378' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.afterOptBL!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Bool,Bool,Bool,Integer,Array{Int64,1}}' href='#PhyloNetworks.afterOptBL!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Bool,Bool,Bool,Integer,Array{Int64,1}}'>#</a>
+<strong><code>PhyloNetworks.afterOptBL!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>afterOptBL</code> road map</p>
+<p>Function that will check if there are <code>h==0,1;t==0,hz==0,1</code> cases in a network after calling <code>optBL!</code>.</p>
+<p>Arguments:</p>
+<ul>
+<li><code>closeN=true</code> will move origin/target, if false, add/delete N times before giving up (we have only tested <code>closeN=true</code>)</li>
+<li><code>origin=true</code> will move origin, false will move target. We added this to avoid going back and forth between the same networks</li>
+<li><code>movesgamma</code> vector of counts of number of times each move is proposed to fix a gamma zero problem: <code>(add,mvorigin,mvtarget,chdir,delete,nni)</code></li>
+</ul>
+<p>Procedure:</p>
+<ul>
+<li>First we split the <code>ht</code> vector in <code>nh,nt,nhz</code> (gammas, lengths, gammaz)</li>
+<li>
+<p>If we find a <code>h==0,1</code>, we loop through <code>nh</code> to find a hybrid edge with h==0 or 1 and want to try to fix this by doing:</p>
+<ul>
+<li><code>gammaZero!(currT,d,edge,closeN,origin,N,movesgamma)</code> which returns true if there was a successful change, and we stop the loop</li>
+<li>If we find a <code>t==0</code>, we loop through all <code>nt</code> to find such edge, and do NNI move on this edge; return true if change successful and we stop the loop</li>
+<li>If we find a <code>hz==0,1</code>, we loop through <code>nhz</code> to find such hybrid edge and call <code>gammaZero</code> again</li>
+<li>If we did a successful change, we run <code>optBL</code> again, and recheck if there are no more problems.</li>
+<li>Returns successchange, flagh, flagt,flaghz (flag=true means no problems)</li>
+<li>If it is the multiple alleles case, it will not try to fix <code>h==0,1;hz==0,1</code> because it can reach a case that violates the multiple alleles condition. If we add a check here, things become horribly slow and inefficient, so we just delete a hybridization that has <code>h==0,1;hz==0,1</code></li>
+</ul>
+</li>
+</ul>
+<p><strong> Important: </strong> <code>afterOptBL</code> is doing only one change, but we need to repeat multiple times to be sure that we fix all the gamma zero problems, which is why we call <code>afterOptBLRepeat</code></p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L568-L592' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.afterOptBLAll!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Integer,Bool,Float64,Float64,Bool,Array{Int64,1},Float64,Float64,Float64}' href='#PhyloNetworks.afterOptBLAll!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Integer,Bool,Float64,Float64,Bool,Array{Int64,1},Float64,Float64,Float64}'>#</a>
+<strong><code>PhyloNetworks.afterOptBLAll!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>afterOptBLAll</code> road map</p>
+<p>After <code>optBL</code>, we want to call <code>afterOptBLAll</code> (or <code>afterOptBLAllMultipleAlleles</code>) to check if there are <code>h==0,1</code>; <code>t==0</code>; <code>hz==0,1</code>. This function will try to fix the gamma zero problem, but if it cannot, it will call <code>moveDownLevel</code>, to delete the hybridization from the network.</p>
+<p>Procedure:</p>
+<p>While <code>startover=true</code> and <code>tries&lt;N</code></p>
+<ul>
+<li>
+<p>While <code>badliks &lt; N2</code> (number of bad pseudolikelihoods are less than <code>N2</code>)</p>
+<ul>
+<li>Run <code>success = afterOptBLRepeat</code></li>
+<li>
+<p>If <code>success = true</code> (it changed something):</p>
+<ul>
+<li>If worse pseudolik, then go back to original topology <code>currT</code>, set <code>startover=true</code> and <code>badliks++</code></li>
+<li>
+<p>If better pseudolik, then check flags. If all good, then <code>startover=false</code>; otherwise <code>startover = true</code></p>
+<ul>
+<li>If <code>success = false</code> (nothing changed), then set <code>badliks=N2+1</code> (to end the while on <code>currT</code>)</li>
+</ul>
+</li>
+<li>
+<p>If all flags are ok, then <code>startover = false</code></p>
+</li>
+<li>If bad h or hz, then call <code>moveDownLevel</code> (delete one hybridization), and set <code>startover = true</code> (maybe deleting that hybridization did not fix other gamma zero problems)</li>
+<li>If bad t, then set <code>startover = false</code></li>
+<li>If left second while by back to original <code>currT</code>, and still bad h/hz, then move down one level, and <code>startover=true</code>; otherwise <code>startover=false</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>If first while ends by <code>tries&gt;N</code>, then it checks one last time the flags, if bad h/hz will move down one level, and exit</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L754-L773' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.afterOptBLRepeat!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Integer,Bool,Bool,Bool,Array{Int64,1}}' href='#PhyloNetworks.afterOptBLRepeat!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Integer,Bool,Bool,Bool,Array{Int64,1}}'>#</a>
+<strong><code>PhyloNetworks.afterOptBLRepeat!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>afterOptBLRepeat</code> road map</p>
+<p><code>afterOptBL</code> is doing only one change, but we need to repeat multiple times to be sure that we fix all the gamma zero problems, which is why we call <code>afterOptBLRepeat</code>. This function will repeat <code>afterOptBL</code> every time a successful change happened; this is done only if <code>closeN=false</code>, because we would delete/add hybridizations and need to stop after tried N times. If <code>closeN=true</code> (default), then <code>afterOptBLRepeat</code> only does one <code>afterOptBL</code>, because in this case, only the neighbor edges need to be tested, and this would have been done already in <code>gammaZero</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L683-L689' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.anova-Union{Tuple{T}, Tuple{Vararg{StatsModels.DataFrameRegressionModel{PhyloNetworks.PhyloNetworkLinearModel,T},N} where N}} where T' href='#PhyloNetworks.anova-Union{Tuple{T}, Tuple{Vararg{StatsModels.DataFrameRegressionModel{PhyloNetworks.PhyloNetworkLinearModel,T},N} where N}} where T'>#</a>
+<strong><code>PhyloNetworks.anova</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>anova(objs::PhyloNetworkLinearModel...)</code></p>
+<p>Takes several nested fits of the same data, and computes the F statistic for each pair of models.</p>
+<p>The fits must be results of function <a href="../public/#PhyloNetworks.phyloNetworklm"><code>phyloNetworklm</code></a> called on the same data, for models that have more and more effects.</p>
+<p>Returns a DataFrame object with the anova table.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/traits.jl#L1764-L1774' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.assignhybridnames!-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.assignhybridnames!-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.assignhybridnames!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>assignhybridnames!(net)</code></p>
+<p>Assign names to hybrid nodes in the network <code>net</code>. Hybrid nodes with an empty <code>name</code> field ("") are modified with a name that does not conflict with other hybrid names in the network. The preferred name is "#H3" if the node number is 3 or -3, but an index other than 3 would be used if "#H3" were the name of another hybrid node already.</p>
+<p>If two hybrid nodes have non-empty and equal names, the name of one of them is changed and re-assigned as described above (with a warning).</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L1233-L1243' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.blobInfo' href='#PhyloNetworks.blobInfo'>#</a>
+<strong><code>PhyloNetworks.blobInfo</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>blobInfo(network, ignoreTrivial=true)
+</pre></div>
+
+
+<p>Calculate the biconnected components (blobs) using function <a href="../public/#PhyloNetworks.biconnectedComponents"><code>biconnectedComponents</code></a> then:</p>
+<ul>
+<li>set node field <code>isExtBadTriangle</code> to true at the root of each non-trivial blob (and at the network root), false otherwise. (a better name for the field would be something like "isBlobRoot".)</li>
+<li>
+<p>output:</p>
+<ol>
+<li>array of nodes that are the roots of each non-trivial blob,</li>
+</ol>
+<p>and the network root. If the root of the full network is   not part of a non-trivial blob, a corresponding blob is   added to the list.</p>
+<ol>
+<li>array of arrays: for each non-trivial blob, array of major hybrid edges in that blob.</li>
+<li>array of arrays: same as #2 but for minor hybrid edges, with hybrids listed in the same order, for each blob.</li>
+</ol>
+</li>
+</ul>
+<p>Blobs are ordered in reverse topological ordering (aka post order). If <code>ignoreTrivial</code> is true, trivial components are ignored.</p>
+<p>keyword argument: <code>checkPreorder</code>, true by default. If false, the <code>isChild1</code> edge field and the <code>net.nodes_changed</code> network field are supposed to be correct.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/biconnectedComponents.jl#L115-L140' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.breakedge!-Tuple{PhyloNetworks.Edge,PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.breakedge!-Tuple{PhyloNetworks.Edge,PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.breakedge!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>breakedge!(Edge, HybridNetwork)
+</pre></div>
+
+
+<p>breaks an edge into 2 edges (each of length half that of original edge). creates new node of degree 2. Useful to root network along an edge.</p>
+<p>warning: updates <code>isChild1</code> and <code>containRoot</code>, but does NOT update attributes like: inCycle, partition, gammaz, etc.</p>
+<p>returns the index of the newly created node in the network</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/manipulateNet.jl#L349-L359' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.calculateObsCFAll!-Tuple{PhyloNetworks.DataCF,Union{Array{Int64,1}, Array{String,1}}}' href='#PhyloNetworks.calculateObsCFAll!-Tuple{PhyloNetworks.DataCF,Union{Array{Int64,1}, Array{String,1}}}'>#</a>
+<strong><code>PhyloNetworks.calculateObsCFAll!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>calculateObsCFAll!(DataCF, taxa::Union{Vector{String}, Vector{Int}})
+</pre></div>
+
+
+<p>update the .quartet[i].obsCF values of the DataCF object, based on its .tree vector.</p>
+<div class="codehilite"><pre><span></span>calculateObsCFAll!(vector of quartets, vector of trees, taxa)
+</pre></div>
+
+
+<p>update the .obsCF values of the quartets, based on the trees, and returns a new DataCF object with these updated quartets and trees.</p>
+<div class="codehilite"><pre><span></span>calculateObsCFAll_noDataCF!(vector of quartets, vector of trees, taxa)
+</pre></div>
+
+
+<p>update the .obsCF values of the quartets based on the trees, but returns nothing.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readData.jl#L414-L427' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.checkNumHybEdges!-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.checkNumHybEdges!-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.checkNumHybEdges!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>`checkNumHybEdges!(net)`
+</pre></div>
+
+
+<p>Check for consistency between hybrid-related attributes in the network:</p>
+<ul>
+<li>for each hybrid node: 2 or more hybrid edges</li>
+<li>exception: allows for a leaf to be attached to a single hybrid edge</li>
+<li>exactly 2 incoming parent hybrid edges</li>
+</ul>
+<p>Run after <code>storeHybrids!</code>. See also <code>check2HybEdges</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L544-L552' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.deleteEdge!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.Edge}' href='#PhyloNetworks.deleteEdge!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.Edge}'>#</a>
+<strong><code>PhyloNetworks.deleteEdge!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>deleteEdge!(net::HybridNetwork,  e::Edge, part=true)
+deleteEdge!(net::QuartetNetwork, e::Edge)
+</pre></div>
+
+
+<p>Delete edge <code>e</code> from <code>net.edge</code> and update <code>net.numEdges</code>. If <code>part</code> is true, update the network's partition field.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L529-L535' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.deleteHybridEdge!' href='#PhyloNetworks.deleteHybridEdge!'>#</a>
+<strong><code>PhyloNetworks.deleteHybridEdge!</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>deleteHybridEdge!(net::HybridNetwork, edge::Edge, keepNodes=false)
+</pre></div>
+
+
+<p>Deletes a hybrid edge from a network. The network does not have to be of level 1, and may contain some polytomies. Updates branch lengths, allowing for missing values. Returns the network.</p>
+<p>At each of the 2 junctions, the child edge is retained (below the hybrid node). If <code>keepNodes</code> is true, all nodes are retained during edge removal.</p>
+<p>Warnings:</p>
+<ul>
+<li>if <code>keepNodes</code> is true: partner hybrid parent edge has its γ value unchanged</li>
+<li>if the parent of <code>edge</code> is the root and if <code>keepNodes</code> is false, the root is moved to keep the network unrooted with a root of degree two.</li>
+<li>does <strong>not</strong> update containRoot (could be implemented later)</li>
+<li>does <strong>not</strong> update attributes needed for snaq! (like containRoot, inCycle, edge.z, edge.y etc.)</li>
+</ul>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/deleteHybrid.jl#L291-L308' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.deleteLeaf!-Tuple{PhyloNetworks.Network,AbstractString}' href='#PhyloNetworks.deleteLeaf!-Tuple{PhyloNetworks.Network,AbstractString}'>#</a>
+<strong><code>PhyloNetworks.deleteLeaf!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>deleteLeaf!(net::HybridNetwork, leaf::AbstractString)</code> <code>deleteLeaf!(net::Network, leaf::Node)</code></p>
+<p>Deletes the leaf taxon from the network. The leaf argument is the name of the taxon to delete.</p>
+<p>Warnings:</p>
+<ul>
+<li>requires a level-1 network with up-to-date attributes for snaq! (e.g. non-missing branch lengths, gammaz, etc.)</li>
+<li>does not care where the root is and does not update it to a sensible location if the root is affected by the leaf removal.</li>
+<li>does not merge edges, i.e. does not remove all nodes of degree 2. Within snaq!, this is used to extract quartets and to keep track of which edge lengths in the original network map to the quartet network.</li>
+</ul>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/pseudolik.jl#L349-L363' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.deleteNode!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.Node}' href='#PhyloNetworks.deleteNode!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.Node}'>#</a>
+<strong><code>PhyloNetworks.deleteNode!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>deleteNode!(net::HybridNetwork, n::Node)</code></p>
+<p>deletes a Node from a network, i.e. removes it from net.node, and from net.hybrid or net.leaf as appropriate. Updates attributes numNodes, numTaxa, numHybrids (it does not update net.names though).</p>
+<p>Warning: if the root is deleted, the new root is arbitrarily set to the first node in the list. This is intentional to save time because this function is used frequently in snaq!, which handles semi-directed (unrooted) networks.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L466-L478' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.descendants-Tuple{PhyloNetworks.Edge}' href='#PhyloNetworks.descendants-Tuple{PhyloNetworks.Edge}'>#</a>
+<strong><code>PhyloNetworks.descendants</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>descendants(edge::Edge)
+</pre></div>
+
+
+<p>Return the node numbers of all the descendants of a given edge.</p>
+<p>The node should belong in a rooted network for which isChild1 is up-to-date. Run directEdges! beforehand. This is very important, otherwise one might enter an infinite loop, and the function does not test for this.</p>
+<p><strong>Examples: #"</strong></p>
+<div class="codehilite"><pre><span></span>julia&gt; net5 = &quot;(A,((B,#H1),(((C,(E)#H2),(#H2,F)),(D)#H1)));&quot; |&gt; readTopology |&gt; directEdges! ;
+
+julia&gt; PhyloNetworks.descendants(net5.edge[12]) # descendants of 12th
+7-element Array{Int64,1}:
+ -6
+ -7
+  4
+  6
+  5
+ -9
+  7
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/compareNetworks.jl#L214-L237' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.displayedNetworks!' href='#PhyloNetworks.displayedNetworks!'>#</a>
+<strong><code>PhyloNetworks.displayedNetworks!</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>displayedNetworks!(net::HybridNetwork, node::Node, keepNode=false)
+</pre></div>
+
+
+<p>Extracts the two networks that simplify a given network at a given hybrid node: deleting either one or the other parent hybrid edge. If <code>keepNodes</code> is true, all original nodes are kept in both networks.</p>
+<ul>
+<li>the original network is modified: the minor edge removed.</li>
+<li>returns one HybridNetwork object: the network with the major edge removed</li>
+</ul>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/compareNetworks.jl#L294-L303' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.fuseedgesat!-Tuple{Integer,PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.fuseedgesat!-Tuple{Integer,PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.fuseedgesat!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>fuseedgesat!(i::Integer,net::HybridNetwork)
+</pre></div>
+
+
+<p>Removes <code>i</code>th node in net.node, if it is of degree 2. The parent and child edges of this node are fused. Reverts the action of breakedge!.</p>
+<p>returns the fused edge.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/manipulateNet.jl#L387-L395' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.gammaZero!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,PhyloNetworks.Edge,Bool,Bool,Integer,Array{Int64,1}}' href='#PhyloNetworks.gammaZero!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,PhyloNetworks.Edge,Bool,Bool,Integer,Array{Int64,1}}'>#</a>
+<strong><code>PhyloNetworks.gammaZero!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>gammaZero</code> road map</p>
+<p>Function that tries to fix a gamma zero problem (<code>h==0,1; t==0; hz==0,1</code>)</p>
+<ol>
+<li>First tries to do <code>changeDirection</code></li>
+<li>If not successful from start, we call <code>moveHybrid</code></li>
+<li>If successful move (change direction), we call <code>optBL</code> and check if we fixed the problem</li>
+<li>If problem fixed and we do not have worse pseudolik, we return <code>success=true</code></li>
+<li>If still problem or worse pseudolik, we call <code>moveHybrid</code></li>
+</ol>
+<p><strong> Important: </strong> Any function (<code>afterOptBL</code>) calling <code>gammaZero</code> is assuming that it only made a change, so if the returned value is true, then a change was made, and the other function needs to run <code>optBL</code> and check that all parameters are 'valid'. If the returned value is false, then no change was possible and we need to remove a hybridization if the problem is h==0,1; hz==0,1. If the problem is t==0, we ignore this problem.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L513-L524' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getChild-Tuple{PhyloNetworks.Edge}' href='#PhyloNetworks.getChild-Tuple{PhyloNetworks.Edge}'>#</a>
+<strong><code>PhyloNetworks.getChild</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getChild(edge::Edge)
+</pre></div>
+
+
+<p>Return child node using the <code>isChild1</code> attribute of the edge.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L162-L166' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getChildren-Tuple{PhyloNetworks.Node}' href='#PhyloNetworks.getChildren-Tuple{PhyloNetworks.Node}'>#</a>
+<strong><code>PhyloNetworks.getChildren</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getChildren(node)
+</pre></div>
+
+
+<p>return a vector with all children <em>nodes</em> of <code>node</code>.   <strong>warning</strong>: assume <code>isChild1</code> field (for edges) are correct</p>
+<p>To get all parent <em>nodes</em>: see <a href="./#PhyloNetworks.getParents-Tuple{PhyloNetworks.Node}"><code>getParents</code></a>.  </p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/manipulateNet.jl#L567-L574' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getDataValue!-Tuple{IO,Int64,Array{Int64,1}}' href='#PhyloNetworks.getDataValue!-Tuple{IO,Int64,Array{Int64,1}}'>#</a>
+<strong><code>PhyloNetworks.getDataValue!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getdataValue!(s::IO, int, numLeft::Array{Int,1})
+</pre></div>
+
+
+<p>Helper function for <code>parseEdgeData!</code>. Read a single floating point edge data value in a tree topology. Return -1.0 if no value exists before the next colon, return the value as a float otherwise. Modifies s by advancing past the next colon character. Only call this function to read a value when you know a numerical value exists!</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L258-L266' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getMajorParent-Tuple{PhyloNetworks.Node}' href='#PhyloNetworks.getMajorParent-Tuple{PhyloNetworks.Node}'>#</a>
+<strong><code>PhyloNetworks.getMajorParent</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getMajorParent(node::Node)
+getMinorParent(node::Node)
+</pre></div>
+
+
+<p>Return major or minor parent of a node using the <code>isChild1</code> field of edges (and assuming correct <code>isMajor</code> field). See also <a href="./#PhyloNetworks.getMajorParentEdge-Tuple{PhyloNetworks.Node}"><code>getMajorParentEdge</code></a> and <a href="./#PhyloNetworks.getMinorParentEdge"><code>getMinorParentEdge</code></a></p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L218-L225' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getMajorParentEdge-Tuple{PhyloNetworks.Node}' href='#PhyloNetworks.getMajorParentEdge-Tuple{PhyloNetworks.Node}'>#</a>
+<strong><code>PhyloNetworks.getMajorParentEdge</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getMajorParentEdge(node)
+getMinorParentEdge(node)
+</pre></div>
+
+
+<p>return the parent edge of a given node: the major / minor if hybrid.   <strong>warning</strong>: assume isChild1 and isMajor attributes are correct</p>
+<p>To get all parent <em>nodes</em>: see <a href="./#PhyloNetworks.getParents-Tuple{PhyloNetworks.Node}"><code>getParents</code></a>.  </p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/manipulateNet.jl#L540-L548' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getMinorParent' href='#PhyloNetworks.getMinorParent'>#</a>
+<strong><code>PhyloNetworks.getMinorParent</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>getMajorParent(node::Node)
+getMinorParent(node::Node)
+</pre></div>
+
+
+<p>Return major or minor parent of a node using the <code>isChild1</code> field of edges (and assuming correct <code>isMajor</code> field). See also <a href="./#PhyloNetworks.getMajorParentEdge-Tuple{PhyloNetworks.Node}"><code>getMajorParentEdge</code></a> and <a href="./#PhyloNetworks.getMinorParentEdge"><code>getMinorParentEdge</code></a></p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L235' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getMinorParentEdge' href='#PhyloNetworks.getMinorParentEdge'>#</a>
+<strong><code>PhyloNetworks.getMinorParentEdge</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>getMajorParentEdge(node)
+getMinorParentEdge(node)
+</pre></div>
+
+
+<p>return the parent edge of a given node: the major / minor if hybrid.   <strong>warning</strong>: assume isChild1 and isMajor attributes are correct</p>
+<p>To get all parent <em>nodes</em>: see <a href="./#PhyloNetworks.getParents-Tuple{PhyloNetworks.Node}"><code>getParents</code></a>.  </p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/manipulateNet.jl#L557' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getParent-Tuple{PhyloNetworks.Edge}' href='#PhyloNetworks.getParent-Tuple{PhyloNetworks.Edge}'>#</a>
+<strong><code>PhyloNetworks.getParent</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getParent(e::Edge)
+</pre></div>
+
+
+<p>Return parent node of edge <code>e</code> using the <code>isChild1</code> attribute of the edge. To get parents of nodes: see <a href="./#PhyloNetworks.getParents-Tuple{PhyloNetworks.Node}"><code>getParents</code></a>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L171-L176' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getParents-Tuple{PhyloNetworks.Node}' href='#PhyloNetworks.getParents-Tuple{PhyloNetworks.Node}'>#</a>
+<strong><code>PhyloNetworks.getParents</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getParents(n::Node)
+</pre></div>
+
+
+<p>Get vector of all parent nodes of <code>n</code>, based on <code>isChild1</code> field (for edges). To get the parent node of an edge: see <a href="./#PhyloNetworks.getParent-Tuple{PhyloNetworks.Edge}"><code>getParent</code></a>.   To get individual parent edges (rather than all parent <em>nodes</em>): see <a href="./#PhyloNetworks.getMajorParentEdge-Tuple{PhyloNetworks.Node}"><code>getMajorParentEdge</code></a> and <code>getMinorParentEdge</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/manipulateNet.jl#L519-L526' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getPartner-Tuple{Any}' href='#PhyloNetworks.getPartner-Tuple{Any}'>#</a>
+<strong><code>PhyloNetworks.getPartner</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getPartner(edge::Edge)
+getPartner(edge::Edge, node::Node)
+</pre></div>
+
+
+<p>Return hybrid partner of edge, that is, hybrid edge pointing to the same child as <code>edge</code>. Assumptions (not checked):</p>
+<ul>
+<li>correct <code>isChild1</code> field for <code>edge</code> and for hybrid edges</li>
+<li>no in-coming polytomy: a node has 0, 1 or 2 parents, no more</li>
+</ul>
+<p>When <code>node</code> is given, it is assumed to be the child of <code>edge</code> (the first form calls the second).</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L182-L194' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.getTipSubmatrix-Tuple{Array{T,2} where T,PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.getTipSubmatrix-Tuple{Array{T,2} where T,PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.getTipSubmatrix</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getTipSubmatrix(M, net; indexation=:both)
+</pre></div>
+
+
+<p>Extract submatrix of M, with rows and/or columns corresponding to tips in the network, ordered like in <code>net.leaf</code>. In M, rows and/or columns are assumed ordered as in <code>net.nodes_changed</code>.</p>
+<p>indexation: one of <code>:rows</code>, <code>:cols</code> or <code>:both</code>: are nodes numbers indexed in the matrix by rows, by columns, or both? Subsetting is taken accordingly.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/pairwiseDistanceLS.jl#L77-L87' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.hybridEdges-Tuple{PhyloNetworks.Node,PhyloNetworks.Edge}' href='#PhyloNetworks.hybridEdges-Tuple{PhyloNetworks.Node,PhyloNetworks.Edge}'>#</a>
+<strong><code>PhyloNetworks.hybridEdges</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>hybridEdges(node::Node, e::Edge)
+</pre></div>
+
+
+<p>Return the 2 edges connected to <code>node</code> other than <code>e</code>, in the same order as <code>node.edge</code>, except that <code>e</code> absent from the list.</p>
+<p>Despite what the name suggest, <code>node</code> need not be a hybrid node! <code>node</code> is assumed to have 3 edges, though.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L789-L798' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.hybridEdges-Tuple{PhyloNetworks.Node}' href='#PhyloNetworks.hybridEdges-Tuple{PhyloNetworks.Node}'>#</a>
+<strong><code>PhyloNetworks.hybridEdges</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>hybridEdges(node::Node)
+</pre></div>
+
+
+<p>Return the 3 edges attached to <code>node</code> in a specific order [e1,e2,e3]. <strong>Warning</strong>: assume a level-1 network with node field <code>hasHybEdge</code> and edge field <code>inCycle</code> up-to-date.</p>
+<p>If <code>node</code> is a hybrid node:</p>
+<ul>
+<li>e1 is the major hybrid parent edge of <code>node</code></li>
+<li>e2 is the minor hybrid parent edge</li>
+<li>e3 is the tree edge, child of <code>node</code>.</li>
+</ul>
+<p>If <code>node</code> is a tree node parent of one child edge:</p>
+<ul>
+<li>e1 is the hybrid edge, child of <code>node</code></li>
+<li>e2 is the tree edge that belongs to the cycle created by e1</li>
+<li>e3 is the other tree edge attached to <code>node</code> (not in a cycle)</li>
+</ul>
+<p>Otherwise:</p>
+<ul>
+<li>e3 is an external edge from <code>node</code> to a leaf, if one exists.</li>
+</ul>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L715-L737' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.inheritanceWeight-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.inheritanceWeight-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.inheritanceWeight</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>inheritanceWeight(tree::HybridNetwork)
+</pre></div>
+
+
+<p>Return the <em>log</em> inheritance weight of a network or tree (as provided by <a href="../public/#PhyloNetworks.displayedTrees"><code>displayedTrees</code></a> with <code>keepNodes</code> = true for instance). For a tree displayed in a network, its inheritance weight is the log of the product of γ's of all edges retained in the tree. To avoid underflow, the log is calculated: i.e. sum of log(γ) across retained edges.</p>
+<p>If any edge has a negative γ, it is assumed to mean that its γ is missing, and the function returns <code>missing</code>.</p>
+<p><strong>Example</strong></p>
+<div class="codehilite"><pre><span></span><span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">net</span> <span class="o">=</span> <span class="nt">readTopology</span><span class="o">(</span><span class="s2">&quot;(((A,(B)#H1:::0.9),(C,#H1:::0.1)),D);&quot;</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">trees</span> <span class="o">=</span> <span class="nt">displayedTrees</span><span class="o">(</span><span class="nt">net</span><span class="o">,</span><span class="nt">0</span><span class="p">.</span><span class="nc">0</span><span class="o">;</span> <span class="nt">keepNodes</span><span class="o">=</span><span class="nt">true</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">inheritanceWeight</span><span class="o">.(</span><span class="nt">trees</span><span class="o">)</span>
+<span class="nt">2-element</span> <span class="nt">Array</span><span class="p">{</span><span class="err">Float64,1</span><span class="p">}</span><span class="o">:</span>
+ <span class="nt">-0</span><span class="p">.</span><span class="nc">105361</span>
+ <span class="nt">-2</span><span class="p">.</span><span class="nc">30259</span> 
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/compareNetworks.jl#L339-L363' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.initializeWeightsFromLeaves!-Tuple{AbstractArray,PhyloNetworks.HybridNetwork,Any,Any,Symbol}' href='#PhyloNetworks.initializeWeightsFromLeaves!-Tuple{AbstractArray,PhyloNetworks.HybridNetwork,Any,Any,Symbol}'>#</a>
+<strong><code>PhyloNetworks.initializeWeightsFromLeaves!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>initializeWeightsFromLeaves!(w, net, tips, stateset, criterion)
+</pre></div>
+
+
+<p>Modify weight in w: to Inf for w[n, i] if the "tips" data has a state different from the lineage state of index i at node number n. Assumes that w was initialized to 0 for the leaves.</p>
+<p>criterion: should be one of <code>:softwired</code>, <code>:parental</code> or <code>:hardwired</code>.</p>
+<ul>
+<li>softwired parsimony: lineage states are in this order: ∅,{1},{2},{3},...,{nstates}</li>
+</ul>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/parsimony.jl#L632-L641' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.initializeWeightsFromLeavesSoftwired!-Tuple{AbstractArray,PhyloNetworks.HybridNetwork,Any,Any}' href='#PhyloNetworks.initializeWeightsFromLeavesSoftwired!-Tuple{AbstractArray,PhyloNetworks.HybridNetwork,Any,Any}'>#</a>
+<strong><code>PhyloNetworks.initializeWeightsFromLeavesSoftwired!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>initializeWeightsFromLeavesSoftwired!(w, net, tips, charset)
+</pre></div>
+
+
+<p>Modify weight in w: to Inf for w[n, s] if the "tips" data has a state different from s at node number n. Assumes that w was initialized to 0 for the leaves.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/parsimony.jl#L346-L352' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.majoredgelength-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.majoredgelength-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.majoredgelength</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>majoredgelength(net::HybridNetwork)
+</pre></div>
+
+
+<p>Generate vector of edge lengths of major <code>net</code> edges organized in the same order as the <code>edge</code> matrix created via <code>majoredgematrix</code>. Considers values of <code>-1.0</code> as missing values, recognized as NA in <code>R</code>. Output: vector allowing for missing values.</p>
+<p>Assume <code>nodes_changed</code> was updated, to list nodes in pre-order.</p>
+<p><strong>Examples</strong></p>
+<div class="codehilite"><pre><span></span><span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">net</span> <span class="o">=</span> <span class="nt">readTopology</span><span class="o">(</span><span class="s2">&quot;(((A:3.1,(B:0.2)#H1:0.3::0.9),(C,#H1:0.3::0.1):1.1),D:0.7);&quot;</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">directEdges</span><span class="o">!(</span><span class="nt">net</span><span class="o">);</span> <span class="nt">preorder</span><span class="o">!(</span><span class="nt">net</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">majoredgelength</span><span class="o">(</span><span class="nt">net</span><span class="o">)</span>
+<span class="nt">8-element</span> <span class="nt">Array</span><span class="p">{</span><span class="err">Union{Float64,</span> <span class="err">Missings.Missing</span><span class="p">}</span><span class="o">,</span><span class="nt">1</span><span class="err">}</span><span class="o">:</span>
+  <span class="nt">missing</span>
+ <span class="nt">0</span><span class="p">.</span><span class="nc">7</span>     
+  <span class="nt">missing</span>
+ <span class="nt">1</span><span class="p">.</span><span class="nc">1</span>     
+  <span class="nt">missing</span>
+ <span class="nt">3</span><span class="p">.</span><span class="nc">1</span>     
+ <span class="nt">0</span><span class="p">.</span><span class="nc">3</span>     
+ <span class="nt">0</span><span class="p">.</span><span class="nc">2</span>     
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/interop.jl#L61-L89' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.majoredgematrix-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.majoredgematrix-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.majoredgematrix</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>majoredgematrix(net::HybridNetwork)
+</pre></div>
+
+
+<p>Matrix of major edges from <code>net</code> where edge[i,1] is the number of the parent node of edge i and edge[i,2] is the number of the child node of edge i. Assume <code>nodes_changed</code> was updated, to list nodes in pre-order.</p>
+<p><strong>Examples</strong></p>
+<div class="codehilite"><pre><span></span>julia&gt; net = readTopology(&quot;(A,(B,(C,D)));&quot;);
+
+julia&gt; PhyloNetworks.resetNodeNumbers!(net);
+
+julia&gt; PhyloNetworks.majoredgematrix(net)
+6×2 Array{Int64,2}:
+ 5  1
+ 5  6
+ 6  2
+ 6  7
+ 7  3
+ 7  4
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/interop.jl#L20-L43' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.makemissing!-Tuple{AbstractArray{T,1} where T}' href='#PhyloNetworks.makemissing!-Tuple{AbstractArray{T,1} where T}'>#</a>
+<strong><code>PhyloNetworks.makemissing!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>makemissing!(x::AbstractVector)
+</pre></div>
+
+
+<p>Turn to <code>missing</code> any element of <code>x</code> exactly equal to -1.0. Used for branch lengths and γs. <code>x</code> needs to accept missing values. If not, this can be done with <code>allowmissing(x)</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/interop.jl#L4-L10' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.mapAllelesCFtable!-Tuple{DataFrames.DataFrame,DataFrames.DataFrame,Array{Int64,1},Bool,AbstractString}' href='#PhyloNetworks.mapAllelesCFtable!-Tuple{DataFrames.DataFrame,DataFrames.DataFrame,Array{Int64,1},Bool,AbstractString}'>#</a>
+<strong><code>PhyloNetworks.mapAllelesCFtable!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>mapAllelesCFtable!(quartet CF DataFrame, mapping DataFrame, columns, write?, filename)
+</pre></div>
+
+
+<p>Modify (and return) the quartet concordance factor (CF) DataFrame: replace each allele name by the species name that the allele maps onto based on the mapping data frame. This mapping data frame should have columns named "allele" and "species" (see <code>rename!</code> to change column names if need be).</p>
+<p>If <code>write?</code> is <code>true</code>, the modified data frame is written to a file named "filename".</p>
+<p>Warning: <a href="../public/#PhyloNetworks.mapAllelesCFtable"><code>mapAllelesCFtable</code></a> takes the quartet data file as its second argument, while <code>mapAllelesCFtable!</code> takes the quartet data (which it modifies) as its first argument.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/multipleAlleles.jl#L49-L62' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.minorreticulationgamma-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.minorreticulationgamma-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.minorreticulationgamma</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>minorreticulationgamma(net::HybridNetwork)
+</pre></div>
+
+
+<p>Vector of minor edge gammas (inheritance probabilities) organized in the same order as in the matrix created via <code>minorreticulationmatrix</code>. Considers values of <code>-1.0</code> as missing values, recognized as NA in <code>R</code>. Output: vector allowing for missing values.</p>
+<p><strong>Examples</strong></p>
+<div class="codehilite"><pre><span></span><span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">net</span> <span class="o">=</span> <span class="nt">readTopology</span><span class="o">(</span><span class="s2">&quot;(((A,(B)#H1:::0.9),(C,#H1:::0.1)),D);&quot;</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">minorreticulationgamma</span><span class="o">(</span><span class="nt">net</span><span class="o">)</span>
+<span class="nt">1-element</span> <span class="nt">Array</span><span class="p">{</span><span class="err">Union{Float64,</span> <span class="err">Missings.Missing</span><span class="p">}</span><span class="o">,</span><span class="nt">1</span><span class="err">}</span><span class="o">:</span>
+ <span class="nt">0</span><span class="p">.</span><span class="nc">1</span>
+</pre></div>
+
+
+<hr />
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/interop.jl#L168-L185' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.minorreticulationlength-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.minorreticulationlength-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.minorreticulationlength</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>minorreticulationlength(net::HybridNetwork)
+</pre></div>
+
+
+<p>Vector of lengths for the minor hybrid edges, organized in the same order as in the matrix created via <code>minorreticulationmatrix</code>. Replace values of <code>-1.0</code> with missing values recognized by <code>R</code>. Output: vector allowing for missing values.</p>
+<p><strong>Examples</strong></p>
+<div class="codehilite"><pre><span></span><span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">net</span> <span class="o">=</span> <span class="nt">readTopology</span><span class="o">(</span><span class="s2">&quot;(((A:3.1,(B:0.2)#H1:0.4::0.9),(C,#H1:0.3::0.1):1.1),D:0.7);&quot;</span><span class="o">);</span>
+
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">minorreticulationlength</span><span class="o">(</span><span class="nt">net</span><span class="o">)</span>
+<span class="nt">1-element</span> <span class="nt">Array</span><span class="p">{</span><span class="err">Union{Float64,</span> <span class="err">Missings.Missing</span><span class="p">}</span><span class="o">,</span><span class="nt">1</span><span class="err">}</span><span class="o">:</span>
+ <span class="nt">0</span><span class="p">.</span><span class="nc">3</span>
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/interop.jl#L139-L156' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.minorreticulationmatrix-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.minorreticulationmatrix-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.minorreticulationmatrix</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>minorreticulationmatrix(net::HybridNetwork)
+</pre></div>
+
+
+<p>Matrix of integers, representing the minor hybrid edges in <code>net</code>. edge[i,1] is the number of the parent node of the ith minor hybrid edge, and edge[i,2] is the number of its child node. Node numbers may be negative, unless they were modified by <code>resetNodeNumbers!</code>. Assumes correct <code>isChild1</code> fields.</p>
+<p><strong>Examples</strong></p>
+<div class="codehilite"><pre><span></span><span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">net</span> <span class="o">=</span> <span class="nt">readTopology</span><span class="o">(</span><span class="s2">&quot;(((A,(B)#H1:::0.9),(C,#H1:::0.1)),D);&quot;</span><span class="o">);</span>
+<span class="nt">julia</span><span class="o">&gt;</span> <span class="nt">PhyloNetworks</span><span class="p">.</span><span class="nc">minorreticulationmatrix</span><span class="o">(</span><span class="nt">net</span><span class="o">)</span>
+<span class="nt">1</span><span class="err">×</span><span class="nt">2</span> <span class="nt">Array</span><span class="p">{</span><span class="err">Int64,2</span><span class="p">}</span><span class="o">:</span>
+ <span class="nt">-6</span>  <span class="nt">3</span>
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/interop.jl#L108-L125' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.moveHybrid!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.Edge,Bool,Bool,Integer,Array{Int64,1}}' href='#PhyloNetworks.moveHybrid!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.Edge,Bool,Bool,Integer,Array{Int64,1}}'>#</a>
+<strong><code>PhyloNetworks.moveHybrid!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>moveHybrid</code> road map</p>
+<p>Function that tries to fix a gamma zero problem (<code>h==0,1; t==0; hz==0,1</code>) after changing direction of hybrid edge failed. This function is called in <code>gammaZero</code>.</p>
+<p>Arguments:</p>
+<ul>
+<li><code>closeN=true</code> will try move origin/target on all neighbors (first choose minor/major edge at random, then make list of all neighbor edges and tries to put the hybrid node in all the neighbors until successful move); if false, will delete and add hybrid until successful move up to N times (this is never tested)</li>
+</ul>
+<p>Returns true if change was successful (not testing <code>optBL</code> again), and false if we could not move anything</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L467-L477' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.nparams-Tuple{PhyloNetworks.TraitSubstitutionModel{T} where T}' href='#PhyloNetworks.nparams-Tuple{PhyloNetworks.TraitSubstitutionModel{T} where T}'>#</a>
+<strong><code>PhyloNetworks.nparams</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>nparams(model)
+</pre></div>
+
+
+<p>Number of parameters for a given trait evolution model (length of field <code>model.rate</code>).</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/substitutionModels.jl#L21-L26' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.optBL!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Bool,Float64,Float64,Float64,Float64}' href='#PhyloNetworks.optBL!-Tuple{PhyloNetworks.HybridNetwork,PhyloNetworks.DataCF,Bool,Float64,Float64,Float64,Float64}'>#</a>
+<strong><code>PhyloNetworks.optBL!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>optBL</code> road map</p>
+<p>Function that optimizes the numerical parameters (branch lengths and inheritance probabilities) for a given network. This function is called multiple times inside <code>optTopLevel!</code>.</p>
+<ul>
+<li>Input: network <code>net</code>, data <code>d</code></li>
+<li>Numerical tolerances: <code>ftolAbs, ftolRel, xtolAbs, xtolRel</code></li>
+<li>Function based on <code>MixedModels</code> <code>fit</code> function</li>
+<li>The function assumes <code>net</code> has all the right attributes, and cannot check this inside because it would be inefficient</li>
+</ul>
+<p>Procedure:</p>
+<ul>
+<li><code>ht = parameters!(net)</code> extracts the vector of parameters to estimate <code>(h,t,gammaz)</code>, and sets as <code>net.ht</code>; identifies a bad diamond I, sets <code>net.numht</code> (vector of hybrid node numbers for h, edge numbers for t, hybrid node numbers for gammaz), and <code>net.index</code> to keep track of the vector of parameters to estimate</li>
+<li>
+<p><code>extractQuartet!(net,d)</code> does the following for all quartets in <code>d.quartet</code>:</p>
+<ul>
+<li>Extract quartet by deleting all leaves not in q -&gt; create <code>QuartetNetwork</code> object saved in <code>q.qnet</code></li>
+<li>This network is ugly and does not have edges collapsed. This is done to keep a one-to-one correspondence between the edges in <code>q.qnet</code> and the edges in <code>net</code> (if we remove nodes with only two edges, we will lose this correspondence)</li>
+<li>Calculate expected CF with <code>calculateExpCFAll</code> for a copy of <code>q.qnet</code>. We do this copy because we want to keep <code>q.qnet</code> as it is (without collapsed edges into one). The function will then save the <code>expCF</code> in <code>q.qnet.expCF</code></li>
+<li>
+<p><code>calculateExpCFAll!(qnet)</code> will</p>
+</li>
+<li>
+<p>identify the type of quartet as type 1 (equivalent to a tree) or type 2 (minor CF different). Here the code will first clean up any hybrid node by removing nodes with only two edges before identifying the <code>qnet</code> (because identification depends on neighbor nodes to hybrid node); later, set <code>qnet.which</code> (1 or 2), <code>node.prev</code> (neighbor node to hybrid node), updates <code>node.k</code> (number of nodes in hybridization cycle, this can change after deleting the nodes with only two edges), <code>node.typeHyb</code> (1,2,3,4,5 depending on the number of nodes in the hybridization cycle and the origin/target of the minor hybrid edge; this attribute is never used).</p>
+</li>
+<li>eliminate hybridization: this will remove type 1 hybridizations first. If <code>qnet.which=1</code>, then the <code>qnet</code> is similar to a tree quartet, so it will calculate the internal length of the tree quartet: <code>qnet.t1</code>.</li>
+<li>update split for <code>qnet.which=1</code>, to determine which taxa are together. For example, for the quartet 12|34, the split is <a href="../or [2,2,1,1]">1,1,2,2</a>, that is, taxon 1 and 2 are on the same side of the split. This will update <code>qnet.split</code></li>
+<li>update formula for <code>qnet.which=1</code> to know the order of minorCF and majorCF in the vector <code>qnet.expCF</code>. That is, if the quartet is 1342 (order in <code>qnet.quartet.taxon</code>), then the expected CF should match the observed CF in 13|42, 14|32, 12|34 and the <code>qnet</code> is 12|34 (given by <code>qnet.split</code>), <code>qnet.formula</code> will be [2,2,1] minor, minor, major</li>
+<li><code>calculateExpCF!(qnet)</code> for <code>qnet.which=1</code>, it will do <code>1-2/3exp(-qnet.t1)</code> if <code>qnet.formula[i]==1</code>, and <code>1/3exp(qnet.t1)</code> if <code>qnet.formula[i]==2</code>. For <code>qnet.which=2</code>, we need to make sure that there is only one hybrid node, and compute the major, minor1,minor2 expected CF in the order 12|34, 13|24, 14|23 of the taxa in <code>qnet.quartet.taxon</code></li>
+</ul>
+</li>
+</ul>
+<p>Then we create a <code>NLopt</code> object with algorithm BOBYQA and k parameters (length of ht). We define upper and lower bounds and define the objective function that should only depend on <code>x=(h,t,gz)</code> and g (gradient, which we do not have, but still need to put as argument).</p>
+<p>The objective function <code>obj(x,g)</code> calls</p>
+<ul>
+<li>
+<p><code>calculateExpCFAll!(d,x,net)</code> needs to be run after <code>extractQuartet(net,d)</code> that will update <code>q.qnet</code> for all quartet.  Assumes that <code>qnet.indexht</code> is updated already: we only need to do this at the beginning of <code>optBL!</code> because the topology is fixed at this point)</p>
+<ul>
+<li>First it will update the edge lengths according to x</li>
+<li>If the <code>q.qnet.changed=true</code> (that is, any of <code>qnet</code> branches changed value), we need to call <code>calculateExpCFAll!(qnet)</code> on a copy of <code>q.qnet</code> (again because we want to leave <code>q.qnet</code> with the edge correspondence to <code>net</code>)</li>
+<li><code>update!(net,x)</code> simply saves the new x in <code>net.ht</code></li>
+</ul>
+</li>
+</ul>
+<p>Finally, we call <code>NLopt.optimize</code>, and we update the <code>net.loglik</code> and <code>net.ht</code> at the end. After <code>optBL</code>, we want to call <code>afterOptBLAll</code> (or <code>afterOptBLAllMultipleAlleles</code>) to check if there are <code>h==0,1</code>; <code>t==0</code>; <code>hz==0,1</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L304-L341' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.optTopLevel!-Tuple{PhyloNetworks.HybridNetwork,Float64,Integer,PhyloNetworks.DataCF,Integer,Float64,Float64,Float64,Float64,Bool,Bool,Array{Int64,1},IO,IO,Bool}' href='#PhyloNetworks.optTopLevel!-Tuple{PhyloNetworks.HybridNetwork,Float64,Integer,PhyloNetworks.DataCF,Integer,Float64,Float64,Float64,Float64,Bool,Bool,Array{Int64,1},IO,IO,Bool}'>#</a>
+<strong><code>PhyloNetworks.optTopLevel!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>optTopLevel</code> road map</p>
+<p>Function that does most of the heavy-lifting of <code>snaq</code>. It optimizes the pseudolikelihood for a given starting topology, and returns the best network. Assumes that the starting topology is level-1 network, and has all the attributes correctly updated.</p>
+<p>Input parameters:</p>
+<ul>
+<li>Starting topology <code>currT</code>, input data <code>DataCF</code> <code>d</code>, maximum number of hybridizations <code>hmax</code></li>
+<li>Numerical optimization parameters: <code>liktolAbs, Nfail, ftolRel, ftolAbs, xtolRel, xtolAbs</code></li>
+<li>Print parameters: <code>verbose, sout, logfile, writelog</code></li>
+<li>Parameters to tune the search in space of networks: <code>closeN=true</code> only propose move origin/target to neighbor edges (coded, but not tested with <code>closeN=false</code>), <code>Nmov0</code> vector with maximum number of trials allowed per type of move <code>(add, mvorigin, mvtarget, chdir, delete, nni)</code>, by default computed inside with coupon’s collector formulas</li>
+</ul>
+<p>The optimization procedure keeps track of</p>
+<ul>
+<li><code>movescount</code>: count of proposed moves,</li>
+<li><code>movesgamma</code>: count of proposed moves to fix a gamma zero situation (see below for definition of this situation),</li>
+<li><code>movesfail</code>: count of failed moves by violation of level-1 network (<code>inCycle</code> attribute) or worse pseudolikelihood than current,</li>
+<li><code>failures</code>: number of failed proposals that had a worse pseudolikelihood</li>
+</ul>
+<p>Optimization procedure:</p>
+<p>While the difference between current loglik and proposed loglik is greater than <code>liktolAbs</code>, or <code>failures&lt;Nfail</code>, or <code>stillmoves=true</code>:</p>
+<ul>
+<li><code>Nmov</code> is updated based on <code>newT</code>. The type of move proposed will depend on <code>newT</code> (which is the same as <code>currT</code> at this point). For example, if <code>currT</code> is a tree, we cannot propose move origin/target.</li>
+<li><code>move = whichMove</code> selects randomly a type of move, depending on <code>Nmov,movesfail,hmax,newT</code> with weights 1/5 by default for all, and 0 for delete. These weights are adjusted depending on <code>newT.numHybrids</code> and <code>hmax</code>. If <code>newT.numHybrids</code> is far from <code>hmax</code>, we give higher probability to adding a new hybrid (we want to reach the <code>hmax</code> sooner, maybe not the best strategy, easy to change).  Later, we adjust the weights by <code>movesfail</code> (first, give weight of 0 if <code>movesfail[i]&gt;Nmov[i]</code>, that is, if we reached the maximum possible number of moves allowed for a certain type) and then increase the probability of the other moves.  So, unless one move has <code>w=0</code>, nothing changes. This could be improved by using the outlier quartets to guide the proposal of moves.</li>
+<li><code>whichMove</code> will choose a move randomly from the weights, it will return <code>none</code> if no more moves allowed, in which case, the optimization ends</li>
+<li>
+<p><code>flag=proposedTop!(move, newT)</code> will modify <code>newT</code> based on <code>move</code>. The function <code>proposedTop</code> will return <code>flag=true</code> if the move was successful (the move succeeded by <code>inCycle</code>, <code>containRoot</code>, available edge to make the move (more details in <code>proposedTop</code>)). If <code>flag=false</code>, then <code>newT</code> is cleaned, except for the case of multiple alleles. The function <code>proposedTop</code> keeps count of <code>movescount</code> (successful move), <code>movesfail</code> (unsuccessful move),</p>
+<p>Options:</p>
+<p><code>random=true</code>: moves major/minor hybrid edge with prob h,1-h, respectively</p>
+<p><code>N=10</code>: number of trials for NNI edge.
+  * if(flag) Optimize branch lengths with <code>optBL</code></p>
+<p>If <code>newT.loglik</code> is better than <code>currT.loglik</code> by <code>liktolAbs</code>, jump to <code>newT</code> (<code>accepted=true</code>) and fix <code>gamma=0, t=0</code> problems (more info on <code>afterOptBL</code>)</p>
+<p>If(accepted)   <code>failures=0</code>, <code>movesfail=zeros</code>, <code>movescount</code> for successful move +1</p>
+</li>
+</ul>
+<p>end while</p>
+<p>After choosing the best network <code>newT</code>, we do one last more thorough optimization of branch lengths with <code>optBL</code>, we change non identifiable branch lengths to -1 and return <code>newT</code></p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L1145-L1200' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.optTopRun1!-Tuple{PhyloNetworks.HybridNetwork,Any,Integer,PhyloNetworks.DataCF,Integer,Float64,Float64,Float64,Float64,Bool,Bool,Array{Int64,1},Integer,IO,Bool,Float64,IO}' href='#PhyloNetworks.optTopRun1!-Tuple{PhyloNetworks.HybridNetwork,Any,Integer,PhyloNetworks.DataCF,Integer,Float64,Float64,Float64,Float64,Bool,Bool,Array{Int64,1},Integer,IO,Bool,Float64,IO}'>#</a>
+<strong><code>PhyloNetworks.optTopRun1!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>optTopRun1</code> roadmap</p>
+<p>The function will run 1 run by modifying the starting topology and calling <code>optTopLevel</code>.</p>
+<ul>
+<li><code>probST</code> (default in snaq is 0.3) is the probability of starting one run in the same starting tree. So, with probability <code>1-probST</code>, we will change the topology by a NNI move on a tree edge without neighbor hybrid.</li>
+</ul>
+<p>If the starting topology is a network, then with probability <code>1-probST</code> it will modify one randomly chosen hybrid edge: with prob 0.5, the function will move origin, with prob 0.5 will do move target</p>
+<p>If there are multiple alleles (<code>d.repSpecies</code> not empty), then the function has to check that the starting topology does not violate the multiple alleles condition.</p>
+<p>After modifying the starting topology with NNI and/or move origin/target, the function calls <code>optTopLevel</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L1787-L1798' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.optTopRuns!-Tuple{PhyloNetworks.HybridNetwork,Float64,Integer,PhyloNetworks.DataCF,Integer,Float64,Float64,Float64,Float64,Bool,Bool,Array{Int64,1},Integer,AbstractString,AbstractString,Integer,Float64}' href='#PhyloNetworks.optTopRuns!-Tuple{PhyloNetworks.HybridNetwork,Float64,Integer,PhyloNetworks.DataCF,Integer,Float64,Float64,Float64,Float64,Bool,Bool,Array{Int64,1},Integer,AbstractString,AbstractString,Integer,Float64}'>#</a>
+<strong><code>PhyloNetworks.optTopRuns!</code></strong> &mdash; <em>Method</em>.</p>
+<p>Road map for various functions behind snaq!</p>
+<div class="codehilite"><pre><span></span>snaq!
+optTopRuns!
+optTopRun1!
+optTopLevel!
+optBL!
+snaqDebug
+</pre></div>
+
+
+<p>All return their optimized network.</p>
+<ul>
+<li>snaq! calls optTopRuns! once, after a deep copy of the starting network. If the data contain multiple alleles from a given species, <code>snaq!</code> first expands the leaf for that species into 2 separate leaves, and merges them back into a single leaf after calling <code>optTopRuns!</code>.</li>
+<li>optTopRuns! calls optTopRun1! several (nrun) times. assumes level-1 network with &gt;0 branch lengths. assumes same tips in network as in data: i.e. 2 separate tips per species                                          that has multiple alleles. each call to optTopRun1! gets the same starting network.</li>
+<li>optTopRun1! calls optTopLevel! once, after deep copying + changing the starting network slightly.</li>
+<li>optTopLevel! calls optBL! various times and proposes new network with various moves.</li>
+<li>snaqDebug calls optTopRun1! once</li>
+</ul>
+<p>Functions that are no longer used, and not tested as much:</p>
+<div class="codehilite"><pre><span></span>optTop! : optimizes at h=0, then h=1 etc.
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L1552-L1580' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.pairwiseTaxonDistanceGrad-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.pairwiseTaxonDistanceGrad-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.pairwiseTaxonDistanceGrad</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>pairwiseTaxonDistanceGrad(net; checkEdgeNumber=true, nodeAges=[])
+</pre></div>
+
+
+<p>3-dim array: gradient of pairwise distances between all nodes. (internal and leaves); gradient with respect to edge lengths if <code>nodeAges</code> is empty; with respect to node ages otherwise. Assume correct <code>net.nodes_changed</code> (preorder).   This gradient depends on the network's topology and γ's only, not on branch lengths or node ages (distances are linear in either).</p>
+<p>WARNING: edge numbers need to range between 1 and #edges.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/pairwiseDistanceLS.jl#L143-L154' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parseEdgeData!-Tuple{IO,PhyloNetworks.Edge,PhyloNetworks.Node,Array{Int64,1}}' href='#PhyloNetworks.parseEdgeData!-Tuple{IO,PhyloNetworks.Edge,PhyloNetworks.Node,Array{Int64,1}}'>#</a>
+<strong><code>PhyloNetworks.parseEdgeData!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>parseEdgeData!(s::IO, edge, node, numberOfLeftParentheses::Array{Int,1})
+</pre></div>
+
+
+<p>Helper function for readSubtree!, fixes a bug from using setGamma Modifies <code>e</code> according to the specified edge length and gamma values in the tree topology. Advances the stream <code>s</code> past any existing edge data. Edges in a topology may optionally be followed by ":edgeLen:bootstrap:gamma" where edgeLen, bootstrap, and gamma are decimal values.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L288-L296' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parseHybridNode!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,String,PhyloNetworks.HybridNetwork,Array{String,1}}' href='#PhyloNetworks.parseHybridNode!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,String,PhyloNetworks.HybridNetwork,Array{String,1}}'>#</a>
+<strong><code>PhyloNetworks.parseHybridNode!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>parseHybridNode!(node, parentNode, hybridName, net, hybrids)
+</pre></div>
+
+
+<p>Helper function for <code>readSubtree!</code>. Create the parent edge for <code>node</code>. Return this edge, and the hybrid node retained (<code>node</code> or its clone in the newick string). Insert new edge and appropriate node into <code>net</code> and <code>hybrids</code> accordingly. Handles any type of given hybrid node. Called after a <code>#</code> has been found in a tree topology.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L158-L166' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parseRemainingSubtree!-Tuple{IO,Array{Int64,1},PhyloNetworks.HybridNetwork,Array{String,1}}' href='#PhyloNetworks.parseRemainingSubtree!-Tuple{IO,Array{Int64,1},PhyloNetworks.HybridNetwork,Array{String,1}}'>#</a>
+<strong><code>PhyloNetworks.parseRemainingSubtree!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>parseRemainingSubtree!(s::IO, numLeft, net, hybrids)
+</pre></div>
+
+
+<p>Create internal node. Helper for <a href="./#PhyloNetworks.readSubtree!-Tuple{IO,PhyloNetworks.Node,Array{Int64,1},PhyloNetworks.HybridNetwork,Array{String,1}}"><code>readSubtree!</code></a>, which creates the parent edge of the node created by <code>parseRemainingSubtree!</code>: <code>readSubtree!</code> calls <code>parseRemainingSubtree!</code>, and vice versa. Called once a <code>(</code> has been read in a tree topology and reads until the corresponding <code>)</code> has been found. This function performs the recursive step for <code>readSubtree!</code>. Advances <code>s</code> past the subtree, adds discovered nodes and edges to <code>net</code>, and <code>hybrids</code>.</p>
+<p>Does <em>not</em> read the node name and the edge information of the subtree root: this is done by <a href="./#PhyloNetworks.readSubtree!-Tuple{IO,PhyloNetworks.Node,Array{Int64,1},PhyloNetworks.HybridNetwork,Array{String,1}}"><code>readSubtree!</code></a></p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L125-L137' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parseTreeNode!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.parseTreeNode!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.parseTreeNode!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>parseTreeNode!(node, parentNode, net)
+</pre></div>
+
+
+<p>Helper function for <code>readSubtree!</code>. Insert the input tree node and associated edge (created here) into <code>net</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L242-L247' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parsimonyBottomUpFitch!-Union{Tuple{PhyloNetworks.Node,Dict{Int64,Set{T}},Array{Int64,1}}, Tuple{T}} where T' href='#PhyloNetworks.parsimonyBottomUpFitch!-Union{Tuple{PhyloNetworks.Node,Dict{Int64,Set{T}},Array{Int64,1}}, Tuple{T}} where T'>#</a>
+<strong><code>PhyloNetworks.parsimonyBottomUpFitch!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>parsimonyBottomUpFitch!(node, states, score)</code></p>
+<p>Bottom-up phase (from tips to root) of the Fitch algorithm: assign sets of character states to internal nodes based on character states at tips. Polytomies okay. Assumes a <em>tree</em> (no reticulation) and correct isChild1 attribute.</p>
+<p>output: dictionary with state sets and most parsimonious score</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/parsimony.jl#L2-L11' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parsimonyBottomUpGF!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,Integer,AbstractArray,AbstractArray,AbstractArray,AbstractArray}' href='#PhyloNetworks.parsimonyBottomUpGF!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,Integer,AbstractArray,AbstractArray,AbstractArray,AbstractArray}'>#</a>
+<strong><code>PhyloNetworks.parsimonyBottomUpGF!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>`parsimonyBottomUpGF!(node, blobroot, nchar, w, scores,
+    costmatrix1, costmatrix2)`
+</pre></div>
+
+
+<p>Compute the MP scores (one for each assignment of the blob root state) given the descendants of a blob, conditional on the states at predefined parents of hybrids in the blobs (one parent per hybrid) as described in</p>
+<p>Leo Van Iersel, Mark Jones, Celine Scornavacca (2017). Improved Maximum Parsimony Models for Phylogenetic Networks, Systematic Biology, (https://doi.org/10.1093/sysbio/syx094).</p>
+<p>Assumes a set of state <em>guesses</em>, ie correct initialization of <code>w</code> for predefined hybrid parents, and correct <code>fromBadDiamondI</code> field for the children edges of these predefined parents. <code>fromBadDiamondI</code> is true for edges that are cut.</p>
+<p>The field <code>isExtBadTriangle</code> is used to know which nodes are at the root of a blob. The field <code>isChild1</code> is used (and assumed correct). Field <code>inCycle</code> is assumed to store the # of detached parents (with guessed states)</p>
+<ul>
+<li><code>nchar</code>: number of characters considered at internal lineages. For softwired parsimony, this is # states + 1, because characters at internal nodes are ∅, {1}, {2}, etc. For parental parsimony, this is 2^#states -1, because characters are all sets on {1,2,...} except for the empty set ∅.</li>
+<li><code>costmatrix1</code>[i,j] and <code>costmatrix2</code>[k][i,j]: 2d array and vector of 2d arrays containing the cost of going to character j starting from character i when the end node has a single parent, or the cost of a child node having character j when its parents have characters k and i. These cost matrices are pre-computed depending on the parsimony criterion (softwired, hardwired, parental etc.)</li>
+</ul>
+<p>used by <a href="../public/#PhyloNetworks.parsimonyGF"><code>parsimonyGF</code></a>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/parsimony.jl#L666-L700' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parsimonyBottomUpSoftwired!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,Integer,AbstractArray,AbstractArray}' href='#PhyloNetworks.parsimonyBottomUpSoftwired!-Tuple{PhyloNetworks.Node,PhyloNetworks.Node,Integer,AbstractArray,AbstractArray}'>#</a>
+<strong><code>PhyloNetworks.parsimonyBottomUpSoftwired!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>parsimonyBottomUpSoftwired!(node, blobroot, states, w, scores)</code></p>
+<p>Computing the MP scores (one for each assignment of the root state) of a swicthing as described in Algorithm 1 in the following paper:</p>
+<p>Fischer, M., van Iersel, L., Kelk, S., Scornavacca, C. (2015). On computing the Maximum Parsimony score of a phylogenetic network. SIAM J. Discrete Math., 29(1):559-585.</p>
+<p>Assumes a <em>switching</em> (ie correct <code>fromBadDiamondI</code> field) and correct isChild1 field. The field <code>isExtBadTriangle</code> is used to know which nodes are at the root of a blob.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/parsimony.jl#L164-L176' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parsimonyDiscreteFitch-Union{Tuple{PhyloNetworks.HybridNetwork,Dict{String,T}}, Tuple{T}} where T' href='#PhyloNetworks.parsimonyDiscreteFitch-Union{Tuple{PhyloNetworks.HybridNetwork,Dict{String,T}}, Tuple{T}} where T'>#</a>
+<strong><code>PhyloNetworks.parsimonyDiscreteFitch</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>parsimonyDiscreteFitch(net, tipdata)
+</pre></div>
+
+
+<p>Calculate the most parsimonious (MP) score of a network given a discrete character at the tips. The softwired parsimony concept is used: where the number of state transitions is minimized over all trees displayed in the network. Tip data can be given in a data frame, in which case the taxon names are to appear in column 1 or in a column named "taxon" or "species", and trait values are to appear in column 2 or in a column named "trait". Alternatively, tip data can be given as a dictionary taxon =&gt; trait.</p>
+<p>also return the union of all optimized character states at each internal node as obtained by Fitch algorithm, where the union is taken over displayed trees with the MP score.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/parsimony.jl#L85-L100' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parsimonySummaryFitch-Union{Tuple{PhyloNetworks.HybridNetwork,Dict{Int64,Set{T}}}, Tuple{T}} where T' href='#PhyloNetworks.parsimonySummaryFitch-Union{Tuple{PhyloNetworks.HybridNetwork,Dict{Int64,Set{T}}}, Tuple{T}} where T'>#</a>
+<strong><code>PhyloNetworks.parsimonySummaryFitch</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>parsimonySummaryFitch(tree, nodestates)</code></p>
+<p>summarize character states at nodes, assuming a <em>tree</em></p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/parsimony.jl#L67-L71' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.parsimonyTopDownFitch!-Union{Tuple{PhyloNetworks.Node,Dict{Int64,Set{T}}}, Tuple{T}} where T' href='#PhyloNetworks.parsimonyTopDownFitch!-Union{Tuple{PhyloNetworks.Node,Dict{Int64,Set{T}}}, Tuple{T}} where T'>#</a>
+<strong><code>PhyloNetworks.parsimonyTopDownFitch!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>parsimonyTopDownFitch!(node, states)</code></p>
+<p>Top-down phase (root to tips) of the Fitch algorithm: constrains character states at internal nodes based on the state of the root. Assumes a <em>tree</em>: no reticulation.</p>
+<p>output: dictionary with state sets</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/parsimony.jl#L43-L51' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.proposedTop!-Tuple{Integer,PhyloNetworks.HybridNetwork,Bool,Integer,Integer,Array{Int64,1},Array{Int64,1},Bool}' href='#PhyloNetworks.proposedTop!-Tuple{Integer,PhyloNetworks.HybridNetwork,Bool,Integer,Integer,Array{Int64,1},Array{Int64,1},Bool}'>#</a>
+<strong><code>PhyloNetworks.proposedTop!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>proposedTop!(move,newT,random,count,N,movescount,movesfail,multall)</code> road map</p>
+<p>Function to change the current network <code>newT</code> by a given <code>move</code>, and checks that the move was successful (correct attributes). If not successful, <code>newT</code> is changed back to its original state, except for the case of multiple alleles.</p>
+<p><strong>Note</strong> that the update of attributes by each move is not done in all the network, but only in the local edges that were changed by the move. This is efficient (and makes a move easy to undo), but makes the code of each move function very clunky.</p>
+<p>Arguments:</p>
+<ul>
+<li>move chosen from <code>whichMove</code> as described in <code>optTopLevel</code></li>
+<li><code>newT</code> is the topology that will be modified inside with the move</li>
+<li><code>random=true</code>: chooses minor hybrid edge with prob 1-h, and major edge with prob h, if false, always chooses minor hybrid edge</li>
+<li><code>count</code>: simply which likelihood step we are in in the optimization at <code>optTopLevel</code></li>
+<li><code>movescount</code> and <code>movesfail</code>: vector of counts of number of moves proposed</li>
+<li><code>multall=true</code> if multiple alleles case: we need to check if the move did not violate the multiple alleles condition (sister alleles together and no gene flow into the alleles). This is inefficient because we are proposing moves that we can reject later, instead of being smart about the moves we propose: for example, move origin/target could rule out some neighbors that move gene flow into the alleles, the same for add hybridization; nni move can check if it is trying to separate the alleles)</li>
+</ul>
+<p>Moves:</p>
+<ul>
+<li><code>addHybridizationUpdate(newT,N)</code>:</li>
+</ul>
+<p>will choose a partition first (to avoid choosing edges that will create a non level-1 network) will choose two edges from this partition randomly, will not allow two edges in a cherry (non-identifiable), or sister edges that are not identifiable (the blacklist was a way to keep track of "bad edges" were we should not waste time trying to put hybridizations, it has never been used nor tested). Also choose gamma from U(0,0.5). The "Update" in the function name means that it creates the new hybrid, and also updates all the attributes of <code>newT</code></p>
+<ul>
+<li><code>node = chooseHybrid(newT)</code> choose a hybrid randomly for the next moves:</li>
+<li><code>moveOriginUpdateRepeat!(newT,node,random)</code></li>
+</ul>
+<p>will choose randomly the minor/major hybrid edge to move (if <code>random=true</code>); will get the list of all neighbor edges where to move the origin, will move the origin and update all the attributes and check if the move was successful (not conflicting attributes); if not, will undo the move, and try with a different neighbor until it runs out of neighbors. Return true if the move was successful.</p>
+<ul>
+<li><code>moveTargetUpdateRepeat!(newT,node,random)</code></li>
+</ul>
+<p>same as move origin but moving the target</p>
+<ul>
+<li><code>changeDirectionUpdate!(newT,node,random)</code></li>
+</ul>
+<p>chooses minor/major hybrid edge at random (if `random=true), and changes the direction, and updates all the attributes. Checks if the move was successful (returns true), or undoes the change and returns false.</p>
+<ul>
+<li><code>deleteHybridizationUpdate!(newT,node)</code></li>
+</ul>
+<p>removes the hybrid node, updates the attributes, no need to check any attributes, always successful move</p>
+<ul>
+<li>NNIRepeat!(newT,N)</li>
+</ul>
+<p>choose an edge for nni that does not have a neighbor hybrid. It will try to find such an edge N times, and if it fails, it will return false (unsuccessful move). N=10 by default. If N=1, it rarely finds such an edge if the network is small or complex. The function cannot choose an external edge. it will update locally the attributes.</p>
+<p><strong> Important: </strong> All the moves undo what they did if the move was not successful, so at the end you either have a <code>newT</code> with a new move and with all good attributes, or the same <code>newT</code> that started. This is important to avoid having to do deepcopy of the network before doing the move. Also, after each move, when we update the attributes, we do not update the attributes of the whole network, we only update the attributes of the edges that were affected by the move. This saves time, but makes the code quite clunky. Only the case of multiple alleles the moves does not undo what it did, because it finds out that it failed after the function is over, so just need to treat this case special.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/optimization.jl#L1024-L1066' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.readStartTop-Tuple{AbstractString,PhyloNetworks.DataCF}' href='#PhyloNetworks.readStartTop-Tuple{AbstractString,PhyloNetworks.DataCF}'>#</a>
+<strong><code>PhyloNetworks.readStartTop</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>readStartTop(treefile,d::DataCF)</code></p>
+<p>function to read a tree in parenthetical format from text file treefile and a DataCF object to update the branch lengths according to the average observed CF for any given edge.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readData.jl#L788-L792' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.readSubtree!-Tuple{IO,PhyloNetworks.Node,Array{Int64,1},PhyloNetworks.HybridNetwork,Array{String,1}}' href='#PhyloNetworks.readSubtree!-Tuple{IO,PhyloNetworks.Node,Array{Int64,1},PhyloNetworks.HybridNetwork,Array{String,1}}'>#</a>
+<strong><code>PhyloNetworks.readSubtree!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>readSubtree!(s::IO, parentNode, numLeft, net, hybrids)
+</pre></div>
+
+
+<p>Recursive helper method for <code>readTopology</code>: read a subtree from an extended Newick topology. input <code>s</code>: IOStream/IOBuffer.</p>
+<p>Reads additional info formatted as: <code>:length:bootstrap:gamma</code>. Allows for name of internal nodes without # after closing parenthesis: (1,2)A. Warning if hybrid edge without γ, or if γ (ignored) without hybrid edge</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L392-L402' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.recursionPostOrder-Tuple{Array{PhyloNetworks.Node,1},Function,Function,Function,Any}' href='#PhyloNetworks.recursionPostOrder-Tuple{Array{PhyloNetworks.Node,1},Function,Function,Function,Any}'>#</a>
+<strong><code>PhyloNetworks.recursionPostOrder</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>recursionPostOrder(nodes, init_function, tip_function, node_function,
+                   parameters)
+updatePostOrder(index, nodes, updated_matrix, tip_function, node_function,
+                parameters)
+</pre></div>
+
+
+<p>Generic tool to apply a post-order (or topological ordering) algorithm. Used by <code>descendenceMatrix</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/traits.jl#L154-L162' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.recursionPreOrder!' href='#PhyloNetworks.recursionPreOrder!'>#</a>
+<strong><code>PhyloNetworks.recursionPreOrder!</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>recursionPreOrder(nodes, init_function, root_function, tree_node_function,
+                  hybrid_node_function, parameters)
+recursionPreOrder!(nodes, AbstractArray, root_function, tree_node_function,
+                   hybrid_node_function, parameters)
+updatePreOrder(index, nodes, updated_matrix, root_function, tree_node_function,
+               hybrid_node_function, parameters)
+</pre></div>
+
+
+<p>Generic tool to apply a pre-order (or topological ordering) algorithm. Used by <code>sharedPathMatrix</code> and by <code>pairwiseTaxonDistanceMatrix</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/traits.jl#L94' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.recursionPreOrder-Tuple{Array{PhyloNetworks.Node,1},Function,Function,Function,Function,Any}' href='#PhyloNetworks.recursionPreOrder-Tuple{Array{PhyloNetworks.Node,1},Function,Function,Function,Function,Any}'>#</a>
+<strong><code>PhyloNetworks.recursionPreOrder</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>recursionPreOrder(nodes, init_function, root_function, tree_node_function,
+                  hybrid_node_function, parameters)
+recursionPreOrder!(nodes, AbstractArray, root_function, tree_node_function,
+                   hybrid_node_function, parameters)
+updatePreOrder(index, nodes, updated_matrix, root_function, tree_node_function,
+               hybrid_node_function, parameters)
+</pre></div>
+
+
+<p>Generic tool to apply a pre-order (or topological ordering) algorithm. Used by <code>sharedPathMatrix</code> and by <code>pairwiseTaxonDistanceMatrix</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/traits.jl#L74-L84' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.removeHybrid!-Tuple{PhyloNetworks.Network,PhyloNetworks.Node}' href='#PhyloNetworks.removeHybrid!-Tuple{PhyloNetworks.Network,PhyloNetworks.Node}'>#</a>
+<strong><code>PhyloNetworks.removeHybrid!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>removeHybrid!(net::Network, n::Node)
+</pre></div>
+
+
+<p>Delete a hybrid node <code>n</code> from <code>net.hybrid</code>, and update <code>net.numHybrid</code>. The actual node <code>n</code> is not deleted. It is kept in the full list <code>net.node</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L565-L570' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.resetEdgeNumbers!-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.resetEdgeNumbers!-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.resetEdgeNumbers!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="nt">resetEdgeNumbers</span><span class="o">!(</span><span class="nt">net</span><span class="p">::</span><span class="nd">HybridNetwork</span><span class="o">;</span> <span class="nt">checkPreorder</span><span class="o">=</span><span class="nt">true</span><span class="o">,</span> <span class="nt">ape</span><span class="o">=</span><span class="nt">true</span><span class="o">)</span>
+</pre></div>
+
+
+<p>Check that edge numbers of <code>net</code> are consecutive numbers from 1 to the total number of edges. If not, reset the edge numbers to be so.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/manipulateNet.jl#L903-L908' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.resetNodeNumbers!-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.resetNodeNumbers!-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.resetNodeNumbers!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span><span class="nt">resetNodeNumbers</span><span class="o">!(</span><span class="nt">net</span><span class="p">::</span><span class="nd">HybridNetwork</span><span class="o">;</span> <span class="nt">checkPreorder</span><span class="o">=</span><span class="nt">true</span><span class="o">,</span> <span class="nt">ape</span><span class="o">=</span><span class="nt">true</span><span class="o">)</span>
+</pre></div>
+
+
+<p>Change internal node numbers of <code>net</code> to consecutive numbers from 1 to the total number of nodes.</p>
+<p>keyword arguments:</p>
+<ul>
+<li><code>ape</code>: if true, the new numbers satisfy the conditions assumed by the <code>ape</code> R package: leaves are 1 to n, the root is n+1, and internal nodes are higher consecutive integers. If false, nodes are numbered in post-order, with leaves from 1 to n (and the root last).</li>
+<li><code>checkPreorder</code>: if false, the <code>isChild1</code> edge field and the <code>net.nodes_changed</code> network field are supposed to be correct (to get nodes in preorder)</li>
+</ul>
+<p><strong>Examples</strong></p>
+<div class="codehilite"><pre><span></span>julia&gt; net = readTopology(&quot;(A,(B,(C,D)));&quot;);
+julia&gt; PhyloNetworks.resetNodeNumbers!(net)
+julia&gt; printNodes(net)
+Node    In Cycle        isHybrid        hasHybEdge      Node label      isLeaf  Edges numbers
+1       -1              false           false           A               true    1
+2       -1              false           false           B               true    2
+3       -1              false           false           C               true    3
+4       -1              false           false           D               true    4
+7       -1              false           false                           false   3       4       5
+6       -1              false           false                           false   2       5       6
+5       -1              false           false                           false   1       6
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/manipulateNet.jl#L849-L878' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.sameTaxa-Tuple{PhyloNetworks.Quartet,PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.sameTaxa-Tuple{PhyloNetworks.Quartet,PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.sameTaxa</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>sameTaxa(Quartet, HybridNetwork)
+</pre></div>
+
+
+<p>Return <code>true</code> if all taxa in the quartet are represented in the network, <code>false</code> if one or more taxa in the quartet does not appear in the network.</p>
+<p>warning: the name can cause confusion. A more appropriate name might be "in", or "taxain", or "taxonsubset", or etc.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readData.jl#L326-L334' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.sampleBootstrapTrees-Tuple{Array{Array{PhyloNetworks.HybridNetwork,1},1}}' href='#PhyloNetworks.sampleBootstrapTrees-Tuple{Array{Array{PhyloNetworks.HybridNetwork,1},1}}'>#</a>
+<strong><code>PhyloNetworks.sampleBootstrapTrees</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>sampleBootstrapTrees(vector of tree lists; seed=0::Integer, generesampling=false, row=0)
+sampleBootstrapTrees!(tree list, vector of tree lists; seed=0::Integer, generesampling=false, row=0)
+</pre></div>
+
+
+<p>Sample bootstrap gene trees, 1 tree per gene. Set the seed with keyword argument <code>seed</code>, which is 0 by default. When <code>seed=0</code>, the actual seed is set using the clock. Assumes a vector of vectors of networks (see <code>readBootstrapTrees</code>), each one of length 1 or more (error if one vector is empty, tested in <code>bootsnaq</code>).</p>
+<ul>
+<li>site resampling: always, from sampling one bootstrap tree from each given list. This tree is sampled at <strong>random</strong> unless <code>row&gt;0</code> (see below).</li>
+<li>gene resampling: if <code>generesampling=true</code> (default is false), genes (i.e. lists) are sampled with replacement.</li>
+<li><code>row=i</code>: samples the ith bootstrap tree for each gene. <code>row</code> is turned back to 0 if gene resampling is true.</li>
+</ul>
+<p>output: one vector of trees. the modifying function (!) modifies the input tree list and returns it.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/bootstrap.jl#L29-L47' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.sampleCFfromCI' href='#PhyloNetworks.sampleCFfromCI'>#</a>
+<strong><code>PhyloNetworks.sampleCFfromCI</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>sampleCFfromCI(data frame, seed=0)
+sampleCFfromCI!(data frame, seed=0)
+</pre></div>
+
+
+<p>Read a data frame containing CFs and their credibility intervals, and sample new obsCF uniformly within the CIs. These CFs are then rescaled to sum up to 1 for each 4-taxon sets. Return a data frame with taxon labels in first 4 columns, sampled obs CFs in columns 5-7 and credibility intervals in columns 8-13.</p>
+<ul>
+<li>The non-modifying function creates a new data frame (with re-ordered columns) and returns it. If <code>seed=-1</code>, the new df is a deep copy of the input df, with no call to the random number generator. Otherwise, <code>seed</code> is passed to the modifying function.</li>
+<li>The modifying function overwrites the input data frame with the sampled CFs and returns it. If <code>seed=0</code>, the random generator is seeded from the clock. Otherwise the random generator is seeded using <code>seed</code>.</li>
+</ul>
+<p>Warning: the modifying version does <em>not</em> check the data frame: assumes correct columns.</p>
+<p>optional argument: <code>delim=','</code> by default: how columns are delimited.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/bootstrap.jl#L86-L106' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.setBLfromDivergenceTimes!-Tuple{PhyloNetworks.HybridNetwork,Dict{Int64,Float64}}' href='#PhyloNetworks.setBLfromDivergenceTimes!-Tuple{PhyloNetworks.HybridNetwork,Dict{Int64,Float64}}'>#</a>
+<strong><code>PhyloNetworks.setBLfromDivergenceTimes!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>setBLfromDivergenceTimes!(net::HybridNetwork, divergenceTimes::Dict{Int64,Float64})
+</pre></div>
+
+
+<p>Modify branch lengths in <code>net</code> to match input divergence times. Assumes correct <code>isChild1</code> field for all edges in the network.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/pairwiseDistanceLS.jl#L1-L6' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.setBranchLength!-Tuple{PhyloNetworks.Edge,Number}' href='#PhyloNetworks.setBranchLength!-Tuple{PhyloNetworks.Edge,Number}'>#</a>
+<strong><code>PhyloNetworks.setBranchLength!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>setBranchLength!(Edge,new length)</code></p>
+<p>sets the length of an Edge object. The new length needs to be non-negative, or -1.0 to be interpreted as missing. Example: if net is a HybridNetwork object, do printEdges(net) to see the list of all edges with their lengths. The length of the 3rd edge can be changed to 1.2 with setBranchLength!(net.edge[3],1.2). It can also be set to missing with setBranchLength!(net.edge[3],-1.0)</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L881-L886' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.setGammaBLfromGammaz!-Tuple{PhyloNetworks.Node,PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.setGammaBLfromGammaz!-Tuple{PhyloNetworks.Node,PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.setGammaBLfromGammaz!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>setGammaBLfromGammaz!(node, network)</code></p>
+<p>Update the γ values of the two sister hybrid edges in a bad diamond I, given the <code>gammaz</code> values of their parent nodes, and updates the branch lengths t1 and t2 of their parent edges (those across from the hybrid nodes), in such a way that t1=t2 and that these branch lengths and γ values are consistent with the <code>gammaz</code> values in the network.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/auxiliary.jl#L955-L962' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.setNonIdBL!-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.setNonIdBL!-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.setNonIdBL!</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>setNonIdBL!(net)</code></p>
+<p>Set non-identifiable edge branch lengths to -1.0 (i.e. missing) for a level-1 network <code>net</code>, except for edges in</p>
+<ul>
+<li>a good triangle: the edge below the hybrid is constrained to 0.</li>
+<li>a bad diamond II: the edge below the hybrid is constrained to 0</li>
+<li>a bad diamond I: the edges across from the hybrid node have non identifiable lengths but are kept, because the two γ*(1-exp(-t)) values are identifiable.</li>
+</ul>
+<p>will break if <code>inCycle</code> attributes are not initialized (at -1) or giving a correct node number.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/descriptive.jl#L76-L88' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.showQ-Tuple{IO,PhyloNetworks.TraitSubstitutionModel{T} where T}' href='#PhyloNetworks.showQ-Tuple{IO,PhyloNetworks.TraitSubstitutionModel{T} where T}'>#</a>
+<strong><code>PhyloNetworks.showQ</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>showQ(IO, model)
+</pre></div>
+
+
+<p>Print the Q matrix to the screen, with trait states as labels on rows and columns. adapted from prettyprint function by mcreel, found 2017/10 at https://discourse.julialang.org/t/display-of-arrays-with-row-and-column-names/1961/6</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/substitutionModels.jl#L37-L43' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.sortUnionTaxa!-Tuple{Any}' href='#PhyloNetworks.sortUnionTaxa!-Tuple{Any}'>#</a>
+<strong><code>PhyloNetworks.sortUnionTaxa!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>sortUnionTaxa!(taxa)
+</pre></div>
+
+
+<p>Take a vector of strings <code>taxa</code>, sort it numerically if elements can be parsed as an integer, alphabetically otherwise.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readData.jl#L381-L386' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.symmetricNet' href='#PhyloNetworks.symmetricNet'>#</a>
+<strong><code>PhyloNetworks.symmetricNet</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>symmetricNet(n, h, gamma)
+</pre></div>
+
+
+<p>Create a string with a symmetric net with 2^n tips, numbered from 1 to 2^n The total height of the network is set to 1. Hybrids are added from level h to h-1 symmetrically.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L1457-L1463' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.symmetricNet-Tuple{Int64,Int64,Int64,Real,Real}' href='#PhyloNetworks.symmetricNet-Tuple{Int64,Int64,Int64,Real,Real}'>#</a>
+<strong><code>PhyloNetworks.symmetricNet</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>symmetricNet(n, i, j, gamma)
+</pre></div>
+
+
+<p>Create a string with a symmetric net with 2^n tips, numbered from 1 to 2^n All the branch length are set equal to 1. One hybrid branch, going from level i to level j is added, with weigth gamma. The tree can be created with function readTopology.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L1420-L1427' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.symmetricTree' href='#PhyloNetworks.symmetricTree'>#</a>
+<strong><code>PhyloNetworks.symmetricTree</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>symmetricTree(n, i=1)
+</pre></div>
+
+
+<p>Create a string with a symmetric tree with 2^n tips, numbered from i to i+2^n-1. All the branch length are set equal to 1. The tree can be created with function readTopology.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L1398-L1404' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.synchronizePartnersData!-Tuple{PhyloNetworks.Edge,PhyloNetworks.Node}' href='#PhyloNetworks.synchronizePartnersData!-Tuple{PhyloNetworks.Edge,PhyloNetworks.Node}'>#</a>
+<strong><code>PhyloNetworks.synchronizePartnersData!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>synchronizePartnersData!(e::Edge, n::Node)
+</pre></div>
+
+
+<p>Synchronize γ and isMajor for edges <code>e</code> and its partner, both hybrid edges with the same child <code>n</code>:</p>
+<ul>
+<li>if one γ is missing and the other is not: set the missing γ to 1 - the other</li>
+<li>γ's should sum up to 1.0</li>
+<li>update <code>isMajor</code> to match the γ information: the major edge is the one with γ &gt; 0.5.</li>
+</ul>
+<p><strong>Warnings</strong>: does not check that <code>e</code> is a hybrid edge, nor that <code>n</code> is the child of <code>e</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L316-L328' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.taxadiff-Tuple{Array{PhyloNetworks.Quartet,1},PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.taxadiff-Tuple{Array{PhyloNetworks.Quartet,1},PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.taxadiff</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>taxadiff(Vector{Quartet}, network; multiplealleles=true)
+taxadiff(DataCF, network; multiplealleles=true)
+</pre></div>
+
+
+<p>Return 2 vectors:</p>
+<ul>
+<li>taxa in at least 1 of the quartets but not in the network, and</li>
+<li>taxa in the network but in none of the quartets.</li>
+</ul>
+<p>When <code>multiplealleles</code> is true, the taxon names that end with "__2" are ignored in the quartets: they are not expected to appear in the networks that users give as input, or get as output.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readData.jl#L342-L354' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.traverseContainRoot!-Tuple{PhyloNetworks.Node,PhyloNetworks.Edge,Array{PhyloNetworks.Edge,1},Array{Bool,1}}' href='#PhyloNetworks.traverseContainRoot!-Tuple{PhyloNetworks.Node,PhyloNetworks.Edge,Array{PhyloNetworks.Edge,1},Array{Bool,1}}'>#</a>
+<strong><code>PhyloNetworks.traverseContainRoot!</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>updateContainRoot!(HybridNetwork, Node)
+traverseContainRoot!(Node, Edge, edges_changed::Array{Edge,1}, rightDir::Vector{Bool})
+</pre></div>
+
+
+<p>The input <code>node</code> to <code>updateContainRoot!</code> must be a hybrid node (can come from searchHybridNode). <code>updateContainRoot!</code> starts at the input node and calls <code>traverseContainRoot!</code>, which traverses the network recursively. By default, containRoot attributes of edges are true. Changes containRoot to false for all the visited edges: those below the input node, but not beyond any other hybrid node.</p>
+<p><code>updateContainRoot!</code> Returns a <code>flag</code> and an array of edges whose containRoot has been changed from true to false. <code>flag</code> is false if the set of edges to place the root is empty</p>
+<p>In <code>traverseContainRoot!</code>, <code>rightDir</code> turns false if hybridizations have incompatible directions (vector of length 1, to be modified).</p>
+<p>Warning:</p>
+<ul>
+<li>does <em>not</em> update containRoot of minor hybrid edges.</li>
+<li>assumes correct isMajor attributes: to stop the recursion at minor hybrid edges.</li>
+<li>assumes correct hybrid attributes of both nodes &amp; edges: to check if various hybridizations have compatible directions. For each hybrid node that is encountered, checks if it was reached via a hybrid edge (ok) or tree edge (not ok).</li>
+</ul>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/update.jl#L117-L144' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.updatePostOrder!' href='#PhyloNetworks.updatePostOrder!'>#</a>
+<strong><code>PhyloNetworks.updatePostOrder!</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>recursionPostOrder(nodes, init_function, tip_function, node_function,
+                   parameters)
+updatePostOrder(index, nodes, updated_matrix, tip_function, node_function,
+                parameters)
+</pre></div>
+
+
+<p>Generic tool to apply a post-order (or topological ordering) algorithm. Used by <code>descendenceMatrix</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/traits.jl#L175' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.updatePreOrder!' href='#PhyloNetworks.updatePreOrder!'>#</a>
+<strong><code>PhyloNetworks.updatePreOrder!</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>recursionPreOrder(nodes, init_function, root_function, tree_node_function,
+                  hybrid_node_function, parameters)
+recursionPreOrder!(nodes, AbstractArray, root_function, tree_node_function,
+                   hybrid_node_function, parameters)
+updatePreOrder(index, nodes, updated_matrix, root_function, tree_node_function,
+               hybrid_node_function, parameters)
+</pre></div>
+
+
+<p>Generic tool to apply a pre-order (or topological ordering) algorithm. Used by <code>sharedPathMatrix</code> and by <code>pairwiseTaxonDistanceMatrix</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/traits.jl#L109' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.writeTopologyLevel1-Tuple{PhyloNetworks.HybridNetwork}' href='#PhyloNetworks.writeTopologyLevel1-Tuple{PhyloNetworks.HybridNetwork}'>#</a>
+<strong><code>PhyloNetworks.writeTopologyLevel1</code></strong> &mdash; <em>Method</em>.</p>
+<p><code>writeTopologyLevel1(net::HybridNetwork)</code></p>
+<p>Write the extended Newick parenthetical format of a level-1 network object with many optional arguments (see below). Makes a deep copy of net: does <em>not</em> modify <code>net</code>.</p>
+<ul>
+<li>di=true: write in format for Dendroscope (default false)</li>
+<li>names=false: write the leaf nodes numbers instead of taxon names (default true)</li>
+<li>outgroup (string): name of outgroup to root the tree/network. if "none" is given, the root is placed wherever possible.</li>
+<li>printID=true, only print branch lengths for identifiable egdes according to the snaq estimation procedure (default false) (true inside of <code>snaq!</code>.)</li>
+<li>round: rounds branch lengths and heritabilities γ (default: true)</li>
+<li>digits: digits after the decimal place for rounding (defult: 3)</li>
+<li>string: if true (default), returns a string, otherwise returns an IOBuffer object.</li>
+<li>multall: (default false). set to true when there are multiple alleles per population.</li>
+</ul>
+<p>The topology may be written using a root different than net.root, if net.root is incompatible with one of more hybrid node. Missing hybrid names are written as "#Hi" where "i" is the hybrid node number if possible.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/blob/1fe57ec2ce32d1a1f8e9f69a355472fa75ca5fbd/src/readwrite.jl#L1078-L1102' class='documenter-source'>source</a><br></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../public/" title="Public" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Public
+              </span>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.a59e2a89.js"></script>
+      
+      <script>app.initialize({version:"0.17.4",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="../../assets/mathjaxhelper.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

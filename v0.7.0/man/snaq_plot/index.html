@@ -1,0 +1,862 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PhyloNetworks is a Julia package for the manipulation, visualization and inference of phylogenetic networks.">
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.3, mkdocs-material-2.7.1">
+    
+    
+      
+        <title>Network estimation and display - PhyloNetworks.jl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.78aab2dc.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.6079476c.css">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <a href="#getting-a-network" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="PhyloNetworks.jl" class="md-header-nav__button md-logo">
+          
+            <img src="../../snaq_small.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                PhyloNetworks.jl
+              </span>
+              <span class="md-header-nav__topic">
+                Network estimation and display
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <img src="../../snaq_small.png" width="48" height="48">
+      
+    </span>
+    PhyloNetworks.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Manual
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Manual
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../inputdata/" title="Input Data for SNaQ" class="md-nav__link">
+      Input Data for SNaQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-nav__link">
+      TICR pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Network estimation and display
+      </label>
+    
+    <a href="./" title="Network estimation and display" class="md-nav__link md-nav__link--active">
+      Network estimation and display
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#network-estimation" title="Network Estimation" class="md-nav__link">
+    Network Estimation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-computation" title="parallel computation" class="md-nav__link">
+    parallel computation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-the-number-of-hybridizations" title="choosing the number of hybridizations" class="md-nav__link">
+    choosing the number of hybridizations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-visualization" title="Network Visualization" class="md-nav__link">
+    Network Visualization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-rooting-networks" title="Re-rooting networks" class="md-nav__link">
+    Re-rooting networks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#candidate-network-evaluation" title="Candidate Network Evaluation" class="md-nav__link">
+    Candidate Network Evaluation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snaq-error-reporting" title="SNaQ error reporting" class="md-nav__link">
+    SNaQ error reporting
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dist_reroot/" title="Network comparison and manipulation" class="md-nav__link">
+      Network comparison and manipulation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fixednetworkoptim/" title="Candidate Networks" class="md-nav__link">
+      Candidate Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../expectedCFs/" title="Extract Expected CFs" class="md-nav__link">
+      Extract Expected CFs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../multiplealleles/" title="Multiple Alleles" class="md-nav__link">
+      Multiple Alleles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../trait_tree/" title="Continuous Trait Evolution" class="md-nav__link">
+      Continuous Trait Evolution
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Library
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Library
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/public/" title="Public" class="md-nav__link">
+      Public
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/internals/" title="Internals" class="md-nav__link">
+      Internals
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#network-estimation" title="Network Estimation" class="md-nav__link">
+    Network Estimation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-computation" title="parallel computation" class="md-nav__link">
+    parallel computation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-the-number-of-hybridizations" title="choosing the number of hybridizations" class="md-nav__link">
+    choosing the number of hybridizations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-visualization" title="Network Visualization" class="md-nav__link">
+    Network Visualization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#re-rooting-networks" title="Re-rooting networks" class="md-nav__link">
+    Re-rooting networks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#candidate-network-evaluation" title="Candidate Network Evaluation" class="md-nav__link">
+    Candidate Network Evaluation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#snaq-error-reporting" title="SNaQ error reporting" class="md-nav__link">
+    SNaQ error reporting
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/crsl4/PhyloNetworks.jl/edit/master/docs/man/snaq_plot.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><a id='Getting-a-Network-1'></a></p>
+<h1 id="getting-a-network">Getting a Network</h1>
+<p><a id='Network-Estimation-1'></a></p>
+<h2 id="network-estimation">Network Estimation</h2>
+<p>SNaQ implements the statistical inference method in <a href="http://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1005896">Sol&iacute;s-Lemus and An&eacute; 2016</a>. The procedure involves a numerical optimization of branch lengths and inheritance probabilities and a heuristic search in the space of phylogenetic networks.</p>
+<p>After <a href="../inputdata/#Input-for-SNaQ-1">Input for SNaQ</a>, we can estimate the network using the input data <code>raxmlCF</code> and starting from tree (or network) <code>astraltree</code>. We first impose the constraint of at most 0 hybrid node, that is, we ask for a tree.</p>
+<div class="codehilite"><pre><span></span><span class="n">net0</span> <span class="o">=</span> <span class="n">snaq!</span><span class="p">(</span><span class="n">astraltree</span><span class="p">,</span><span class="n">raxmlCF</span><span class="p">,</span> <span class="n">hmax</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">&quot;net0&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1234</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Part of the screen output shows this:</p>
+<div class="codehilite"><pre><span></span>MaxNet is (C,D,((B,A):1.395762055180493,(O,E):0.48453400554506426):10.0);
+with -loglik 53.53150526187732
+</pre></div>
+
+
+<p>This parenthetical (extended Newick) description is not very human-friendly, so we plot the tree:</p>
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">net0</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="net0_1" src="../../assets/figures/snaq_plot_net0_1_1.png" /></p>
+<p>We can use this tree as a starting point to search for the best network allowing for at most <code>hmax=1</code> hybrid node (which is the default).</p>
+<div class="codehilite"><pre><span></span><span class="n">net1</span> <span class="o">=</span> <span class="n">snaq!</span><span class="p">(</span><span class="n">net0</span><span class="p">,</span><span class="n">raxmlCF</span><span class="p">,</span> <span class="n">hmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">&quot;net1&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2345</span><span class="p">)</span>
+</pre></div>
+
+
+<p>part of screen output:</p>
+<div class="codehilite"><pre><span></span><span class="nt">best</span> <span class="nt">network</span> <span class="nt">and</span> <span class="nt">networks</span> <span class="nt">with</span> <span class="nt">different</span> <span class="nt">hybrid</span><span class="o">/</span><span class="nt">gene</span> <span class="nt">flow</span> <span class="nt">directions</span> <span class="nt">printed</span> <span class="nt">to</span> <span class="p">.</span><span class="nc">networks</span> <span class="nt">file</span>
+<span class="nt">MaxNet</span> <span class="nt">is</span> <span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,((</span><span class="nt">O</span><span class="o">,(</span><span class="nt">E</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">19558838614943078</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">31352437658618976</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">6640664399202987</span><span class="o">,(</span><span class="nt">B</span><span class="o">,(</span><span class="nt">A</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">8044116138505693</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">);</span>
+<span class="nt">with</span> <span class="nt">-loglik</span> <span class="nt">28</span><span class="p">.</span><span class="nc">31506721890958</span>
+</pre></div>
+
+
+<p>To visualize the estimated network, we can use the companion package <a href="https://github.com/cecileane/PhyloPlots.jl">PhyloPlots</a>.</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">PhyloPlots</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">net1</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="net1_1" src="../../assets/figures/snaq_plot_net1_1_1.png" /></p>
+<p>This network has A as a hybrid, 80.4% sister to B, and 19.6% sister to E (which is otherwise sister to O). C &amp; D are sister to each other. We can also check the output files created by <code>snaq!</code>:</p>
+<div class="codehilite"><pre><span></span><span class="n">less</span><span class="p">(</span><span class="s">&quot;net1.err&quot;</span><span class="p">)</span> <span class="c"># would provide info about errors, if any</span>
+<span class="n">less</span><span class="p">(</span><span class="s">&quot;net1.out&quot;</span><span class="p">)</span> <span class="c"># main output file with the estimated network from each run</span>
+<span class="n">less</span><span class="p">(</span><span class="s">&quot;net1.networks&quot;</span><span class="p">)</span> <span class="c"># extra info</span>
+</pre></div>
+
+
+<p>when viewing these result files with <code>less</code> within Julia, use arrows to scroll down and type <code>q</code> to quit viewing the files. The file <code>net1.networks</code> contains a list of networks obtained from the estimated network, <code>net1</code>, by changing the direction of each hybridization, and by moving the placement of the hybrid node to another node inside the cycle, along with its pseudolikelihood score.</p>
+<p>The function name <code>snaq!</code> ends with ! because it modifies the argument <code>raxmlCF</code> by including the expected CF. Type <code>?</code> then <code>snaq!</code> to get help on that function.</p>
+<p>The main output file, here <code>net1.out</code> (or <code>snaq.out</code> by default) has the estimated network in parenthetical format, but we can also print it directly to the screen:</p>
+<div class="codehilite"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span> <span class="n">net1</span>
+<span class="n">PhyloNetworks</span><span class="o">.</span><span class="n">HybridNetwork</span><span class="p">,</span> <span class="n">Rooted</span> <span class="n">Network</span>
+<span class="mi">12</span> <span class="n">edges</span>
+<span class="mi">12</span> <span class="n">nodes</span><span class="o">:</span> <span class="mi">6</span> <span class="n">tips</span><span class="p">,</span> <span class="mi">1</span> <span class="n">hybrid</span> <span class="n">nodes</span><span class="p">,</span> <span class="mi">5</span> <span class="n">internal</span> <span class="n">tree</span> <span class="n">nodes</span><span class="o">.</span>
+<span class="n">tip</span> <span class="n">labels</span><span class="o">:</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">O</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="o">...</span>
+<span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">,((</span><span class="n">O</span><span class="p">,(</span><span class="n">E</span><span class="p">,</span><span class="c">#H7:::0.196):0.314):0.664,(B,(A)#H7:::0.804):10.0):10.0);</span>
+
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">writeTopology</span><span class="p">(</span><span class="n">net1</span><span class="p">)</span>  <span class="c"># writes to screen, full precision for branch lengths and γ</span>
+<span class="s">&quot;(C,D,((O,(E,#H7:::0.19558838614943078):0.31352437658618976):0.6640664399202987,(B,(A)#H7:::0.8044116138505693):10.0):10.0);&quot;</span>
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">writeTopology</span><span class="p">(</span><span class="n">net1</span><span class="p">,</span> <span class="n">round</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="s">&quot;(C,D,((O,(E,#H7:::0.2):0.31):0.66,(B,(A)#H7:::0.8):10.0):10.0);&quot;</span>
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">writeTopology</span><span class="p">(</span><span class="n">net1</span><span class="p">,</span><span class="n">di</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span> <span class="c"># γ omitted: for dendroscope</span>
+<span class="s">&quot;(C,D,((O,(E,#H7):0.31352437658618976):0.6640664399202987,(B,(A)#H7):10.0):10.0);&quot;</span>
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">writeTopology</span><span class="p">(</span><span class="n">net1</span><span class="p">,</span> <span class="s">&quot;bestnet_h1.tre&quot;</span><span class="p">)</span> <span class="c"># writes to file: creates or overwrites file</span>
+</pre></div>
+
+
+<p>The option <code>di=true</code> is for the parenthetical format used by <a href="http://dendroscope.org/">Dendroscope</a> (without reticulation heritabilities). Copy this parenthetical description and paste it into Dendroscope, or use the plotting function described below.</p>
+<p>We can go on and let the network have up to 2 or 3 hybrid nodes:</p>
+<div class="codehilite"><pre><span></span><span class="n">net2</span> <span class="o">=</span> <span class="n">snaq!</span><span class="p">(</span><span class="n">net1</span><span class="p">,</span><span class="n">raxmlCF</span><span class="p">,</span> <span class="n">hmax</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">&quot;net2&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">3456</span><span class="p">)</span>
+<span class="n">net3</span> <span class="o">=</span> <span class="n">snaq!</span><span class="p">(</span><span class="n">net0</span><span class="p">,</span><span class="n">raxmlCF</span><span class="p">,</span> <span class="n">hmax</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">&quot;net3&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">4567</span><span class="p">)</span>
+</pre></div>
+
+
+<p>and plot them (they are identical):</p>
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">net2</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">net3</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="net23 1" src="../../assets/figures/snaq_plot_net23_1.png" /> <img alt="net23 2" src="../../assets/figures/snaq_plot_net23_2.png" /></p>
+<p>with this screen output for net2 (only 1 hybrid node found):</p>
+<div class="codehilite"><pre><span></span><span class="nt">MaxNet</span> <span class="nt">is</span> <span class="o">(</span><span class="nt">C</span><span class="o">,</span><span class="nt">D</span><span class="o">,((</span><span class="nt">B</span><span class="o">,(</span><span class="nt">A</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">804411606649347</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">,(</span><span class="nt">O</span><span class="o">,(</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">19558839335065303</span><span class="o">,</span><span class="nt">E</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">3135243143217013</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">664066456871298</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">);</span>
+<span class="nt">with</span> <span class="nt">-loglik</span> <span class="nt">28</span><span class="p">.</span><span class="nc">31506721890957</span>
+</pre></div>
+
+
+<p>and this output for net3 (again, only 1 hybrid found):</p>
+<div class="codehilite"><pre><span></span><span class="nt">MaxNet</span> <span class="nt">is</span> <span class="o">(</span><span class="nt">D</span><span class="o">,</span><span class="nt">C</span><span class="o">,((</span><span class="nt">O</span><span class="o">,(</span><span class="nt">E</span><span class="o">,</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">19558839257941849</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">3135243301652981</span><span class="o">)</span><span class="p">:</span><span class="nd">0</span><span class="p">.</span><span class="nc">6640664138384673</span><span class="o">,(</span><span class="nt">B</span><span class="o">,(</span><span class="nt">A</span><span class="o">)</span><span class="p">#</span><span class="nn">H7</span><span class="o">:</span><span class="p">::</span><span class="nd">0</span><span class="p">.</span><span class="nc">8044116074205815</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">)</span><span class="p">:</span><span class="nd">10</span><span class="p">.</span><span class="nc">0</span><span class="o">);</span>
+<span class="nt">with</span> <span class="nt">-loglik</span> <span class="nt">28</span><span class="p">.</span><span class="nc">315067218909626</span>
+</pre></div>
+
+
+<p><a id='parallel-computation-1'></a></p>
+<h2 id="parallel-computation">parallel computation</h2>
+<p>For network estimation, multiple runs can done in parallel. For example, if your machine has 4 or more processors (or cores), you can tell julia to use 4 processors by starting julia with <code>julia -p 4</code>, or by starting julia the usual way (<code>julia</code>) and then adding processors with:</p>
+<div class="codehilite"><pre><span></span><span class="n">addprocs</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+
+
+<p>If we load a package (<code>using PhyloNetworks</code>) before adding processors, then we need to re-load it again so that all processors have access to it:</p>
+<div class="codehilite"><pre><span></span><span class="nd">@everywhere</span> <span class="k">using</span> <span class="n">PhyloNetworks</span>
+</pre></div>
+
+
+<p>After that, running any of the <code>snaq!(...)</code> command will use different cores for different runs, as processors become available. Fewer details are printed to the log file when multiple cores are used in parallel.</p>
+<p>When running <code>bootsnaq</code>, the analysis of each bootstrap replicate will use multiple cores to parallelize separate runs of that particular bootstrap replicate. You may parallelize things further by running <code>bootsnaq</code> multiple times (on separate machines for instance), each time for a small subset of bootstrap replicates, and with a different seed each time.</p>
+<p>You may tell julia to add more processors than your machine has, but you will not receive any performance benefits. At any time during the julia session, <code>nworkers()</code> tells us how many worker processors julia has access to.</p>
+<p><a id='choosing-the-number-of-hybridizations-1'></a></p>
+<h2 id="choosing-the-number-of-hybridizations">choosing the number of hybridizations</h2>
+<p>Each network has a <code>loglik</code> attribute, which is its pseudo deviance: twice the negative log-likelihood up to a constant (the constant is such that the score is 0 if the network fits the data perfectly). The lower the better. We can plot these scores across hybrid values:</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">Gadfly</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="n">net0</span><span class="o">.</span><span class="n">loglik</span><span class="p">,</span> <span class="n">net1</span><span class="o">.</span><span class="n">loglik</span><span class="p">,</span> <span class="n">net2</span><span class="o">.</span><span class="n">loglik</span><span class="p">,</span> <span class="n">net3</span><span class="o">.</span><span class="n">loglik</span><span class="p">]</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">collect</span><span class="p">(</span><span class="mi">0</span><span class="o">:</span><span class="mi">3</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">scores</span><span class="p">,</span> <span class="n">Geom</span><span class="o">.</span><span class="n">point</span><span class="p">,</span> <span class="n">Geom</span><span class="o">.</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="scores_heuristic" src="../../assets/figures/snaq_plot_scores_heuristic_1.png" /></p>
+<p>Here the slope heuristic suggests a single hybrid node: the score does not get much better beyond h=1.</p>
+<p><a id='Network-Visualization-1'></a></p>
+<h2 id="network-visualization">Network Visualization</h2>
+<div class="codehilite"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">net1</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="net1_1" src="../../assets/figures/snaq_plot_net1_1_1.png" /></p>
+<p>This will open a browser where the plot will appear (unless you use <a href="http://junolab.org">Juno</a>, which would capture and display the plot). To get a pdf version, for instance: (see <a href="http://gadflyjl.org/">Gadfly tutorial</a> for other formats)</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">Gadfly</span>
+<span class="n">draw</span><span class="p">(</span><span class="n">PDF</span><span class="p">(</span><span class="s">&quot;bestnet_h1.pdf&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="n">inch</span><span class="p">,</span> <span class="mi">4</span><span class="n">inch</span><span class="p">),</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The plot function has many options, to annotate nodes and edges (with γ heritabilities as show above, for example). Type <code>?</code> to switch to the help mode of Julia, then type the name of the function, here <code>plot</code>. Edge colors can be modified, for instance.</p>
+<div class="codehilite"><pre><span></span><span class="c"># using Gadfly # if not done earlier, for colorant</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">net1</span><span class="p">,</span> <span class="n">showEdgeLength</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">minorHybridEdgeColor</span><span class="o">=</span><span class="n">colorant</span><span class="s">&quot;tan&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="net1_2" src="../../assets/figures/snaq_plot_net1_2_1.png" /></p>
+<p>Edge lengths are shown, too. They were estimated in coalescent units: number of generations / effective population size. Some edge lengths are not identifiable, hence not shown.</p>
+<p>Networks can also be displayed through R, using <a href="https://github.com/JuliaInterop/RCall.jl">RCall</a> instead of <a href="../gadflyjl.org/">Gadfly</a>. To do so, add the argument <code>:RCall</code> after the network, like this for example:</p>
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">net</span><span class="p">,</span><span class="o">:</span><span class="n">RCall</span><span class="p">,</span> <span class="n">tipOffset</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">edgeColor</span><span class="o">=</span><span class="s">&quot;tomato4&quot;</span><span class="p">,</span>
+     <span class="n">minorHybridEdgeColor</span><span class="o">=</span><span class="s">&quot;skyblue&quot;</span><span class="p">,</span> <span class="n">majorHybridEdgeColor</span><span class="o">=</span><span class="s">&quot;tan&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<p><a id='Re-rooting-networks-1'></a></p>
+<h2 id="re-rooting-networks">Re-rooting networks</h2>
+<p>SNaQ infers an unrooted semi-directed network. The direction of hybrid edges can be inferred, but the direction of tree edges cannot be inferred. To obtain a representative visualization, it is best to root the network first, using one or more outgroup. Go to <a href="../dist_reroot/#Comparing-and-manipulating-networks-1">Comparing and manipulating networks</a> for this.</p>
+<p><a id='Candidate-Network-Evaluation-1'></a></p>
+<h2 id="candidate-network-evaluation">Candidate Network Evaluation</h2>
+<p>From a set of candidate networks, one might simply need to score of each network to pick the best. Here, the score is the negative log pseudo-likelihood, and the lower the better. See the section to get the score of <a href="../fixednetworkoptim/#Candidate-Networks-1">Candidate Networks</a>.</p>
+<p><a id='SNaQ-error-reporting-1'></a></p>
+<h2 id="snaq-error-reporting">SNaQ error reporting</h2>
+<p>Please report any bugs and errors by opening an <a href="https://github.com/crsl4/PhyloNetworks.jl/issues/new">issue</a>. The easiest way to provide information on the error is by checking the <code>.err</code> file, which will show the number of runs that failed and the corresponding seed to replicate the run. In case of an error, the <code>.err</code> file might look like: <code>Total errors: 1 in seeds [4545]</code>. To replicate the bug (necessary to fix it!), you can run the following function with the same settings that caused the error:</p>
+<div class="codehilite"><pre><span></span><span class="n">snaqDebug</span><span class="p">(</span><span class="n">startnetwork</span><span class="p">,</span> <span class="n">raxmlCF</span><span class="p">,</span> <span class="n">hmax</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">4545</span><span class="p">)</span>
+</pre></div>
+
+
+<p>This will create two files: <code>snaqDebug.log</code> and <code>debug.log</code>, with information on steps to retrace the bug. You can attach them to your issue (or send them offline), to help us fix the bug.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                TICR pipeline
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../dist_reroot/" title="Network comparison and manipulation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Network comparison and manipulation
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.8eb9be28.js"></script>
+      
+      <script>app.initialize({version:"0.17.3",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="../../assets/mathjaxhelper.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

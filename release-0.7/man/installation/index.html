@@ -1,0 +1,826 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PhyloNetworks is a Julia package for the manipulation, visualization and inference of phylogenetic networks.">
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.4, mkdocs-material-2.9.2">
+    
+    
+      
+        <title>Installation - PhyloNetworks.jl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.ba0fd1a6.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.6079476c.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#installation" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="PhyloNetworks.jl" class="md-header-nav__button md-logo">
+          
+            <img src="../../snaq_small.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                PhyloNetworks.jl
+              </span>
+              <span class="md-header-nav__topic">
+                Installation
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <span class="md-nav__button md-logo">
+      
+        <img src="../../snaq_small.png" width="48" height="48">
+      
+    </span>
+    PhyloNetworks.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Manual
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Manual
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Installation
+      </label>
+    
+    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+      Installation
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation-of-julia" title="Installation of Julia" class="md-nav__link">
+    Installation of Julia
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-of-the-package-phylonetworks" title="Installation of the package PhyloNetworks" class="md-nav__link">
+    Installation of the package PhyloNetworks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-example" title="Test example" class="md-nav__link">
+    Test example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#julia-types" title="Julia types" class="md-nav__link">
+    Julia types
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../inputdata/" title="Input Data for SNaQ" class="md-nav__link">
+      Input Data for SNaQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-nav__link">
+      TICR pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../snaq_plot/" title="Network estimation and display" class="md-nav__link">
+      Network estimation and display
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dist_reroot/" title="Network comparison and manipulation" class="md-nav__link">
+      Network comparison and manipulation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fixednetworkoptim/" title="Candidate Networks" class="md-nav__link">
+      Candidate Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../expectedCFs/" title="Extract Expected CFs" class="md-nav__link">
+      Extract Expected CFs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../multiplealleles/" title="Multiple Alleles" class="md-nav__link">
+      Multiple Alleles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../trait_tree/" title="Continuous Trait Evolution" class="md-nav__link">
+      Continuous Trait Evolution
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Library
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Library
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/public/" title="Public" class="md-nav__link">
+      Public
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/internals/" title="Internals" class="md-nav__link">
+      Internals
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation-of-julia" title="Installation of Julia" class="md-nav__link">
+    Installation of Julia
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-of-the-package-phylonetworks" title="Installation of the package PhyloNetworks" class="md-nav__link">
+    Installation of the package PhyloNetworks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-example" title="Test example" class="md-nav__link">
+    Test example
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#julia-types" title="Julia types" class="md-nav__link">
+    Julia types
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/crsl4/PhyloNetworks.jl/edit/master/docs/man/installation.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><a id='Installation-1'></a></p>
+<h1 id="installation">Installation</h1>
+<p><a id='Installation-of-Julia-1'></a></p>
+<h2 id="installation-of-julia">Installation of Julia</h2>
+<p>Julia is a high-level and interactive programming language (like R or Matlab), but it is also high-performance (like C). To install Julia, follow instructions <a href="http://julialang.org/downloads/">here</a>. For a quick &amp; basic tutorial on Julia, see <a href="http://learnxinyminutes.com/docs/julia/">learn x in y minutes</a>.</p>
+<p>Editors:</p>
+<ul>
+<li><a href="https://code.visualstudio.com">Visual Studio Code</a> provides an editor and an integrated development environment (IDE) for Julia: highly recommended!</li>
+<li><a href="http://junolab.org">Juno</a> provides an IDE for Julia, based on the <a href="http://atom.io/">Atom</a> editor.</li>
+<li>you can also run Julia within a <a href="http://jupyter.org">Jupyter</a> notebook (formerly IPython notebook).</li>
+</ul>
+<p>IMPORTANT: Julia code is just-in-time compiled. This means that the first time you run a function, it will be compiled at that moment. So, please be patient! Future calls to the function will be much much faster. Trying out toy examples for the first calls is a good idea.</p>
+<p><a id='Installation-of-the-package-PhyloNetworks-1'></a></p>
+<h2 id="installation-of-the-package-phylonetworks">Installation of the package PhyloNetworks</h2>
+<p>To install the package, type inside Julia:</p>
+<div class="codehilite"><pre><span></span><span class="n">Pkg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;PhyloNetworks&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The first step can take a few minutes, be patient. If you already installed the package and want the latest registered version, just do this (which will update all of your packages):</p>
+<div class="codehilite"><pre><span></span><span class="n">Pkg</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</pre></div>
+
+
+<p>WARNING: It is important to update the package regularly as it is undergoing constant development. Join the google group for updates <a href="https://groups.google.com/forum/#!forum/phylonetworks-users/new">here</a>.</p>
+<p><code>Pkg.update()</code> will install the latest registered version, but there could be other improvements in the <code>master</code> branch of the repository. If you want to update to the latest unregistered version of the package, you can do <code>Pkg.checkout("PhyloNetworks")</code> just beware that the latest changes could be not as robust. If you want to go back to the registered package, you can do <code>Pkg.free("PhyloNetworks")</code>.</p>
+<p>Similarly, you can pin a version of the package <code>Pkg.pin("PhyloNetworks")</code> so that <code>Pkg.update()</code> will not modify it. You can always free a pinned package with <code>Pkg.free("PhyloNetworks")</code>. More on checked and pinned packages <a href="http://docs.julialang.org/en/stable/manual/packages/">here</a>.</p>
+<p>The PhyloNetworks package has dependencies like <a href="https://github.com/JuliaOpt/NLopt.jl">NLopt</a> and <a href="http://juliadata.github.io/DataFrames.jl/stable/">DataFrames</a> (see the REQUIRE file for the full list), but everything is installed automatically.</p>
+<p>The companion package <a href="https://github.com/cecileane/PhyloPlots.jl">PhyloPlots</a> has utilities to visualize networks, and for interoperability, such as to export networks to R (which can then be plotted via R). To install:</p>
+<div class="codehilite"><pre><span></span><span class="n">Pkg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;PhyloPlots&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>PhyloPlots depends on PhyloNetworks, and has further dependencies like <a href="http://gadflyjl.org/stable/">Gadfly</a> and <a href="https://github.com/JuliaInterop/RCall.jl">RCall</a></p>
+<p><a id='Test-example-1'></a></p>
+<h2 id="test-example">Test example</h2>
+<p>To check that your installation worked, type this in Julia to load the package. This is something to type every time you start a Julia session:</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">PhyloNetworks</span><span class="p">;</span>
+</pre></div>
+
+
+<p>This step can also take a while, if Julia needs to pre-compile the code (after a package update for instance). Here is a very small test for the installation of PhyloNetworks.</p>
+<div class="codehilite"><pre><span></span>julia&gt; net = readTopology(&quot;(A,(B,(C,D)));&quot;);
+
+julia&gt; tipLabels(net)
+4-element Array{String,1}:
+ &quot;A&quot;
+ &quot;B&quot;
+ &quot;C&quot;
+ &quot;D&quot;
+</pre></div>
+
+
+<p>You can see a list of all the functions with</p>
+<div class="codehilite"><pre><span></span><span class="n">whos</span><span class="p">(</span><span class="n">PhyloNetworks</span><span class="p">)</span>
+</pre></div>
+
+
+<p>and press <code>?</code> inside Julia to switch to help mode, followed by the name of a function (or type) to get more details about it.</p>
+<p><a id='Julia-types-1'></a></p>
+<h2 id="julia-types">Julia types</h2>
+<p>Each object in Julia has a <em>type</em>. We show here small examples on how to get more info on an object, what's its type, and how to manipulate objects. For example, let's take an object <code>raxmlCF</code> created from reading in some data (see <a href="../inputdata/#Input-for-SNaQ-1">Input for SNaQ</a>):</p>
+<div class="codehilite"><pre><span></span>julia&gt; raxmltrees = joinpath(Pkg.dir(&quot;PhyloNetworks&quot;),&quot;examples&quot;,&quot;raxmltrees.tre&quot;);
+
+julia&gt; raxmlCF = readTrees2CF(raxmltrees);
+will use all quartets on 6 taxa
+calculating obsCF from 30 gene trees and for 15 quartets
+Reading in quartets...
+0+---------------+100%  
+  ***************  
+table of obsCF printed to file tableCF.txt
+descriptive stat of input data printed to file summaryTreesQuartets.txt
+</pre></div>
+
+
+<p>Typing <code>whos()</code> will provide a list of objects and packages in memory, including <code>raxmlCF</code> that we just created. If we want to know the type of a particular object, we do:</p>
+<div class="codehilite"><pre><span></span>julia&gt; typeof(raxmlCF)
+PhyloNetworks.DataCF
+</pre></div>
+
+
+<p>which shows us that <code>raxmlCF</code> is of type <code>DataCF</code>. If we want to know about the attributes the object has, we can type <code>?</code> in Julia, followed by <code>DataCF</code> for a description. We can also ask for a list of all its attributes with</p>
+<div class="codehilite"><pre><span></span>julia&gt; fieldnames(raxmlCF)
+5-element Array{Symbol,1}:
+ :quartet
+ :numQuartets
+ :tree
+ :numTrees
+ :repSpecies
+</pre></div>
+
+
+<p>For example, we see that one attribute is <code>numQuartets</code>: its the number of 4-taxon subsets in the data. To see what this number is:</p>
+<div class="codehilite"><pre><span></span>julia&gt; raxmlCF.numQuartets
+15
+</pre></div>
+
+
+<p>We also noticed an attribute <code>quartet</code>. It is a vector of Quartet objects inside <code>raxmlCF</code>, so</p>
+<div class="codehilite"><pre><span></span>julia&gt; raxmlCF.quartet[2].taxon
+4-element Array{String,1}:
+ &quot;A&quot;
+ &quot;B&quot;
+ &quot;C&quot;
+ &quot;E&quot;
+</pre></div>
+
+
+<p>will provide the list of taxon names for the second 4-taxon subset in the data. To see the observed CF, we can type</p>
+<div class="codehilite"><pre><span></span>julia&gt; raxmlCF.quartet[2].obsCF
+3-element Array{Float64,1}:
+ 0.833333
+ 0.0333333
+ 0.133333
+</pre></div>
+
+
+<p>We can verify the type with</p>
+<div class="codehilite"><pre><span></span>julia&gt; typeof(raxmlCF.quartet[2])
+PhyloNetworks.Quartet
+</pre></div>
+
+
+<p>We can also read a simple network in Julia and print the list of edges</p>
+<div class="codehilite"><pre><span></span>julia&gt; str = &quot;(A,((B,#H1),(C,(D)#H1)));&quot;;
+
+julia&gt; net = readTopology(str);
+
+julia&gt; printEdges(net)
+edge parent child  length  hybrid isMajor gamma   containRoot inCycle istIdentitiable
+1    -2     1              false  true    1       true        -1      false
+2    -4     2              false  true    1       true        -1      false
+3    -4     3              true   false           false       -1      false
+4    -3     -4             false  true    1       true        -1      true 
+5    -5     4              false  true    1       true        -1      false
+6    3      5              false  true    1       true        -1      false
+7    -5     3              true   true            false       -1      true 
+8    -3     -5             false  true    1       true        -1      true 
+9    -2     -3             false  true    1       true        -1      true
+</pre></div>
+
+
+<p>We see that the edges do not have branch lengths, and the hybrid edges do not have gamma values. We can set them with</p>
+<div class="codehilite"><pre><span></span>julia&gt; setLength!(net.edge[1],1.9)
+
+julia&gt; setGamma!(net.edge[3],0.8)
+
+julia&gt; printEdges(net)
+edge parent child  length  hybrid isMajor gamma   containRoot inCycle istIdentitiable
+1    -2     1      1.900   false  true    1       true        -1      false
+2    -4     2              false  true    1       true        -1      false
+3    -4     3              true   true    0.8     false       -1      false
+4    -3     -4             false  true    1       true        -1      true 
+5    -5     4              false  true    1       true        -1      false
+6    3      5              false  true    1       true        -1      false
+7    -5     3              true   false   0.2     false       -1      true 
+8    -3     -5             false  true    1       true        -1      true 
+9    -2     -3             false  true    1       true        -1      true
+</pre></div>
+
+
+<p>where 1 and 3 correspond to the position of the given edge to modify in the list of edges. We can only change the gamma value of hybrid edges (not tree edges). Such an attempt below will cause an error with a message to explain that the edge was a tree edge:</p>
+<div class="codehilite"><pre><span></span><span class="n">setGamma!</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">edge</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="c"># should return this:</span>
+<span class="c"># ERROR: cannot change gamma in a tree edge</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../.." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Home
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../inputdata/" title="Input Data for SNaQ" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Input Data for SNaQ
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.a59e2a89.js"></script>
+      
+      <script>app.initialize({version:"0.17.4",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="../../assets/mathjaxhelper.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

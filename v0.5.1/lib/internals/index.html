@@ -1,0 +1,995 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PhyloNetworks is a Julia package for the manipulation, visualization and inference of phylogenetic networks.">
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+      
+        <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.7.4">
+    
+    
+      
+        <title>Internals - PhyloNetworks.jl</title>
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr-1df76c4e58.js"></script>
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application-769c285a91.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-02c2a4388f.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <a href="../.." title="PhyloNetworks.jl" class="md-logo md-header-nav__button">
+            <img src="../../snaq_small.png" width="24" height="24">
+          </a>
+        
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+                <span class="md-header-nav__parent">
+                  Library
+                </span>
+              
+            
+            Internals
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" accesskey="s" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">close</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    
+      <i class="md-logo md-nav__button">
+        <img src="../../snaq_small.png">
+      </i>
+    
+    PhyloNetworks.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Manual
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Manual
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/inputdata/" title="Input Data for SNaQ" class="md-nav__link">
+      Input Data for SNaQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-nav__link">
+      TICR pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/snaq_plot/" title="Network estimation and display" class="md-nav__link">
+      Network estimation and display
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/dist_reroot/" title="Network comparison and manipulation" class="md-nav__link">
+      Network comparison and manipulation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/fixednetworkoptim/" title="Candidate Networks" class="md-nav__link">
+      Candidate Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/expectedCFs/" title="Extract Expected CFs" class="md-nav__link">
+      Extract Expected CFs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/multiplealleles/" title="Multiple Alleles" class="md-nav__link">
+      Multiple Alleles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../man/trait_tree/" title="Continuous Trait Evolution" class="md-nav__link">
+      Continuous Trait Evolution
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Library
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Library
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../public/" title="Public" class="md-nav__link">
+      Public
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Internals
+      </label>
+    
+    <a href="./" title="Internals" class="md-nav__link md-nav__link--active">
+      Internals
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#contents" title="Contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index" title="Index" class="md-nav__link">
+    Index
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types" title="Types" class="md-nav__link">
+    Types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#functions-and-methods" title="Functions and methods" class="md-nav__link">
+    Functions and methods
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-functions-in-snaq" title="Main functions in SNaQ" class="md-nav__link">
+    Main functions in SNaQ
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#contents" title="Contents" class="md-nav__link">
+    Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index" title="Index" class="md-nav__link">
+    Index
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types" title="Types" class="md-nav__link">
+    Types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#functions-and-methods" title="Functions and methods" class="md-nav__link">
+    Functions and methods
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-functions-in-snaq" title="Main functions in SNaQ" class="md-nav__link">
+    Main functions in SNaQ
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/crsl4/PhyloNetworks.jl/edit/master/docs/lib/internals.md" title="Edit this page" class="md-icon md-content__icon">edit</a>
+                
+                
+                <p><a id='Internal-Documentation-1'></a></p>
+<h1 id="internal-documentation">Internal Documentation</h1>
+<p><a id='Contents-1'></a></p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="./#Internal-Documentation-1">Internal Documentation</a><ul>
+<li><a href="./#Contents-1">Contents</a></li>
+<li><a href="./#Index-1">Index</a></li>
+<li><a href="./#Types-1">Types</a></li>
+<li><a href="./#Functions-and-methods-1">Functions and methods</a></li>
+<li><a href="./#Main-functions-in-SNaQ-1">Main functions in SNaQ</a></li>
+</ul>
+</li>
+</ul>
+<p><a id='Index-1'></a></p>
+<h2 id="index">Index</h2>
+<ul>
+<li><a href="./#PhyloNetworks.ANode"><code>PhyloNetworks.ANode</code></a></li>
+<li><a href="./#PhyloNetworks.MatrixTopologicalOrder"><code>PhyloNetworks.MatrixTopologicalOrder</code></a></li>
+<li><a href="./#Base.getindex-Tuple{PhyloNetworks.MatrixTopologicalOrder,Symbol}"><code>Base.getindex</code></a></li>
+<li><a href="./#PhyloNetworks.afterOptBL!"><code>PhyloNetworks.afterOptBL!</code></a></li>
+<li><a href="./#PhyloNetworks.afterOptBLAll!"><code>PhyloNetworks.afterOptBLAll!</code></a></li>
+<li><a href="./#PhyloNetworks.afterOptBLRepeat!"><code>PhyloNetworks.afterOptBLRepeat!</code></a></li>
+<li><a href="./#PhyloNetworks.assignhybridnames!"><code>PhyloNetworks.assignhybridnames!</code></a></li>
+<li><a href="./#PhyloNetworks.deleteNode!"><code>PhyloNetworks.deleteNode!</code></a></li>
+<li><a href="./#PhyloNetworks.gammaZero!"><code>PhyloNetworks.gammaZero!</code></a></li>
+<li><a href="./#PhyloNetworks.moveHybrid!"><code>PhyloNetworks.moveHybrid!</code></a></li>
+<li><a href="./#PhyloNetworks.optBL!"><code>PhyloNetworks.optBL!</code></a></li>
+<li><a href="./#PhyloNetworks.optTopLevel!"><code>PhyloNetworks.optTopLevel!</code></a></li>
+<li><a href="./#PhyloNetworks.optTopRun1!"><code>PhyloNetworks.optTopRun1!</code></a></li>
+<li><a href="./#PhyloNetworks.optTopRuns!"><code>PhyloNetworks.optTopRuns!</code></a></li>
+<li><a href="./#PhyloNetworks.proposedTop!"><code>PhyloNetworks.proposedTop!</code></a></li>
+<li><a href="./#PhyloNetworks.sampleBootstrapTrees"><code>PhyloNetworks.sampleBootstrapTrees</code></a></li>
+<li><a href="./#PhyloNetworks.sampleCFfromCI"><code>PhyloNetworks.sampleCFfromCI</code></a></li>
+<li><a href="./#PhyloNetworks.setNonIdBL!"><code>PhyloNetworks.setNonIdBL!</code></a></li>
+<li><a href="./#PhyloNetworks.sharedPathMatrix"><code>PhyloNetworks.sharedPathMatrix</code></a></li>
+</ul>
+<p><a id='Types-1'></a></p>
+<h2 id="types">Types</h2>
+<p><a id='PhyloNetworks.ANode' href='#PhyloNetworks.ANode'>#</a>
+<strong><code>PhyloNetworks.ANode</code></strong> &mdash; <em>Type</em>.</p>
+<p><code>ANode</code></p>
+<p>Abstract node. An object of type <code>Edge</code> has a <code>node</code> attribute, which is an vector of (2) ANode objects. The object of type <code>Node</code> is an <code>ANode</code>, and has an <code>edge</code> attribute, which is vector of <code>Edge</code> objects.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/types.jl#L17-L24' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.MatrixTopologicalOrder' href='#PhyloNetworks.MatrixTopologicalOrder'>#</a>
+<strong><code>PhyloNetworks.MatrixTopologicalOrder</code></strong> &mdash; <em>Type</em>.</p>
+<p><code>MatrixTopologicalOrder</code></p>
+<p>Matrix associated to an <a href="../public/#PhyloNetworks.HybridNetwork"><code>HybridNetwork</code></a> sorted in topological order.</p>
+<p>The following functions and extractors can be applied to it: <a href="../public/#PhyloNetworks.tipLabels"><code>tipLabels</code></a>, <code>obj[:Tips]</code>, <code>obj[:InternalNodes]</code>, <code>obj[:TipsNodes]</code> (see documentation for function <a href="./#Base.getindex-Tuple{PhyloNetworks.MatrixTopologicalOrder,Symbol}"><code>getindex(::MatrixTopologicalOrder, ::Symbol)</code></a>).</p>
+<p>Functions <a href="./#PhyloNetworks.sharedPathMatrix"><code>sharedPathMatrix</code></a> and <a href="../public/#PhyloNetworks.simulate"><code>simulate</code></a> return objects of this type.</p>
+<p>The <code>MatrixTopologicalOrder</code> object has fields: <code>V</code>, <code>nodeNumbersTopOrder</code>, <code>internalNodeNumbers</code>, <code>tipNumbers</code>, <code>tipNames</code>, <code>indexation</code>. Type in "?MatrixTopologicalOrder.field" to get documentation on a specific field.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/traits.jl#L11-L22' class='documenter-source'>source</a><br></p>
+<p><a id='Functions-and-methods-1'></a></p>
+<h2 id="functions-and-methods">Functions and methods</h2>
+<p><a id='PhyloNetworks.assignhybridnames!' href='#PhyloNetworks.assignhybridnames!'>#</a>
+<strong><code>PhyloNetworks.assignhybridnames!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>assignhybridnames!(net)</code></p>
+<p>Assign names to hybrid nodes in the network <code>net</code>. Hybrid nodes with an empty <code>name</code> field ("") are modified with a name that does not conflict with other hybrid names in the network. The preferred name is "#H3" if the node number is 3 or -3, but an index other than 3 would be used if "#H3" were the name of another hybrid node already.</p>
+<p>If two hybrid nodes have non-empty and equal names, the name of one of them is changed and re-assigned as described above (with a warning).</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/auxiliary.jl#L1160-L1170' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.deleteNode!' href='#PhyloNetworks.deleteNode!'>#</a>
+<strong><code>PhyloNetworks.deleteNode!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>deleteNode!(net::HybridNetwork, n::Node)</code></p>
+<p>deletes a Node from a network, i.e. removes it from net.node, and from net.hybrid or net.leaf as appropriate. Updates attributes numNodes, numTaxa, numHybrids (it does not update net.names though).</p>
+<p>Warning: if the root is deleted, the new root is arbitrarily set to the first node in the list. This is intentional to save time because this function is used frequently in snaq!, which handles semi-directed (unrooted) networks.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/auxiliary.jl#L394-L406' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.sampleBootstrapTrees' href='#PhyloNetworks.sampleBootstrapTrees'>#</a>
+<strong><code>PhyloNetworks.sampleBootstrapTrees</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>sampleBootstrapTrees(vector of tree lists; seed=0::Integer, generesampling=false, row=0)
+sampleBootstrapTrees!(tree list, vector of tree lists; seed=0::Integer, generesampling=false, row=0)
+</pre></div>
+
+
+<p>Sample bootstrap gene trees, 1 tree per gene. Set the seed with keyword argument <code>seed</code>, which is 0 by default. When <code>seed=0</code>, the actual seed is set using the clock. Assumes a vector of vectors of networks (see <code>readBootstrapTrees</code>), each one of length 1 or more (error if one vector is empty, tested in <code>bootsnaq</code>).</p>
+<ul>
+<li>site resampling: always, from sampling one bootstrap tree from each given list. This tree is sampled at <strong>random</strong> unless <code>row&gt;0</code> (see below).</li>
+<li>gene resampling: if <code>generesampling=true</code> (default is false), genes (i.e. lists) are sampled with replacement.</li>
+<li><code>row=i</code>: samples the ith bootstrap tree for each gene. <code>row</code> is turned back to 0 if gene resampling is true.</li>
+</ul>
+<p>output: one vector of trees. the modifying function (!) modifies the input tree list and returns it.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/bootstrap.jl#L29-L47' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.sampleCFfromCI' href='#PhyloNetworks.sampleCFfromCI'>#</a>
+<strong><code>PhyloNetworks.sampleCFfromCI</code></strong> &mdash; <em>Function</em>.</p>
+<div class="codehilite"><pre><span></span>sampleCFfromCI(data frame, seed=0)
+sampleCFfromCI!(data frame, seed=0)
+</pre></div>
+
+
+<p>Read a data frame containing CFs and their credibility intervals, and sample new obsCF uniformly within the CIs. These CFs are then rescaled to sum up to 1 for each 4-taxon sets. Return a data frame with taxon labels in first 4 columns, sampled obs CFs in columns 5-7 and credibility intervals in columns 8-13.</p>
+<ul>
+<li>The non-modifying function creates a new data frame (with re-ordered columns) and returns it. If <code>seed=-1</code>, the new df is a deep copy of the input df, with no call to the random number generator. Otherwise, <code>seed</code> is passed to the modifying function.</li>
+<li>The modifying function overwrites the input data frame with the sampled CFs and returns it. If <code>seed=0</code>, the random generator is seeded from the clock. Otherwise the random generator is seeded using <code>seed</code>.</li>
+</ul>
+<p>Warning: the modifying version does <em>not</em> check the df: assumes correct columns.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/bootstrap.jl#L86-L104' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.setNonIdBL!' href='#PhyloNetworks.setNonIdBL!'>#</a>
+<strong><code>PhyloNetworks.setNonIdBL!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>setNonIdBL!(net)</code></p>
+<p>Set non-identifiable edge branch lengths to -1.0 (i.e. missing) for a level-1 network <code>net</code>, except for edges in</p>
+<ul>
+<li>a good triangle: the edge below the hybrid is constrained to 0.</li>
+<li>a bad diamond II: the edge below the hybrid is constrained to 0</li>
+<li>a bad diamond I: the edges across from the hybrid node have non identifiable lengths but are kept, because the two γ*(1-exp(-t)) values are identifiable.</li>
+</ul>
+<p>will break if <code>inCycle</code> attributes are not initialized (at -1) or giving a correct node number.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/descriptive.jl#L68-L80' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.sharedPathMatrix' href='#PhyloNetworks.sharedPathMatrix'>#</a>
+<strong><code>PhyloNetworks.sharedPathMatrix</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>sharedPathMatrix(net::HybridNetwork; checkPreorder=true::Bool)</code></p>
+<p>This function computes the shared path matrix between all the nodes of a network. It assumes that the network is in the pre-order. If checkPreorder is true (default), then it runs function <code>preoder</code> on the network beforehand.</p>
+<p>Returns an object of type <a href="./#PhyloNetworks.MatrixTopologicalOrder"><code>MatrixTopologicalOrder</code></a>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/traits.jl#L215-L224' class='documenter-source'>source</a><br></p>
+<p><a id='Base.getindex-Tuple{PhyloNetworks.MatrixTopologicalOrder,Symbol}' href='#Base.getindex-Tuple{PhyloNetworks.MatrixTopologicalOrder,Symbol}'>#</a>
+<strong><code>Base.getindex</code></strong> &mdash; <em>Method</em>.</p>
+<div class="codehilite"><pre><span></span>getindex(collection, key...)
+</pre></div>
+
+
+<p>Retrieve the value(s) stored at the given key or index within a collection. The syntax <code>a[i,j,...]</code> is converted by the compiler to <code>getindex(a, i, j, ...)</code>.</p>
+<p><a target='_blank' href='https://github.com/JuliaLang/julia/tree/f4c6c9d4bbbd9587d84494e314f692c15ff1f9c0/base/docs/helpdb/Base.jl#L466-L471' class='documenter-source'>source</a><br></p>
+<p><code>getindex(obj, d,[ indTips, msng])</code></p>
+<p>Getting submatrices of an object of type <a href="./#PhyloNetworks.MatrixTopologicalOrder"><code>MatrixTopologicalOrder</code></a>.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>obj::MatrixTopologicalOrder</code>: the matrix from which to extract.</li>
+<li>
+<p><code>d::Symbol</code>: a symbol precising which sub-matrix to extract. Can be:</p>
+<ul>
+<li><code>:Tips</code> columns and/or rows corresponding to the tips</li>
+<li><code>:InternalNodes</code> columns and/or rows corresponding to the internal nodes</li>
+<li><code>:TipsNodes</code> columns corresponding to internal nodes, and row to tips (works only is indexation="b")</li>
+<li><code>indTips::Vector{Int}</code>: optional argument precising a specific order for the tips (internal use).</li>
+<li><code>msng::BitArray{1}</code>: optional argument precising the missing tips (internal use).</li>
+</ul>
+</li>
+</ul>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/traits.jl#L159-L173' class='documenter-source'>source</a><br></p>
+<p><a id='Main-functions-in-SNaQ-1'></a></p>
+<h2 id="main-functions-in-snaq">Main functions in SNaQ</h2>
+<p><a id='PhyloNetworks.optTopRuns!' href='#PhyloNetworks.optTopRuns!'>#</a>
+<strong><code>PhyloNetworks.optTopRuns!</code></strong> &mdash; <em>Function</em>.</p>
+<p>Road map for various functions behind snaq!</p>
+<div class="codehilite"><pre><span></span>snaq!
+optTopRuns!
+optTopRun1!
+optTopLevel!
+optBL!
+snaqDebug
+</pre></div>
+
+
+<p>All return their optimized network.</p>
+<ul>
+<li>snaq! calls optTopRuns! once, after a deep copy of the starting network. If the data contain multiple alleles from a given species, <code>snaq!</code> first expands the leaf for that species into 2 separate leaves, and merges them back into a single leaf after calling <code>optTopRuns!</code>.</li>
+<li>optTopRuns! calls optTopRun1! several (nrun) times. assumes level-1 network with &gt;0 branch lengths. assumes same tips in network as in data: i.e. 2 separate tips per species                                          that has multiple alleles. each call to optTopRun1! gets the same starting network.</li>
+<li>optTopRun1! calls optTopLevel! once, after deep copying + changing the starting network slightly.</li>
+<li>optTopLevel! calls optBL! various times and proposes new network with various moves.</li>
+<li>snaqDebug calls optTopRun1! once</li>
+</ul>
+<p>Functions that are no longer used, and not tested as much:</p>
+<div class="codehilite"><pre><span></span>optTop! : optimizes at h=0, then h=1 etc.
+</pre></div>
+
+
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L1542-L1570' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.optTopRun1!' href='#PhyloNetworks.optTopRun1!'>#</a>
+<strong><code>PhyloNetworks.optTopRun1!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>optTopRun1</code> roadmap</p>
+<p>The function will run 1 run by modifying the starting topology and calling <code>optTopLevel</code>.</p>
+<ul>
+<li><code>probST</code> (default in snaq is 0.3) is the probability of starting one run in the same starting tree. So, with probability <code>1-probST</code>, we will change the topology by a NNI move on a tree edge without neighbor hybrid.</li>
+</ul>
+<p>If the starting topology is a network, then with probability <code>1-probST</code> it will modify one randomly chosen hybrid edge: with prob 0.5, the function will move origin, with prob 0.5 will do move target</p>
+<p>If there are multiple alleles (<code>d.repSpecies</code> not empty), then the function has to check that the starting topology does not violate the multiple alleles condition.</p>
+<p>After modifying the starting topology with NNI and/or move origin/target, the function calls <code>optTopLevel</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L1776-L1787' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.optTopLevel!' href='#PhyloNetworks.optTopLevel!'>#</a>
+<strong><code>PhyloNetworks.optTopLevel!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>optTopLevel</code> road map</p>
+<p>Function that does most of the heavy-lifting of <code>snaq</code>. It optimizes the pseudolikelihood for a given starting topology, and returns the best network. Assumes that the starting topology is level-1 network, and has all the attributes correctly updated.</p>
+<p>Input parameters:</p>
+<ul>
+<li>Starting topology <code>currT</code>, input data <code>DataCF</code> <code>d</code>, maximum number of hybridizations <code>hmax</code></li>
+<li>Numerical optimization parameters: <code>liktolAbs, Nfail, ftolRel, ftolAbs, xtolRel, xtolAbs</code></li>
+<li>Print parameters: <code>verbose, sout, logfile, writelog</code></li>
+<li>Parameters to tune the search in space of networks: <code>closeN=true</code> only propose move origin/target to neighbor edges (coded, but not tested with <code>closeN=false</code>), <code>Nmov0</code> vector with maximum number of trials allowed per type of move <code>(add, mvorigin, mvtarget, chdir, delete, nni)</code>, by default computed inside with coupon’s collector formulas</li>
+</ul>
+<p>The optimization procedure keeps track of</p>
+<ul>
+<li><code>movescount</code>: count of proposed moves,</li>
+<li><code>movesgamma</code>: count of proposed moves to fix a gamma zero situation (see below for definition of this situation),</li>
+<li><code>movesfail</code>: count of failed moves by violation of level-1 network (<code>inCycle</code> attribute) or worse pseudolikelihood than current,</li>
+<li><code>failures</code>: number of failed proposals that had a worse pseudolikelihood</li>
+</ul>
+<p>Optimization procedure:</p>
+<p>While the difference between current loglik and proposed loglik is greater than <code>liktolAbs</code>, or <code>failures&lt;Nfail</code>, or <code>stillmoves=true</code>:</p>
+<ul>
+<li><code>Nmov</code> is updated based on <code>newT</code>. The type of move proposed will depend on <code>newT</code> (which is the same as <code>currT</code> at this point). For example, if <code>currT</code> is a tree, we cannot propose move origin/target.</li>
+<li><code>move = whichMove</code> selects randomly a type of move, depending on <code>Nmov,movesfail,hmax,newT</code> with weights 1/5 by default for all, and 0 for delete. These weights are adjusted depending on <code>newT.numHybrids</code> and <code>hmax</code>. If <code>newT.numHybrids</code> is far from <code>hmax</code>, we give higher probability to adding a new hybrid (we want to reach the <code>hmax</code> sooner, maybe not the best strategy, easy to change).  Later, we adjust the weights by <code>movesfail</code> (first, give weight of 0 if <code>movesfail[i]&gt;Nmov[i]</code>, that is, if we reached the maximum possible number of moves allowed for a certain type) and then increase the probability of the other moves.  So, unless one move has <code>w=0</code>, nothing changes. This could be improved by using the outlier quartets to guide the proposal of moves.</li>
+<li><code>whichMove</code> will choose a move randomly from the weights, it will return <code>none</code> if no more moves allowed, in which case, the optimization ends</li>
+<li>
+<p><code>flag=proposedTop!(move, newT)</code> will modify <code>newT</code> based on <code>move</code>. The function <code>proposedTop</code> will return <code>flag=true</code> if the move was successful (the move succeeded by <code>inCycle</code>, <code>containRoot</code>, available edge to make the move (more details in <code>proposedTop</code>)). If <code>flag=false</code>, then <code>newT</code> is cleaned, except for the case of multiple alleles. The function <code>proposedTop</code> keeps count of <code>movescount</code> (successful move), <code>movesfail</code> (unsuccessful move),</p>
+<p>Options:</p>
+<p><code>random=true</code>: moves major/minor hybrid edge with prob h,1-h, respectively</p>
+<p><code>N=10</code>: number of trials for NNI edge.
+  * if(flag) Optimize branch lengths with <code>optBL</code></p>
+<p>If <code>newT.loglik</code> is better than <code>currT.loglik</code> by <code>liktolAbs</code>, jump to <code>newT</code> (<code>accepted=true</code>) and fix <code>gamma=0, t=0</code> problems (more info on <code>afterOptBL</code>)</p>
+<p>If(accepted)   <code>failures=0</code>, <code>movesfail=zeros</code>, <code>movescount</code> for successful move +1</p>
+</li>
+</ul>
+<p>end while</p>
+<p>After choosing the best network <code>newT</code>, we do one last more thorough optimization of branch lengths with <code>optBL</code>, we change non identifiable branch lengths to -1 and return <code>newT</code></p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L1135-L1190' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.proposedTop!' href='#PhyloNetworks.proposedTop!'>#</a>
+<strong><code>PhyloNetworks.proposedTop!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>proposedTop!(move,newT,random,count,N,movescount,movesfail,multall)</code> road map</p>
+<p>Function to change the current network <code>newT</code> by a given <code>move</code>, and checks that the move was successful (correct attributes). If not successful, <code>newT</code> is changed back to its original state, except for the case of multiple alleles.</p>
+<p><strong>Note</strong> that the update of attributes by each move is not done in all the network, but only in the local edges that were changed by the move. This is efficient (and makes a move easy to undo), but makes the code of each move function very clunky.</p>
+<p>Arguments:</p>
+<ul>
+<li>move chosen from <code>whichMove</code> as described in <code>optTopLevel</code></li>
+<li><code>newT</code> is the topology that will be modified inside with the move</li>
+<li><code>random=true</code>: chooses minor hybrid edge with prob 1-h, and major edge with prob h, if false, always chooses minor hybrid edge</li>
+<li><code>count</code>: simply which likelihood step we are in in the optimization at <code>optTopLevel</code></li>
+<li><code>movescount</code> and <code>movesfail</code>: vector of counts of number of moves proposed</li>
+<li><code>multall=true</code> if multiple alleles case: we need to check if the move did not violate the multiple alleles condition (sister alleles together and no gene flow into the alleles). This is inefficient because we are proposing moves that we can reject later, instead of being smart about the moves we propose: for example, move origin/target could rule out some neighbors that move gene flow into the alleles, the same for add hybridization; nni move can check if it is trying to separate the alleles)</li>
+</ul>
+<p>Moves:</p>
+<ul>
+<li><code>addHybridizationUpdate(newT,N)</code>:</li>
+</ul>
+<p>will choose a partition first (to avoid choosing edges that will create a non level-1 network) will choose two edges from this partition randomly, will not allow two edges in a cherry (non-identifiable), or sister edges that are not identifiable (the blacklist was a way to keep track of "bad edges" were we should not waste time trying to put hybridizations, it has never been used nor tested). Also choose gamma from U(0,0.5). The "Update" in the function name means that it creates the new hybrid, and also updates all the attributes of <code>newT</code></p>
+<ul>
+<li><code>node = chooseHybrid(newT)</code> choose a hybrid randomly for the next moves:</li>
+<li><code>moveOriginUpdateRepeat!(newT,node,random)</code></li>
+</ul>
+<p>will choose randomly the minor/major hybrid edge to move (if <code>random=true</code>); will get the list of all neighbor edges where to move the origin, will move the origin and update all the attributes and check if the move was successful (not conflicting attributes); if not, will undo the move, and try with a different neighbor until it runs out of neighbors. Return true if the move was successful.</p>
+<ul>
+<li><code>moveTargetUpdateRepeat!(newT,node,random)</code></li>
+</ul>
+<p>same as move origin but moving the target</p>
+<ul>
+<li><code>changeDirectionUpdate!(newT,node,random)</code></li>
+</ul>
+<p>chooses minor/major hybrid edge at random (if `random=true), and changes the direction, and updates all the attributes. Checks if the move was successful (returns true), or undoes the change and returns false.</p>
+<ul>
+<li><code>deleteHybridizationUpdate!(newT,node)</code></li>
+</ul>
+<p>removes the hybrid node, updates the attributes, no need to check any attributes, always successful move</p>
+<ul>
+<li>NNIRepeat!(newT,N)</li>
+</ul>
+<p>choose an edge for nni that does not have a neighbor hybrid. It will try to find such an edge N times, and if it fails, it will return false (unsuccessful move). N=10 by default. If N=1, it rarely finds such an edge if the network is small or complex. The function cannot choose an external edge. it will update locally the attributes.</p>
+<p><strong> Important: </strong> All the moves undo what they did if the move was not successful, so at the end you either have a <code>newT</code> with a new move and with all good attributes, or the same <code>newT</code> that started. This is important to avoid having to do deepcopy of the network before doing the move. Also, after each move, when we update the attributes, we do not update the attributes of the whole network, we only update the attributes of the edges that were affected by the move. This saves time, but makes the code quite clunky. Only the case of multiple alleles the moves does not undo what it did, because it finds out that it failed after the function is over, so just need to treat this case special.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L1014-L1056' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.optBL!' href='#PhyloNetworks.optBL!'>#</a>
+<strong><code>PhyloNetworks.optBL!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>optBL</code> road map</p>
+<p>Function that optimizes the numerical parameters (branch lengths and inheritance probabilities) for a given network. This function is called multiple times inside <code>optTopLevel!</code>.</p>
+<ul>
+<li>Input: network <code>net</code>, data <code>d</code></li>
+<li>Numerical tolerances: <code>ftolAbs, ftolRel, xtolAbs, xtolRel</code></li>
+<li>Function based on <code>MixedModels</code> <code>fit</code> function</li>
+<li>The function assumes <code>net</code> has all the right attributes, and cannot check this inside because it would be inefficient</li>
+</ul>
+<p>Procedure:</p>
+<ul>
+<li><code>ht = parameters!(net)</code> extracts the vector of parameters to estimate <code>(h,t,gammaz)</code>, and sets as <code>net.ht</code>; identifies a bad diamond I, sets <code>net.numht</code> (vector of hybrid node numbers for h, edge numbers for t, hybrid node numbers for gammaz), and <code>net.index</code> to keep track of the vector of parameters to estimate</li>
+<li>
+<p><code>extractQuartet!(net,d)</code> does the following for all quartets in <code>d.quartet</code>:</p>
+<ul>
+<li>Extract quartet by deleting all leaves not in q -&gt; create <code>QuartetNetwork</code> object saved in <code>q.qnet</code></li>
+<li>This network is ugly and does not have edges collapsed. This is done to keep a one-to-one correspondence between the edges in <code>q.qnet</code> and the edges in <code>net</code> (if we remove nodes with only two edges, we will lose this correspondence)</li>
+<li>Calculate expected CF with <code>calculateExpCFAll</code> for a copy of <code>q.qnet</code>. We do this copy because we want to keep <code>q.qnet</code> as it is (without collapsed edges into one). The function will then save the <code>expCF</code> in <code>q.qnet.expCF</code></li>
+<li>
+<p><code>calculateExpCFAll!(qnet)</code> will</p>
+</li>
+<li>
+<p>identify the type of quartet as type 1 (equivalent to a tree) or type 2 (minor CF different). Here the code will first clean up any hybrid node by removing nodes with only two edges before identifying the <code>qnet</code> (because identification depends on neighbor nodes to hybrid node); later, set <code>qnet.which</code> (1 or 2), <code>node.prev</code> (neighbor node to hybrid node), updates <code>node.k</code> (number of nodes in hybridization cycle, this can change after deleting the nodes with only two edges), <code>node.typeHyb</code> (1,2,3,4,5 depending on the number of nodes in the hybridization cycle and the origin/target of the minor hybrid edge; this attribute is never used).</p>
+</li>
+<li>eliminate hybridization: this will remove type 1 hybridizations first. If <code>qnet.which=1</code>, then the <code>qnet</code> is similar to a tree quartet, so it will calculate the internal length of the tree quartet: <code>qnet.t1</code>.</li>
+<li>update split for <code>qnet.which=1</code>, to determine which taxa are together. For example, for the quartet 12|34, the split is <a href="../or [2,2,1,1]">1,1,2,2</a>, that is, taxon 1 and 2 are on the same side of the split. This will update <code>qnet.split</code></li>
+<li>update formula for <code>qnet.which=1</code> to know the order of minorCF and majorCF in the vector <code>qnet.expCF</code>. That is, if the quartet is 1342 (order in <code>qnet.quartet.taxon</code>), then the expected CF should match the observed CF in 13|42, 14|32, 12|34 and the <code>qnet</code> is 12|34 (given by <code>qnet.split</code>), <code>qnet.formula</code> will be [2,2,1] minor, minor, major</li>
+<li><code>calculateExpCF!(qnet)</code> for <code>qnet.which=1</code>, it will do <code>1-2/3exp(-qnet.t1)</code> if <code>qnet.formula[i]==1</code>, and <code>1/3exp(qnet.t1)</code> if <code>qnet.formula[i]==2</code>. For <code>qnet.which=2</code>, we need to make sure that there is only one hybrid node, and compute the major, minor1,minor2 expected CF in the order 12|34, 13|24, 14|23 of the taxa in <code>qnet.quartet.taxon</code></li>
+</ul>
+</li>
+</ul>
+<p>Then we create a <code>NLopt</code> object with algorithm BOBYQA and k parameters (length of ht). We define upper and lower bounds and define the objective function that should only depend on <code>x=(h,t,gz)</code> and g (gradient, which we do not have, but still need to put as argument).</p>
+<p>The objective function <code>obj(x,g)</code> calls</p>
+<ul>
+<li>
+<p><code>calculateExpCFAll!(d,x,net)</code> needs to be run after <code>extractQuartet(net,d)</code> that will update <code>q.qnet</code> for all quartet.  Assumes that <code>qnet.indexht</code> is updated already: we only need to do this at the beginning of <code>optBL!</code> because the topology is fixed at this point)</p>
+<ul>
+<li>First it will update the edge lengths according to x</li>
+<li>If the <code>q.qnet.changed=true</code> (that is, any of <code>qnet</code> branches changed value), we need to call <code>calculateExpCFAll!(qnet)</code> on a copy of <code>q.qnet</code> (again because we want to leave <code>q.qnet</code> with the edge correspondence to <code>net</code>)</li>
+<li><code>update!(net,x)</code> simply saves the new x in <code>net.ht</code></li>
+</ul>
+</li>
+</ul>
+<p>Finally, we call <code>NLopt.optimize</code>, and we update the <code>net.loglik</code> and <code>net.ht</code> at the end. After <code>optBL</code>, we want to call <code>afterOptBLAll</code> (or <code>afterOptBLAllMultipleAlleles</code>) to check if there are <code>h==0,1</code>; <code>t==0</code>; <code>hz==0,1</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L304-L341' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.afterOptBL!' href='#PhyloNetworks.afterOptBL!'>#</a>
+<strong><code>PhyloNetworks.afterOptBL!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>afterOptBL</code> road map</p>
+<p>Function that will check if there are <code>h==0,1;t==0,hz==0,1</code> cases in a network after calling <code>optBL!</code>.</p>
+<p>Arguments:</p>
+<ul>
+<li><code>closeN=true</code> will move origin/target, if false, add/delete N times before giving up (we have only tested <code>closeN=true</code>)</li>
+<li><code>origin=true</code> will move origin, false will move target. We added this to avoid going back and forth between the same networks</li>
+<li><code>movesgamma</code> vector of counts of number of times each move is proposed to fix a gamma zero problem: <code>(add,mvorigin,mvtarget,chdir,delete,nni)</code></li>
+</ul>
+<p>Procedure:</p>
+<ul>
+<li>First we split the <code>ht</code> vector in <code>nh,nt,nhz</code> (gammas, lengths, gammaz)</li>
+<li>
+<p>If we find a <code>h==0,1</code>, we loop through <code>nh</code> to find a hybrid edge with h==0 or 1 and want to try to fix this by doing:</p>
+<ul>
+<li><code>gammaZero!(currT,d,edge,closeN,origin,N,movesgamma)</code> which returns true if there was a successful change, and we stop the loop</li>
+<li>If we find a <code>t==0</code>, we loop through all <code>nt</code> to find such edge, and do NNI move on this edge; return true if change successful and we stop the loop</li>
+<li>If we find a <code>hz==0,1</code>, we loop through <code>nhz</code> to find such hybrid edge and call <code>gammaZero</code> again</li>
+<li>If we did a successful change, we run <code>optBL</code> again, and recheck if there are no more problems.</li>
+<li>Returns successchange, flagh, flagt,flaghz (flag=true means no problems)</li>
+<li>If it is the multiple alleles case, it will not try to fix <code>h==0,1;hz==0,1</code> because it can reach a case that violates the multiple alleles condition. If we add a check here, things become horribly slow and inefficient, so we just delete a hybridization that has <code>h==0,1;hz==0,1</code></li>
+</ul>
+</li>
+</ul>
+<p><strong> Important: </strong> <code>afterOptBL</code> is doing only one change, but we need to repeat multiple times to be sure that we fix all the gamma zero problems, which is why we call <code>afterOptBLRepeat</code></p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L558-L582' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.gammaZero!' href='#PhyloNetworks.gammaZero!'>#</a>
+<strong><code>PhyloNetworks.gammaZero!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>gammaZero</code> road map</p>
+<p>Function that tries to fix a gamma zero problem (<code>h==0,1; t==0; hz==0,1</code>)</p>
+<ol>
+<li>First tries to do <code>changeDirection</code></li>
+<li>If not successful from start, we call <code>moveHybrid</code></li>
+<li>If successful move (change direction), we call <code>optBL</code> and check if we fixed the problem</li>
+<li>If problem fixed and we do not have worse pseudolik, we return <code>success=true</code></li>
+<li>If still problem or worse pseudolik, we call <code>moveHybrid</code></li>
+</ol>
+<p><strong> Important: </strong> Any function (<code>afterOptBL</code>) calling <code>gammaZero</code> is assuming that it only made a change, so if the returned value is true, then a change was made, and the other function needs to run <code>optBL</code> and check that all parameters are 'valid'. If the returned value is false, then no change was possible and we need to remove a hybridization if the problem is h==0,1; hz==0,1. If the problem is t==0, we ignore this problem.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L503-L514' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.moveHybrid!' href='#PhyloNetworks.moveHybrid!'>#</a>
+<strong><code>PhyloNetworks.moveHybrid!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>moveHybrid</code> road map</p>
+<p>Function that tries to fix a gamma zero problem (<code>h==0,1; t==0; hz==0,1</code>) after changing direction of hybrid edge failed. This function is called in <code>gammaZero</code>.</p>
+<p>Arguments:</p>
+<ul>
+<li><code>closeN=true</code> will try move origin/target on all neighbors (first choose minor/major edge at random, then make list of all neighbor edges and tries to put the hybrid node in all the neighbors until successful move); if false, will delete and add hybrid until successful move up to N times (this is never tested)</li>
+</ul>
+<p>Returns true if change was successful (not testing <code>optBL</code> again), and false if we could not move anything</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L457-L467' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.afterOptBLRepeat!' href='#PhyloNetworks.afterOptBLRepeat!'>#</a>
+<strong><code>PhyloNetworks.afterOptBLRepeat!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>afterOptBLRepeat</code> road map</p>
+<p><code>afterOptBL</code> is doing only one change, but we need to repeat multiple times to be sure that we fix all the gamma zero problems, which is why we call <code>afterOptBLRepeat</code>. This function will repeat <code>afterOptBL</code> every time a successful change happened; this is done only if <code>closeN=false</code>, because we would delete/add hybridizations and need to stop after tried N times. If <code>closeN=true</code> (default), then <code>afterOptBLRepeat</code> only does one <code>afterOptBL</code>, because in this case, only the neighbor edges need to be tested, and this would have been done already in <code>gammaZero</code>.</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L673-L679' class='documenter-source'>source</a><br></p>
+<p><a id='PhyloNetworks.afterOptBLAll!' href='#PhyloNetworks.afterOptBLAll!'>#</a>
+<strong><code>PhyloNetworks.afterOptBLAll!</code></strong> &mdash; <em>Function</em>.</p>
+<p><code>afterOptBLAll</code> road map</p>
+<p>After <code>optBL</code>, we want to call <code>afterOptBLAll</code> (or <code>afterOptBLAllMultipleAlleles</code>) to check if there are <code>h==0,1</code>; <code>t==0</code>; <code>hz==0,1</code>. This function will try to fix the gamma zero problem, but if it cannot, it will call <code>moveDownLevel</code>, to delete the hybridization from the network.</p>
+<p>Procedure:</p>
+<p>While <code>startover=true</code> and <code>tries&lt;N</code></p>
+<ul>
+<li>
+<p>While <code>badliks &lt; N2</code> (number of bad pseudolikelihoods are less than <code>N2</code>)</p>
+<ul>
+<li>Run <code>success = afterOptBLRepeat</code></li>
+<li>
+<p>If <code>success = true</code> (it changed something):</p>
+<ul>
+<li>If worse pseudolik, then go back to original topology <code>currT</code>, set <code>startover=true</code> and <code>badliks++</code></li>
+<li>
+<p>If better pseudolik, then check flags. If all good, then <code>startover=false</code>; otherwise <code>startover = true</code></p>
+<ul>
+<li>If <code>success = false</code> (nothing changed), then set <code>badliks=N2+1</code> (to end the while on <code>currT</code>)</li>
+</ul>
+</li>
+<li>
+<p>If all flags are ok, then <code>startover = false</code></p>
+</li>
+<li>If bad h or hz, then call <code>moveDownLevel</code> (delete one hybridization), and set <code>startover = true</code> (maybe deleting that hybridization did not fix other gamma zero problems)</li>
+<li>If bad t, then set <code>startover = false</code></li>
+<li>If left second while by back to original <code>currT</code>, and still bad h/hz, then move down one level, and <code>startover=true</code>; otherwise <code>startover=false</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>If first while ends by <code>tries&gt;N</code>, then it checks one last time the flags, if bad h/hz will move down one level, and exit</p>
+<p><a target='_blank' href='https://github.com/crsl4/PhyloNetworks.jl/tree/a5d7349d531b6fcda9610cc8a5060f49cd63447e/src/optimization.jl#L744-L763' class='documenter-source'>source</a><br></p>
+                
+                  
+                
+              
+              
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../public/" title="Public" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Public
+              </span>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application-c35428f87f.js"></script>
+      
+      
+      <script>app.initialize({url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="../../assets/mathjaxhelper.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

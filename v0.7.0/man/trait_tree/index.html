@@ -1,0 +1,1238 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PhyloNetworks is a Julia package for the manipulation, visualization and inference of phylogenetic networks.">
+      
+      
+      
+        <meta name="author" content="Claudia Sol&iacute;s-Lemus">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-0.17.3, mkdocs-material-2.7.1">
+    
+    
+      
+        <title>Continuous Trait Evolution - PhyloNetworks.jl</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.78aab2dc.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.6079476c.css">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+      <link rel="stylesheet" href="../../assets/Documenter.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <a href="#continuous-trait-evolution" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="PhyloNetworks.jl" class="md-header-nav__button md-logo">
+          
+            <img src="../../snaq_small.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                PhyloNetworks.jl
+              </span>
+              <span class="md-header-nav__topic">
+                Continuous Trait Evolution
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <span class="md-nav__button md-logo">
+      
+        <img src="../../snaq_small.png" width="48" height="48">
+      
+    </span>
+    PhyloNetworks.jl
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/crsl4/PhyloNetworks.jl/" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Manual
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Manual
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../inputdata/" title="Input Data for SNaQ" class="md-nav__link">
+      Input Data for SNaQ
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ticr_howtogetQuartetCFs/" title="TICR pipeline" class="md-nav__link">
+      TICR pipeline
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../snaq_plot/" title="Network estimation and display" class="md-nav__link">
+      Network estimation and display
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dist_reroot/" title="Network comparison and manipulation" class="md-nav__link">
+      Network comparison and manipulation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fixednetworkoptim/" title="Candidate Networks" class="md-nav__link">
+      Candidate Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../expectedCFs/" title="Extract Expected CFs" class="md-nav__link">
+      Extract Expected CFs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../bootstrap/" title="Bootstrap" class="md-nav__link">
+      Bootstrap
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../multiplealleles/" title="Multiple Alleles" class="md-nav__link">
+      Multiple Alleles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Continuous Trait Evolution
+      </label>
+    
+    <a href="./" title="Continuous Trait Evolution" class="md-nav__link md-nav__link--active">
+      Continuous Trait Evolution
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#trait-simulation" title="Trait simulation" class="md-nav__link">
+    Trait simulation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phylogenetic-regression" title="Phylogenetic regression" class="md-nav__link">
+    Phylogenetic regression
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ancestral-state-reconstruction" title="Ancestral State Reconstruction" class="md-nav__link">
+    Ancestral State Reconstruction
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-known-parameters" title="From known parameters" class="md-nav__link">
+    From known parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-estimated-parameters" title="From estimated parameters" class="md-nav__link">
+    From estimated parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-imputation" title="Data imputation" class="md-nav__link">
+    Data imputation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-known-predictors" title="With known predictors" class="md-nav__link">
+    With known predictors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phylogenetic-anova" title="Phylogenetic ANOVA" class="md-nav__link">
+    Phylogenetic ANOVA
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pagels-lambda" title="Pagel's Lambda" class="md-nav__link">
+    Pagel's Lambda
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shifts-and-transgressive-evolution" title="Shifts and transgressive evolution" class="md-nav__link">
+    Shifts and transgressive evolution
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulation-of-a-shifted-bm" title="Simulation of a Shifted BM" class="md-nav__link">
+    Simulation of a Shifted BM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fit-of-a-shifted-bm" title="Fit of a Shifted BM" class="md-nav__link">
+    Fit of a Shifted BM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Library
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Library
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/public/" title="Public" class="md-nav__link">
+      Public
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../lib/internals/" title="Internals" class="md-nav__link">
+      Internals
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#trait-simulation" title="Trait simulation" class="md-nav__link">
+    Trait simulation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phylogenetic-regression" title="Phylogenetic regression" class="md-nav__link">
+    Phylogenetic regression
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ancestral-state-reconstruction" title="Ancestral State Reconstruction" class="md-nav__link">
+    Ancestral State Reconstruction
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-known-parameters" title="From known parameters" class="md-nav__link">
+    From known parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-estimated-parameters" title="From estimated parameters" class="md-nav__link">
+    From estimated parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-imputation" title="Data imputation" class="md-nav__link">
+    Data imputation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-known-predictors" title="With known predictors" class="md-nav__link">
+    With known predictors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phylogenetic-anova" title="Phylogenetic ANOVA" class="md-nav__link">
+    Phylogenetic ANOVA
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pagels-lambda" title="Pagel's Lambda" class="md-nav__link">
+    Pagel's Lambda
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shifts-and-transgressive-evolution" title="Shifts and transgressive evolution" class="md-nav__link">
+    Shifts and transgressive evolution
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulation-of-a-shifted-bm" title="Simulation of a Shifted BM" class="md-nav__link">
+    Simulation of a Shifted BM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fit-of-a-shifted-bm" title="Fit of a Shifted BM" class="md-nav__link">
+    Fit of a Shifted BM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/crsl4/PhyloNetworks.jl/edit/master/docs/man/trait_tree.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><a id='Continuous-Trait-Evolution-1'></a></p>
+<h1 id="continuous-trait-evolution">Continuous Trait Evolution</h1>
+<p>Once the network is inferred, we can take these species relationships into account when studying the distribution of quantitative traits measured for extant species. This is the goal of phylogenetic comparative methods (PCM).</p>
+<p>We assume a fixed network, correctly rooted, with branch lengths proportional to calendar time. Here, we consider the true network that was used in the previous sections, and which is ultrametric (all the tips are contemporary).</p>
+<div class="codehilite"><pre><span></span><span class="n">truenet</span> <span class="o">=</span> <span class="n">readTopology</span><span class="p">(</span><span class="s">&quot;((((D:0.4,C:0.4):4.8,((A:0.8,B:0.8):2.2)#H1:2.2::0.7):4.0,(#H1:0::0.3,E:3.0):6.2):2.0,O:11.2);&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">PhyloPlots</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">useEdgeLength</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">showGamma</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="truenet" src="../../assets/figures/trait_tree_truenet_1.png" /></p>
+<p><a id='Trait-simulation-1'></a></p>
+<h2 id="trait-simulation">Trait simulation</h2>
+<p>We start by generating continuous traits to study. We simulate three traits on the network (two independent, one dependent), using a Brownian Motion (BM) model of trait evolution on the network. We start by choosing the parameters of the BM (ancestral mean and variance), by creating objects of class <a href="../../lib/public/#PhyloNetworks.ParamsBM"><code>ParamsBM</code></a><code>&lt;:ParamsProcess</code>.</p>
+<div class="codehilite"><pre><span></span><span class="n">params_trait1</span> <span class="o">=</span> <span class="n">ParamsBM</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="c"># BM with mean  2 and variance 0.5</span>
+<span class="n">params_trait2</span> <span class="o">=</span> <span class="n">ParamsBM</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>   <span class="c"># BM with mean -2 and variance 1.0</span>
+</pre></div>
+
+
+<p>We then simulate the independent traits according to these parameters, using function <a href="../../lib/public/#PhyloNetworks.simulate"><code>simulate</code></a> (fixing the seed, for reproducibility).</p>
+<div class="codehilite"><pre><span></span><span class="n">srand</span><span class="p">(</span><span class="mi">18480224</span><span class="p">);</span>
+<span class="n">sim1</span> <span class="o">=</span> <span class="n">simulate</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">params_trait1</span><span class="p">)</span> <span class="c"># simulate a BM on truenet</span>
+<span class="n">sim2</span> <span class="o">=</span> <span class="n">simulate</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">params_trait2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>This creates objects of class <a href="../../lib/public/#PhyloNetworks.TraitSimulation"><code>TraitSimulation</code></a>, from which we can extract the data at the tips, thanks to the method <a href="../../lib/public/#Base.getindex-Tuple{PhyloNetworks.TraitSimulation,Symbol}"><code>getindex(::TraitSimulation, ::Symbol)</code></a>.</p>
+<div class="codehilite"><pre><span></span><span class="n">trait1</span> <span class="o">=</span> <span class="n">sim1</span><span class="p">[</span><span class="o">:</span><span class="n">Tips</span><span class="p">]</span> <span class="c"># trait 1 at the tips (data)</span>
+<span class="n">trait2</span> <span class="o">=</span> <span class="n">sim2</span><span class="p">[</span><span class="o">:</span><span class="n">Tips</span><span class="p">]</span>
+</pre></div>
+
+
+<p>This extractor creates an <code>Array</code> with one column, and as many lines as the number of tips there are in the phylogeny.  It is sorted in the same order as the tips of the phylogeny used to simulate it.   If needed, we could also extract the simulated values at the internal nodes in the network:</p>
+<div class="codehilite"><pre><span></span><span class="n">sim1</span><span class="p">[</span><span class="o">:</span><span class="n">InternalNodes</span><span class="p">]</span>
+</pre></div>
+
+
+<p>Finally, we generate the last trait correlated with trait 1 (but not trait 2), with phylogenetic noise.</p>
+<div class="codehilite"><pre><span></span><span class="n">srand</span><span class="p">(</span><span class="mi">18700904</span><span class="p">);</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">simulate</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">ParamsBM</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span> <span class="c"># phylogenetic residuals</span>
+<span class="n">trait3</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">trait1</span> <span class="o">+</span> <span class="n">noise</span><span class="p">[</span><span class="o">:</span><span class="n">Tips</span><span class="p">]</span> <span class="c"># trait to study. independent of trait2</span>
+</pre></div>
+
+
+<p><a id='Phylogenetic-regression-1'></a></p>
+<h2 id="phylogenetic-regression">Phylogenetic regression</h2>
+<p>Assume that we measured the three traits above, and that we wanted to study the impact of traits 1 and 2 on trait 3. To do that, we can perform a phylogenetic regression.</p>
+<p>In order to avoid confusion, the function takes in a <code>DataFrame</code>, that has an extra column with the names of the tips of the network, labeled <code>tipNames</code>. Here, we generated the traits ourselves, so they are all in the same order.</p>
+<div class="codehilite"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">DataFrames</span>
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">dat</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">trait1</span> <span class="o">=</span> <span class="n">trait1</span><span class="p">,</span> <span class="n">trait2</span> <span class="o">=</span> <span class="n">trait2</span><span class="p">,</span> <span class="n">trait3</span> <span class="o">=</span> <span class="n">trait3</span><span class="p">,</span>
+                <span class="n">tipNames</span> <span class="o">=</span> <span class="n">tipLabels</span><span class="p">(</span><span class="n">sim1</span><span class="p">))</span>
+<span class="mi">6</span><span class="n">×4</span> <span class="n">DataFrames</span><span class="o">.</span><span class="n">DataFrame</span>
+<span class="n">│</span> <span class="n">Row</span> <span class="n">│</span> <span class="n">trait1</span>  <span class="n">│</span> <span class="n">trait2</span>   <span class="n">│</span> <span class="n">trait3</span>  <span class="n">│</span> <span class="n">tipNames</span> <span class="n">│</span>
+<span class="n">├─────┼─────────┼──────────┼─────────┼──────────┤</span>
+<span class="n">│</span> <span class="mi">1</span>   <span class="n">│</span> <span class="mf">4.08298</span> <span class="n">│</span> <span class="o">-</span><span class="mf">7.34186</span> <span class="n">│</span> <span class="mf">16.673</span>  <span class="n">│</span> <span class="n">D</span>        <span class="n">│</span>
+<span class="n">│</span> <span class="mi">2</span>   <span class="n">│</span> <span class="mf">3.10782</span> <span class="n">│</span> <span class="o">-</span><span class="mf">7.45085</span> <span class="n">│</span> <span class="mf">15.0831</span> <span class="n">│</span> <span class="n">C</span>        <span class="n">│</span>
+<span class="n">│</span> <span class="mi">3</span>   <span class="n">│</span> <span class="mf">2.17078</span> <span class="n">│</span> <span class="o">-</span><span class="mf">3.32538</span> <span class="n">│</span> <span class="mf">14.4522</span> <span class="n">│</span> <span class="n">A</span>        <span class="n">│</span>
+<span class="n">│</span> <span class="mi">4</span>   <span class="n">│</span> <span class="mf">1.87333</span> <span class="n">│</span> <span class="o">-</span><span class="mf">4.26472</span> <span class="n">│</span> <span class="mf">13.9712</span> <span class="n">│</span> <span class="n">B</span>        <span class="n">│</span>
+<span class="n">│</span> <span class="mi">5</span>   <span class="n">│</span> <span class="mf">2.8445</span>  <span class="n">│</span> <span class="o">-</span><span class="mf">5.96857</span> <span class="n">│</span> <span class="mf">16.417</span>  <span class="n">│</span> <span class="n">E</span>        <span class="n">│</span>
+<span class="n">│</span> <span class="mi">6</span>   <span class="n">│</span> <span class="mf">5.88204</span> <span class="n">│</span> <span class="o">-</span><span class="mf">1.99388</span> <span class="n">│</span> <span class="mf">22.0269</span> <span class="n">│</span> <span class="n">O</span>        <span class="n">│</span>
+</pre></div>
+
+
+<p>Phylogenetic regression / ANOVA is based on the <a href="https://github.com/JuliaStats/GLM.jl">GLM</a> package, with the network as an extra argument, using funtion <a href="../../lib/public/#PhyloNetworks.phyloNetworklm"><code>phyloNetworklm</code></a>.</p>
+<div class="codehilite"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">StatsModels</span> <span class="c"># for statistical model formulas</span>
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">fitTrait3</span> <span class="o">=</span> <span class="n">phyloNetworklm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">trait3</span> <span class="o">~</span> <span class="n">trait1</span> <span class="o">+</span> <span class="n">trait2</span><span class="p">),</span> <span class="n">dat</span><span class="p">,</span> <span class="n">truenet</span><span class="p">)</span>
+<span class="n">StatsModels</span><span class="o">.</span><span class="n">DataFrameRegressionModel</span><span class="p">{</span><span class="n">PhyloNetworks</span><span class="o">.</span><span class="n">PhyloNetworkLinearModel</span><span class="p">,</span><span class="kt">Array</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span><span class="mi">2</span><span class="p">}}</span>
+
+<span class="n">Formula</span><span class="o">:</span> <span class="n">trait3</span> <span class="o">~</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">trait1</span> <span class="o">+</span> <span class="n">trait2</span>
+
+<span class="n">Model</span><span class="o">:</span> <span class="n">BM</span>
+
+<span class="n">Parameter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">Estimates</span><span class="o">:</span>
+<span class="n">Sigma2</span><span class="o">:</span> <span class="mf">0.034712</span>
+
+<span class="n">Coefficients</span><span class="o">:</span>
+             <span class="n">Estimate</span> <span class="n">Std</span><span class="o">.</span><span class="n">Error</span> <span class="n">t</span> <span class="n">value</span> <span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span>
+<span class="p">(</span><span class="n">Intercept</span><span class="p">)</span>   <span class="mf">11.9564</span>   <span class="mf">1.15462</span> <span class="mf">10.3552</span>   <span class="mf">0.0019</span>
+<span class="n">trait1</span>        <span class="mf">1.69111</span>  <span class="mf">0.183047</span> <span class="mf">9.23868</span>   <span class="mf">0.0027</span>
+<span class="n">trait2</span>       <span class="mf">0.170664</span>  <span class="mf">0.155645</span>  <span class="mf">1.0965</span>   <span class="mf">0.3530</span>
+
+<span class="n">Log</span> <span class="n">Likelihood</span><span class="o">:</span> <span class="o">-</span><span class="mf">2.9851753461</span>
+<span class="n">AIC</span><span class="o">:</span> <span class="mf">13.9703506922</span>
+</pre></div>
+
+
+<p>From this, we can see that the intercept, the coefficient for trait 1 and the variance of the noise are correctly estimated (given that there are only 6 taxa). In addition, the Student test for the coefficient associated with trait 2 has a high p-value, which means that this coefficient is not significantly different from 0. This is consistent with the way we simulated trait 3.</p>
+<p>The function returns an object of type <a href="../../lib/public/#PhyloNetworks.PhyloNetworkLinearModel"><code>PhyloNetworkLinearModel</code></a><code>&lt;:LinPredModel</code>. It is a subtype of the GLM type <code>LinPredModel</code>, which means that all base functions from Julia <a href="https://github.com/JuliaStats/StatsBase.jl">StatsBase</a> can be applied to it. See the documentation for this type for a list of all functions that can be used. Some functions allow the user to retrieve directly the estimated parameters of the BM, and are specific to this object.</p>
+<p><a id='Ancestral-State-Reconstruction-1'></a></p>
+<h2 id="ancestral-state-reconstruction">Ancestral State Reconstruction</h2>
+<p><a id='From-known-parameters-1'></a></p>
+<h3 id="from-known-parameters">From known parameters</h3>
+<p>If we assume that we know the exact model of evolution that generated the traits, we can do ancestral trait reconstruction. Here, we simulated trait 1 ourselves, so we can use the true process, with the true parameters. In other words, we can reconstruct the state at the internal nodes, given the values at the tips, the known value at the root and the known BM variance.</p>
+<div class="codehilite"><pre><span></span><span class="n">ancTrait1</span> <span class="o">=</span> <span class="n">ancestralStateReconstruction</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">trait1</span><span class="p">,</span> <span class="n">params_trait1</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Function <a href="../../lib/public/#PhyloNetworks.ancestralStateReconstruction"><code>ancestralStateReconstruction</code></a> creates an object with type <a href="../../lib/public/#PhyloNetworks.ReconstructedStates"><code>ReconstructedStates</code></a>. Several extractors can be applied to it:</p>
+<div class="codehilite"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span> <span class="n">expectations</span><span class="p">(</span><span class="n">ancTrait1</span><span class="p">)</span> <span class="c"># predictions</span>
+<span class="mi">13</span><span class="n">×2</span> <span class="n">DataFrames</span><span class="o">.</span><span class="n">DataFrame</span>
+<span class="n">│</span> <span class="n">Row</span> <span class="n">│</span> <span class="n">nodeNumber</span> <span class="n">│</span> <span class="n">condExpectation</span> <span class="n">│</span>
+<span class="n">├─────┼────────────┼─────────────────┤</span>
+<span class="n">│</span> <span class="mi">1</span>   <span class="n">│</span> <span class="o">-</span><span class="mi">5</span>         <span class="n">│</span> <span class="mf">3.55615</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">2</span>   <span class="n">│</span> <span class="o">-</span><span class="mi">7</span>         <span class="n">│</span> <span class="mf">2.08473</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">3</span>   <span class="n">│</span> <span class="mi">5</span>          <span class="n">│</span> <span class="mf">2.42943</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">4</span>   <span class="n">│</span> <span class="o">-</span><span class="mi">4</span>         <span class="n">│</span> <span class="mf">2.61415</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">5</span>   <span class="n">│</span> <span class="o">-</span><span class="mi">8</span>         <span class="n">│</span> <span class="mf">2.56143</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">6</span>   <span class="n">│</span> <span class="o">-</span><span class="mi">3</span>         <span class="n">│</span> <span class="mf">2.26785</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">7</span>   <span class="n">│</span> <span class="o">-</span><span class="mi">2</span>         <span class="n">│</span> <span class="mf">2.0</span>             <span class="n">│</span>
+<span class="n">│</span> <span class="mi">8</span>   <span class="n">│</span> <span class="mi">1</span>          <span class="n">│</span> <span class="mf">4.08298</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">9</span>   <span class="n">│</span> <span class="mi">2</span>          <span class="n">│</span> <span class="mf">3.10782</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">10</span>  <span class="n">│</span> <span class="mi">3</span>          <span class="n">│</span> <span class="mf">2.17078</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">11</span>  <span class="n">│</span> <span class="mi">4</span>          <span class="n">│</span> <span class="mf">1.87333</span>         <span class="n">│</span>
+<span class="n">│</span> <span class="mi">12</span>  <span class="n">│</span> <span class="mi">6</span>          <span class="n">│</span> <span class="mf">2.8445</span>          <span class="n">│</span>
+<span class="n">│</span> <span class="mi">13</span>  <span class="n">│</span> <span class="mi">7</span>          <span class="n">│</span> <span class="mf">5.88204</span>         <span class="n">│</span>
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="k">using</span> <span class="n">StatsBase</span> <span class="c"># for stderr(), aic(), likelihood() etc.</span>
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">stderr</span><span class="p">(</span><span class="n">ancTrait1</span><span class="p">)</span> <span class="c"># associated standard errors</span>
+<span class="mi">7</span><span class="o">-</span><span class="n">element</span> <span class="kt">Array</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span><span class="mi">1</span><span class="p">}</span><span class="o">:</span>
+ <span class="mf">0.312339</span>
+ <span class="mf">0.429933</span>
+ <span class="mf">0.812157</span>
+ <span class="mf">0.985996</span>
+ <span class="mf">1.00992</span> 
+ <span class="mf">0.807042</span>
+ <span class="mf">0.0</span>     
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">predint</span><span class="p">(</span><span class="n">ancTrait1</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span> <span class="c"># prediction interval (with level 90%)</span>
+<span class="mi">13</span><span class="n">×2</span> <span class="kt">Array</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span><span class="mi">2</span><span class="p">}</span><span class="o">:</span>
+ <span class="mf">3.0424</span>    <span class="mf">4.0699</span> 
+ <span class="mf">1.37755</span>   <span class="mf">2.79191</span>
+ <span class="mf">1.09355</span>   <span class="mf">3.76531</span>
+ <span class="mf">0.992327</span>  <span class="mf">4.23596</span>
+ <span class="mf">0.90026</span>   <span class="mf">4.2226</span> 
+ <span class="mf">0.940384</span>  <span class="mf">3.59532</span>
+ <span class="mf">2.0</span>       <span class="mf">2.0</span>    
+ <span class="mf">4.08298</span>   <span class="mf">4.08298</span>
+ <span class="mf">3.10782</span>   <span class="mf">3.10782</span>
+ <span class="mf">2.17078</span>   <span class="mf">2.17078</span>
+ <span class="mf">1.87333</span>   <span class="mf">1.87333</span>
+ <span class="mf">2.8445</span>    <span class="mf">2.8445</span> 
+ <span class="mf">5.88204</span>   <span class="mf">5.88204</span>
+</pre></div>
+
+
+<p>We can plot the ancestral states or prediction intervals on the tree, using the <code>nodeLabel</code> argument of the <code>plot</code> function.</p>
+<div class="codehilite"><pre><span></span><span class="n">ancExpe</span> <span class="o">=</span> <span class="n">expectationsPlot</span><span class="p">(</span><span class="n">ancTrait1</span><span class="p">);</span> <span class="c"># format expected ancestral states for the plot</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">nodeLabel</span> <span class="o">=</span> <span class="n">ancExpe</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="ancestral_expe" src="../../assets/figures/trait_tree_ancestral_expe_1.png" /></p>
+<div class="codehilite"><pre><span></span><span class="n">ancInt</span> <span class="o">=</span> <span class="n">predintPlot</span><span class="p">(</span><span class="n">ancTrait1</span><span class="p">)</span> <span class="c"># format the prediction intervals for the plot</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">nodeLabel</span> <span class="o">=</span> <span class="n">ancInt</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="ancestral_predint" src="../../assets/figures/trait_tree_ancestral_predint_1.png" /></p>
+<p>The <code>predint</code> and <code>predintPlot</code> functions have an optional argument to state the <code>level</code> of the prediction interval. If not given, the default value is 0.95.</p>
+<p>It is also possible to plot both the reconstructed state and the predicted value on the same plot, using the optional keywork argument <code>withExp</code>. As shown below, we could also use the <code>:RCall</code> method from the <a href="https://cecileane.github.io/PhyloPlots.jl/latest/lib/public/"><code>plot</code></a> function.</p>
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="o">:</span><span class="n">RCall</span><span class="p">,</span> <span class="n">nodeLabel</span> <span class="o">=</span> <span class="n">predintPlot</span><span class="p">(</span><span class="n">ancTrait1</span><span class="p">,</span> <span class="n">withExp</span><span class="o">=</span><span class="kc">true</span><span class="p">))</span>
+</pre></div>
+
+
+<p>These plots tend to be quite busy, even for small networks.</p>
+<p>As we know the true ancestral states here, we can compare them to our estimation.</p>
+<div class="codehilite"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span> <span class="n">predictions</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">infPred</span><span class="o">=</span><span class="n">predint</span><span class="p">(</span><span class="n">ancTrait1</span><span class="p">)[</span><span class="mi">1</span><span class="o">:</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                        <span class="n">trueValue</span><span class="o">=</span><span class="n">sim1</span><span class="p">[</span><span class="o">:</span><span class="n">InternalNodes</span><span class="p">],</span>
+                        <span class="n">supPred</span><span class="o">=</span><span class="n">predint</span><span class="p">(</span><span class="n">ancTrait1</span><span class="p">)[</span><span class="mi">1</span><span class="o">:</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="mi">7</span><span class="n">×3</span> <span class="n">DataFrames</span><span class="o">.</span><span class="n">DataFrame</span>
+<span class="n">│</span> <span class="n">Row</span> <span class="n">│</span> <span class="n">infPred</span>  <span class="n">│</span> <span class="n">trueValue</span> <span class="n">│</span> <span class="n">supPred</span> <span class="n">│</span>
+<span class="n">├─────┼──────────┼───────────┼─────────┤</span>
+<span class="n">│</span> <span class="mi">1</span>   <span class="n">│</span> <span class="mf">2.94398</span>  <span class="n">│</span> <span class="mf">2.74233</span>   <span class="n">│</span> <span class="mf">4.16832</span> <span class="n">│</span>
+<span class="n">│</span> <span class="mi">2</span>   <span class="n">│</span> <span class="mf">1.24207</span>  <span class="n">│</span> <span class="mf">2.24355</span>   <span class="n">│</span> <span class="mf">2.92738</span> <span class="n">│</span>
+<span class="n">│</span> <span class="mi">3</span>   <span class="n">│</span> <span class="mf">0.837628</span> <span class="n">│</span> <span class="mf">1.38334</span>   <span class="n">│</span> <span class="mf">4.02123</span> <span class="n">│</span>
+<span class="n">│</span> <span class="mi">4</span>   <span class="n">│</span> <span class="mf">0.681629</span> <span class="n">│</span> <span class="mf">1.50076</span>   <span class="n">│</span> <span class="mf">4.54666</span> <span class="n">│</span>
+<span class="n">│</span> <span class="mi">5</span>   <span class="n">│</span> <span class="mf">0.582023</span> <span class="n">│</span> <span class="mf">2.84188</span>   <span class="n">│</span> <span class="mf">4.54084</span> <span class="n">│</span>
+<span class="n">│</span> <span class="mi">6</span>   <span class="n">│</span> <span class="mf">0.686076</span> <span class="n">│</span> <span class="mf">1.76745</span>   <span class="n">│</span> <span class="mf">3.84962</span> <span class="n">│</span>
+<span class="n">│</span> <span class="mi">7</span>   <span class="n">│</span> <span class="mf">2.0</span>      <span class="n">│</span> <span class="mf">2.0</span>       <span class="n">│</span> <span class="mf">2.0</span>     <span class="n">│</span>
+</pre></div>
+
+
+<p><a id='From-estimated-parameters-1'></a></p>
+<h3 id="from-estimated-parameters">From estimated parameters</h3>
+<p>In real applications though, we do not have access to the true parameters of the process that generated the data. We can estimate it using the previous function. To fit a regular BM, we just need to do a regression of trait 1 against a simple intercept:</p>
+<div class="codehilite"><pre><span></span><span class="n">fitTrait1</span> <span class="o">=</span> <span class="n">phyloNetworklm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">trait1</span> <span class="o">~</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dat</span><span class="p">,</span> <span class="n">truenet</span><span class="p">)</span>
+</pre></div>
+
+
+<p>We can then apply the <a href="../../lib/public/#PhyloNetworks.ancestralStateReconstruction"><code>ancestralStateReconstruction</code></a> function directly to the fitted object:</p>
+<div class="codehilite"><pre><span></span><span class="n">ancTrait1Approx</span> <span class="o">=</span> <span class="n">ancestralStateReconstruction</span><span class="p">(</span><span class="n">fitTrait1</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The prediction intervals ignore the fact that we estimated the process parameters, so they are less accurate and the function throws a warning. The output is an object of the same <a href="../../lib/public/#PhyloNetworks.ReconstructedStates"><code>ReconstructedStates</code></a> type as earlier, and the same extractors can be applied to it:</p>
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">nodeLabel</span> <span class="o">=</span> <span class="n">expectationsPlot</span><span class="p">(</span><span class="n">ancTrait1Approx</span><span class="p">))</span>
+</pre></div>
+
+
+<p><img alt="ancestral1" src="../../assets/figures/trait_tree_ancestral1_1.png" /></p>
+<p>For convenience, the two steps described above (fitting against the intercept, and then do ancestral state reconstruction) can be done all at once with a single call of the function <a href="../../lib/public/#PhyloNetworks.ancestralStateReconstruction"><code>ancestralStateReconstruction</code></a> on a DataFrame with the trait to reconstruct, and the tip labels:</p>
+<div class="codehilite"><pre><span></span><span class="n">datTrait1</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">trait1</span> <span class="o">=</span> <span class="n">trait1</span><span class="p">,</span> <span class="n">tipNames</span> <span class="o">=</span> <span class="n">tipLabels</span><span class="p">(</span><span class="n">sim1</span><span class="p">))</span>
+<span class="n">ancTrait1Approx</span> <span class="o">=</span> <span class="n">ancestralStateReconstruction</span><span class="p">(</span><span class="n">datTrait1</span><span class="p">,</span> <span class="n">truenet</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">nodeLabel</span> <span class="o">=</span> <span class="n">predintPlot</span><span class="p">(</span><span class="n">ancTrait1Approx</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mf">0.9</span><span class="p">))</span>
+</pre></div>
+
+
+<p><img alt="ancestral2" src="../../assets/figures/trait_tree_ancestral2_1.png" /></p>
+<p>This produces the exact same results. Here, we chose a <code>level</code> of 90% for the plotted prediction intervals.</p>
+<p><a id='Data-imputation-1'></a></p>
+<h3 id="data-imputation">Data imputation</h3>
+<p>Note that there is no theoretical difference between an internal node, for which we could not measure the value of the trait, and a missing value at a tip of the network. Consequently, the previous <a href="../../lib/public/#PhyloNetworks.ancestralStateReconstruction"><code>ancestralStateReconstruction</code></a> function can be used to do data imputation. To see this, let's add some missing values in trait 1.</p>
+<div class="codehilite"><pre><span></span><span class="n">datTrait1</span><span class="p">[</span><span class="o">:</span><span class="n">trait1</span><span class="p">]</span> <span class="o">=</span> <span class="n">allowmissing</span><span class="p">(</span><span class="n">datTrait1</span><span class="p">[</span><span class="o">:</span><span class="n">trait1</span><span class="p">]);</span>
+<span class="n">datTrait1</span><span class="p">[[</span><span class="mi">2</span><span class="p">],</span> <span class="o">:</span><span class="n">trait1</span><span class="p">]</span> <span class="o">=</span> <span class="n">missing</span><span class="p">;</span> <span class="c"># second row: for taxon C</span>
+<span class="n">ancTrait1Approx</span> <span class="o">=</span> <span class="n">ancestralStateReconstruction</span><span class="p">(</span><span class="n">datTrait1</span><span class="p">,</span> <span class="n">truenet</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">nodeLabel</span> <span class="o">=</span> <span class="n">predintPlot</span><span class="p">(</span><span class="n">ancTrait1Approx</span><span class="p">))</span>
+</pre></div>
+
+
+<p><img alt="ancestral3" src="../../assets/figures/trait_tree_ancestral3_1.png" /></p>
+<p>A prediction interval is shown for the missing values.</p>
+<p><a id='With-known-predictors-1'></a></p>
+<h3 id="with-known-predictors">With known predictors</h3>
+<p>At this point, it might be tempting to apply this function to trait 3 we simulated earlier as a linear combination of trait 1 and a phylogenetic noise. However, this cannot be done directly:</p>
+<div class="codehilite"><pre><span></span><span class="n">ancTrait3</span> <span class="o">=</span> <span class="n">ancestralStateReconstruction</span><span class="p">(</span><span class="n">fitTrait3</span><span class="p">)</span> <span class="c"># Throws an error !</span>
+</pre></div>
+
+
+<p>This is because the model we used to fit the trait (a regression with one predictor and an intercept) is not compatible with the simple model of Brownian evolution that we assumed for the ancestral state reconstruction. As the predictor used is not known for ancestral states, it is not possible to reconstruct the trait for this particular model.</p>
+<p>The only option we have is to provide the function with the predictor's ancestral states, if they are known. They are known indeed in this toy example that we generated ourselves, so we can reconstruct our trait doing the following:</p>
+<div class="codehilite"><pre><span></span><span class="n">ancTrait3</span> <span class="o">=</span> <span class="n">ancestralStateReconstruction</span><span class="p">(</span><span class="n">fitTrait3</span><span class="p">,</span>
+              <span class="p">[</span><span class="n">ones</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="n">sim1</span><span class="p">[</span><span class="o">:</span><span class="n">InternalNodes</span><span class="p">]</span> <span class="n">sim2</span><span class="p">[</span><span class="o">:</span><span class="n">InternalNodes</span><span class="p">]])</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">nodeLabel</span> <span class="o">=</span> <span class="n">predintPlot</span><span class="p">(</span><span class="n">ancTrait3</span><span class="p">))</span>
+</pre></div>
+
+
+<p><img alt="ancestral4" src="../../assets/figures/trait_tree_ancestral4_1.png" /></p>
+<p>where we provided the ancestral predictors as a matrix, containing the intercept, and the known predictor at the nodes. The user must be very careful with this function, as no check is done for the order of the predictors, that must be in the same order as the internal nodes of the phylogeny. As ancestral predictors are often unknown, the use of this functionality is discouraged.</p>
+<p><a id='Phylogenetic-ANOVA-1'></a></p>
+<h2 id="phylogenetic-anova">Phylogenetic ANOVA</h2>
+<p>The <a href="../../lib/public/#PhyloNetworks.phyloNetworklm"><code>phyloNetworklm</code></a> function is based on the <code>lm</code> function from <a href="https://github.com/JuliaStats/GLM.jl">GLM</a>. This means that it inherits from most of its features, and in particular, it can handle formulas with factors or interactions. For example, in lizards, we might want to do a regression of toe length against body length and the region where each species is found, where this region is coded into 4 categories (say). We might also want to include an interaction effect between body length and region. (This model has no biological basis. It is just meant to show the possibilities of the function).</p>
+<p>To illustrate the use of categorical predictors of particular interest in a network with reticulations, let's assume that some transgressive evolution took place after the hybridization event, so that tips "A" and "B" have larger mean compared to the others.</p>
+<div class="codehilite"><pre><span></span><span class="n">delta</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span> <span class="c"># value of heterosis</span>
+<span class="n">underHyb</span> <span class="o">=</span> <span class="p">[(</span><span class="n">n</span> <span class="o">==</span> <span class="s">&quot;A&quot;</span> <span class="o">||</span> <span class="n">n</span> <span class="o">==</span> <span class="s">&quot;B&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="kp">in</span> <span class="n">tipLabels</span><span class="p">(</span><span class="n">sim1</span><span class="p">)]</span> <span class="c"># tips under hybrid</span>
+<span class="n">underHyb</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>6-element Array{Bool,1}:
+ false
+ false
+  true
+  true
+ false
+ false
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="kp">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">trait3</span><span class="p">)</span>
+    <span class="n">underHyb</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">trait3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+=</span><span class="n">delta</span><span class="p">)</span> <span class="c"># add delta to tips A and B</span>
+<span class="k">end</span>
+<span class="n">trait3</span> <span class="c"># changed: +5 was added by the previous loop to A and B</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>6-element Array{Float64,1}:
+ 16.673 
+ 15.0831
+ 19.4522
+ 18.9712
+ 16.417 
+ 22.0269
+</pre></div>
+
+
+<p>The categorical variable <code>underHyb</code> separates tips "A" and "B" from the others. We need to mark it as a factor, not a numerical variable, i.e. as a <code>PooledDataArray</code>.</p>
+<div class="codehilite"><pre><span></span><span class="n">dat</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">trait1</span> <span class="o">=</span> <span class="n">trait1</span><span class="p">,</span> <span class="n">trait2</span> <span class="o">=</span> <span class="n">trait2</span><span class="p">,</span> <span class="n">trait3</span> <span class="o">=</span> <span class="n">trait3</span><span class="p">,</span>
+                <span class="n">underHyb</span> <span class="o">=</span> <span class="n">underHyb</span><span class="p">,</span>
+                <span class="n">tipNames</span> <span class="o">=</span> <span class="n">tipLabels</span><span class="p">(</span><span class="n">sim1</span><span class="p">))</span>
+<span class="n">categorical!</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="o">:</span><span class="n">underHyb</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Now we can include this factor in the regression.</p>
+<div class="codehilite"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span> <span class="n">fitTrait</span> <span class="o">=</span> <span class="n">phyloNetworklm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">trait3</span> <span class="o">~</span> <span class="n">trait1</span> <span class="o">+</span> <span class="n">underHyb</span><span class="p">),</span> <span class="n">dat</span><span class="p">,</span> <span class="n">truenet</span><span class="p">)</span>
+<span class="n">StatsModels</span><span class="o">.</span><span class="n">DataFrameRegressionModel</span><span class="p">{</span><span class="n">PhyloNetworks</span><span class="o">.</span><span class="n">PhyloNetworkLinearModel</span><span class="p">,</span><span class="kt">Array</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span><span class="mi">2</span><span class="p">}}</span>
+
+<span class="n">Formula</span><span class="o">:</span> <span class="n">trait3</span> <span class="o">~</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">trait1</span> <span class="o">+</span> <span class="n">underHyb</span>
+
+<span class="n">Model</span><span class="o">:</span> <span class="n">BM</span>
+
+<span class="n">Parameter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">Estimates</span><span class="o">:</span>
+<span class="n">Sigma2</span><span class="o">:</span> <span class="mf">0.0484988</span>
+
+<span class="n">Coefficients</span><span class="o">:</span>
+                <span class="n">Estimate</span> <span class="n">Std</span><span class="o">.</span><span class="n">Error</span> <span class="n">t</span> <span class="n">value</span> <span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span>
+<span class="p">(</span><span class="n">Intercept</span><span class="p">)</span>      <span class="mf">11.0616</span>   <span class="mf">1.19414</span> <span class="mf">9.26324</span>   <span class="mf">0.0027</span>
+<span class="n">trait1</span>           <span class="mf">1.72504</span>  <span class="mf">0.240787</span> <span class="mf">7.16418</span>   <span class="mf">0.0056</span>
+<span class="n">underHyb</span><span class="o">:</span> <span class="kc">true</span>   <span class="mf">5.07354</span>  <span class="mf">0.837326</span> <span class="mf">6.05922</span>   <span class="mf">0.0090</span>
+
+<span class="n">Log</span> <span class="n">Likelihood</span><span class="o">:</span> <span class="o">-</span><span class="mf">3.9885372687</span>
+<span class="n">AIC</span><span class="o">:</span> <span class="mf">15.9770745374</span>
+</pre></div>
+
+
+<p>In this case, the categorical variable indicating which tips are descendants of the reticulation event is indeed relevant, and the transgressive evolution effect is recovered.</p>
+<p>This is a very simple example of how to include transgressive evolution, but some general functions to test for it, on networks with more than on hybrid, are also available.</p>
+<p><a id='Pagel's-Lambda-1'></a></p>
+<h2 id="pagels-lambda">Pagel's Lambda</h2>
+<p>One classical question about trait evolution is the amount of "phylogenetic signal" in a dataset, that is, the importance of the tree structure to explain variation in the observed traits. One way of doing measuring that is to use Pagel's lambda<sup id="fnref:fn3"><a class="footnote-ref" href="#fn:fn3" rel="footnote">1</a></sup> transformation of the branch lengths. This model assumes a BM on a tree where the internal branches are multiplied by a factor λ, while the external branches are modified so that the total height of the tree is constant. Hence, λ varies between 0 (the tree has no influence on the data) and 1 (the tree is unchanged). Using the same branch length transformations, this model can be straightforwardly extended to phylogenetic networks.</p>
+<p>We can illustrate this with the predictor trait we used earlier. We use the same function as before, only indicating the model we want to use:</p>
+<div class="codehilite"><pre><span></span><span class="n">fitPagel</span> <span class="o">=</span> <span class="n">phyloNetworklm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">trait1</span> <span class="o">~</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dat</span><span class="p">,</span> <span class="n">truenet</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s">&quot;lambda&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>As it is indeed generated according to a plain BM on the phylogeny, the estimated λ should be close to 1. It can be extracted with function <code>lambda_estim</code>:</p>
+<div class="codehilite"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span> <span class="n">lambda_estim</span><span class="p">(</span><span class="n">fitPagel</span><span class="p">)</span>
+<span class="mf">0.9073561228984233</span>
+</pre></div>
+
+
+<p><a id='Shifts-and-transgressive-evolution-1'></a></p>
+<h2 id="shifts-and-transgressive-evolution">Shifts and transgressive evolution</h2>
+<p>In the ANOVA section above, we showed how to include transgressive evolution in a simple case. In general, transgressive evolution can be seen as a particuliar exemple of a <em>shifted BM</em> on the phylogenetic network.</p>
+<p><a id='Simulation-of-a-Shifted-BM-1'></a></p>
+<h3 id="simulation-of-a-shifted-bm">Simulation of a Shifted BM</h3>
+<p>In a shifted BM, the trait evolves as a BM on the network most of the time, but <em>shifts</em> on some of the branches. The positions and values of the shifts can be stored in a <a href="../../lib/public/#PhyloNetworks.ShiftNet"><code>ShiftNet</code></a> object. For identifiability reasons, shifts are only allowed on tree-like branches. The position of the shifts can be given using vector of edges. To see this, let's first plot the network with its associated edges and node numbers.</p>
+<div class="codehilite"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">useEdgeLength</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">showEdgeNumber</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
+</pre></div>
+
+
+<p><img alt="truenet_with_numbers" src="../../assets/figures/trait_tree_truenet_with_numbers_1.png" /></p>
+<p>Let's say that we want to add a shift with value 5.0 on the branch directly following the hybridization event, in order to model transgressive evolution. We can see on the plot above that this branch is number 6, so we define the following object:</p>
+<div class="codehilite"><pre><span></span><span class="n">shift</span> <span class="o">=</span> <span class="n">ShiftNet</span><span class="p">(</span><span class="n">truenet</span><span class="o">.</span><span class="n">edge</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="mf">5.0</span><span class="p">,</span>  <span class="n">truenet</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Note that the edge numbers and values of a <code>ShiftNet</code> object can be retrieved thanks to functions <a href="../../lib/public/#PhyloNetworks.getShiftEdgeNumber"><code>getShiftEdgeNumber</code></a> and <a href="../../lib/public/#PhyloNetworks.getShiftValue"><code>getShiftValue</code></a>. The constructor can take a single edge and associated value, like here, or two vectors of edges and matching values.</p>
+<p>Because we often need to put shifts only on edges right after hybrids, there is a special function <a href="../../lib/public/#PhyloNetworks.shiftHybrid"><code>shiftHybrid</code></a> to do that, so that  we do not have to find out their edges number. Here, the <code>shift</code> object could hence have been defined as:</p>
+<div class="codehilite"><pre><span></span><span class="n">shift</span> <span class="o">=</span> <span class="n">shiftHybrid</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span>  <span class="n">truenet</span><span class="p">)</span>
+<span class="n">shift</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>PhyloNetworks.ShiftNet:
+     Edge Number Shift Value
+             6.0         5.0
+</pre></div>
+
+
+<p>The parameters for the simulation are then defined as above, just adding the <code>ShiftNet</code> object as a parameter.</p>
+<div class="codehilite"><pre><span></span><span class="n">params_sh</span> <span class="o">=</span> <span class="n">ParamsBM</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">shift</span><span class="p">)</span> <span class="c"># BM with mean 2, variance 0.5, and shifts.</span>
+</pre></div>
+
+
+<p>The traits are simulated using the same function <a href="../../lib/public/#PhyloNetworks.simulate"><code>simulate</code></a>, and extracted at the tips as before.</p>
+<div class="codehilite"><pre><span></span><span class="n">srand</span><span class="p">(</span><span class="mi">18700904</span><span class="p">)</span>
+<span class="n">sim_sh</span> <span class="o">=</span> <span class="n">simulate</span><span class="p">(</span><span class="n">truenet</span><span class="p">,</span> <span class="n">params_sh</span><span class="p">)</span> <span class="c"># simulate a shifted BM on truenet</span>
+<span class="n">trait_sh</span> <span class="o">=</span> <span class="n">sim_sh</span><span class="p">[</span><span class="o">:</span><span class="n">Tips</span><span class="p">]</span>              <span class="c"># trait at the tips (data)</span>
+</pre></div>
+
+
+<p><a id='Fit-of-a-Shifted-BM-1'></a></p>
+<h3 id="fit-of-a-shifted-bm">Fit of a Shifted BM</h3>
+<p>Let's assume that we measured <code>trait_sh</code>, and that we want to test whether there were some ancestral hybridizations. To do that, we can use the  custom columns of the <a href="../../lib/public/#PhyloNetworks.descendenceMatrix"><code>descendenceMatrix</code></a>, that can be directly defined thanks to function <a href="../../lib/public/#PhyloNetworks.regressorHybrid"><code>regressorHybrid</code></a>.</p>
+<div class="codehilite"><pre><span></span><span class="n">df_shift</span> <span class="o">=</span> <span class="n">regressorHybrid</span><span class="p">(</span><span class="n">truenet</span><span class="p">)</span> <span class="c"># Regressors matching Hybrid Shifts</span>
+</pre></div>
+
+
+<p>This creates a dataframe, with as many columns as the number of hybrids in the network, each named according to the number of the edge after the hybrid. We can use this dataframe as regressors in the <code>phyloNetworklm</code> function.</p>
+<div class="codehilite"><pre><span></span><span class="n">dat</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">trait</span> <span class="o">=</span> <span class="n">trait_sh</span><span class="p">,</span> <span class="n">tipNames</span> <span class="o">=</span> <span class="n">tipLabels</span><span class="p">(</span><span class="n">sim_sh</span><span class="p">))</span>  <span class="c"># Data</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">df_shift</span><span class="p">,</span> <span class="n">on</span><span class="o">=:</span><span class="n">tipNames</span><span class="p">)</span>                          <span class="c"># join the two</span>
+<span class="n">fit_sh</span> <span class="o">=</span> <span class="n">phyloNetworklm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">trait</span> <span class="o">~</span> <span class="n">shift_6</span><span class="p">),</span> <span class="n">dat</span><span class="p">,</span> <span class="n">truenet</span><span class="p">)</span> <span class="c"># fit</span>
+<span class="n">fit_sh</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>StatsModels.DataFrameRegressionModel{PhyloNetworks.PhyloNetworkLinearModel,
+Array{Float64,2}}
+
+Formula: trait ~ 1 + shift_6
+
+Model: BM
+
+Parameter(s) Estimates:
+Sigma2: 0.347898
+
+Coefficients:
+             Estimate Std.Error t value Pr(&gt;|t|)
+(Intercept)    1.7885   1.46856 1.21786   0.2902
+shift_6       6.13121   1.73228 3.53939   0.0240
+
+Log Likelihood: -9.8996497316
+AIC: 25.7992994631
+</pre></div>
+
+
+<p>Here, because there is only one hybrid in the network, we can directly see whether the ancestral transgressive evolution is significant or not thanks to the Student test on the coefficient associated with <code>shift_6</code>. In more complex cases, it is possible to do a Fisher test, thanks to the <code>GLM</code> function <code>ftest</code>.</p>
+<div class="codehilite"><pre><span></span><span class="n">julia</span><span class="o">&gt;</span> <span class="n">fit_null</span> <span class="o">=</span> <span class="n">phyloNetworklm</span><span class="p">(</span><span class="nd">@formula</span><span class="p">(</span><span class="n">trait</span> <span class="o">~</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dat</span><span class="p">,</span> <span class="n">truenet</span><span class="p">)</span> <span class="c"># fit against the null (no shift)</span>
+<span class="n">StatsModels</span><span class="o">.</span><span class="n">DataFrameRegressionModel</span><span class="p">{</span><span class="n">PhyloNetworks</span><span class="o">.</span><span class="n">PhyloNetworkLinearModel</span><span class="p">,</span><span class="kt">Array</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span><span class="mi">2</span><span class="p">}}</span>
+
+<span class="n">Formula</span><span class="o">:</span> <span class="n">trait</span> <span class="o">~</span> <span class="o">+</span><span class="mi">1</span>
+
+<span class="n">Model</span><span class="o">:</span> <span class="n">BM</span>
+
+<span class="n">Parameter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">Estimates</span><span class="o">:</span>
+<span class="n">Sigma2</span><span class="o">:</span> <span class="mf">1.43745</span>
+
+<span class="n">Coefficients</span><span class="o">:</span>
+             <span class="n">Estimate</span> <span class="n">Std</span><span class="o">.</span><span class="n">Error</span> <span class="n">t</span> <span class="n">value</span> <span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span>
+<span class="p">(</span><span class="n">Intercept</span><span class="p">)</span>   <span class="mf">3.27827</span>   <span class="mf">2.55795</span>  <span class="mf">1.2816</span>   <span class="mf">0.2562</span>
+
+<span class="n">Log</span> <span class="n">Likelihood</span><span class="o">:</span> <span class="o">-</span><span class="mf">14.1557978601</span>
+<span class="n">AIC</span><span class="o">:</span> <span class="mf">32.3115957201</span>
+
+
+<span class="n">julia</span><span class="o">&gt;</span> <span class="n">ftest</span><span class="p">(</span><span class="n">fit_sh</span><span class="p">,</span> <span class="n">fit_null</span><span class="p">)</span>                                      <span class="c"># nested models, from more complex to most simple</span>
+        <span class="n">Res</span><span class="o">.</span> <span class="n">DOF</span> <span class="n">DOF</span> <span class="n">ΔDOF</span>    <span class="n">SSR</span>    <span class="n">ΔSSR</span>      <span class="n">R²</span>    <span class="n">ΔR²</span>      <span class="n">F</span><span class="o">*</span>  <span class="n">p</span><span class="p">(</span><span class="o">&gt;</span><span class="n">F</span><span class="p">)</span>
+<span class="n">Model</span> <span class="mi">1</span>        <span class="mi">4</span>   <span class="mi">3</span>      <span class="mf">2.0874</span>          <span class="mf">0.6994</span>                      
+<span class="n">Model</span> <span class="mi">2</span>        <span class="mi">5</span>   <span class="mi">2</span>   <span class="o">-</span><span class="mi">1</span> <span class="mf">8.6247</span> <span class="o">-</span><span class="mf">6.5373</span> <span class="o">-</span><span class="mf">0.2419</span> <span class="mf">0.9413</span> <span class="mf">12.5272</span> <span class="mf">0.0240</span>
+</pre></div>
+
+
+<p>Here, this test is equivalent to the Fisher test, and gives the same p-value.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:fn3">
+<p>Pagel M (1999). Inferring the historical patterns of biological     evolution. Nature. 401: 877–884. doi:10.1038/44766&#160;<a class="footnote-backref" href="#fnref:fn3" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../multiplealleles/" title="Multiple Alleles" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Multiple Alleles
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../lib/public/" title="Public" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Public
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="http://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.8eb9be28.js"></script>
+      
+      <script>app.initialize({version:"0.17.3",url:{base:"../.."}})</script>
+      
+        <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+        <script src="../../assets/mathjaxhelper.js"></script>
+      
+    
+    
+      
+    
+  </body>
+</html>

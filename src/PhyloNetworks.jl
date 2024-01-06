@@ -177,7 +177,7 @@ module PhyloNetworks
         readfastatodna,
         stationary,
         empiricalDNAfrequencies,
-        # phyLiNC,
+        phyLiNC,
         # neighbor joining
         nj
 

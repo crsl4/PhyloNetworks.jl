@@ -166,4 +166,5 @@ nstates
 nparams
 stationary
 empiricalDNAfrequencies
+phyLiNC
 ```
